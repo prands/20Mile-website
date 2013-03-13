@@ -106,7 +106,7 @@ $config['theme_folder_path'] = $config['server_path']."/themes/";
 -------------------------------------------------------------------*/
 $config['save_tmpl_files'] = "y";
 $config['tmpl_file_basepath'] = $config['server_path']."/templates/";
-$config['site_404'] = "404/index";
+$config['site_404'] = "pages/404";
 $config['strict_urls'] = "n";
 
 /* Category settings
