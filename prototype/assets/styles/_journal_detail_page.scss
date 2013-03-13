@@ -1,0 +1,117 @@
+.journal-detail {
+
+	article {
+		padding: 30px 90px 30px 150px;
+
+		h1, h2, h3, h4, h5, h6 {
+			color: #fff;
+		}
+
+		header {
+			h1 {
+				font-size: 2.1em;
+				line-height: 1.4em;
+			}
+
+			time {
+				position: absolute;
+				display: inline-block;
+				background-color: #F05921;
+				color: #fff;
+				padding: 1px 10px 5px 10px;
+				text-align: center;
+				margin-left: -104px;
+				.month {
+					display: block;
+					font-size: 1.4em;
+					text-transform: uppercase;
+				}
+
+				.day {
+					display: block;
+					font-size: 2.3em;
+				}
+			}
+		}
+
+		p {
+			text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.1);
+		}
+
+		blockquote {
+			width: 500px;
+			background-color: #fff;
+			padding: 28px;
+			margin: 0;
+			border-left: 0;
+			margin-left: -86px;
+			h3 {
+				font-family: Adelle;
+				font-style: italic;
+				color: #F05921;
+				font-weight: bold;
+				line-height: 1.6em;
+			}
+		}
+
+		footer {
+
+			position: relative;
+
+			svg {
+				position: absolute;
+				margin-left: -131px;
+
+				.colored-ring {
+					fill: #A5CE39;
+				}
+			}
+
+			.post-label {
+				margin-left: -14px;
+			}
+
+			.bar {
+				@include clearfix();
+				margin-left: -44px;
+				margin-top: 1px;
+
+				.author-info {
+					display: inline-block;
+					background-color: #56524F;
+					float: left;
+
+					padding: 9px 30px 10px 30px;
+
+					.name {
+						color: #fff;
+						line-height: 1.2em;
+					}
+
+					.position{
+						color: #ccc;
+						font-size: 0.9em;
+						line-height: 1.1em;
+					}
+				}
+
+				.social {
+					display: inline-block;
+					background-color: #aaa9a5;
+					padding: 10px 30px 10px 30px;
+
+					.tags {
+						color: #fff;
+						margin-right: 20px;
+
+						a {
+							color: #fff;
+							text-transform: capitalize;
+						}
+					}
+				}
+			}
+		}
+	}
+
+}

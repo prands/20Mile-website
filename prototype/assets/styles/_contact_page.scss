@@ -1,0 +1,139 @@
+.contact-form-container {
+	background-color: #66615B;
+	padding: 30px 75px;
+	height: 572px;
+
+	.control-group{
+		margin-top: 0px;
+	}
+
+	legend {
+		border: 0px;
+		margin: 0px;
+		color: #fff;
+		font-size: 2em;
+	}
+
+	label {
+		float: left;
+
+		&[for=name] {
+			padding: 9px 16px 9px 16px;
+		}
+
+		&[for=email] {
+			padding: 9px 17px 9px 18px;
+		}
+
+		&[for=phone] {
+			padding: 9px 15px 9px 16px;
+		}
+	}
+
+	input, textarea {
+		float: right;
+		// Focus state
+		&:focus {
+			// border-color: rgba(82,168,236,.8);
+			outline: 0;
+			outline: thin dotted \9; /* IE6-9 */
+			// @include box-shadow(inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6));
+
+			& + label {
+				background-color: #00748B;
+				border-color: #00748B;
+			}
+		}
+	}
+
+	input {
+		width: 206px;
+	}
+
+	textarea {
+		width: 284px;
+		height: 120px;
+		margin-top: 42px;
+		margin-bottom: 24px;
+		padding: 12px;
+
+		& + label.control-label {
+			width: 100%;
+			padding-left: 0px;
+			padding-right: 0px;
+			border: 0px;
+			position: absolute;
+		}
+	}
+
+	.message-box {
+		display: block;
+		width: 100%;
+		position: relative;
+	}
+
+	input[type=submit] {
+		padding: 12px 0px;
+		text-align: center;
+		width: 100%;
+		border: 0px;
+		background-color: #F05921;
+		color: #fff;
+		font-size: 1.4em;
+
+		&:hover {
+			background-color: lighten(#F05921, 5%);
+		}
+	}
+
+	label.completed {
+		background-color: #A5CD38;
+		border-color: #A5CD38;
+	}
+}
+
+.contact-info {
+	margin-left: -20px;
+	margin-right: 20px;
+	height: 552px;
+	background: #fff url(layout/city@2x.png) no-repeat left bottom;
+	background-size: 470px 262px;
+
+	padding: 40px 50px;
+
+	ul {
+		list-style: none;
+		margin: 0px;
+		padding: 0px;
+
+		li {
+			display: block;
+			border-bottom: 1px dashed #ccc;
+			padding: 20px 0px;
+
+			&.phone {
+				a {
+					font-size: 3.3em;
+					color: #66615B;
+				}
+			}
+
+			&.email {
+				a {
+					font-size: 2.9em;
+					color: #F05921;
+				}
+			}
+
+			&.address {
+				font-size: 1.6em;
+				color: #66615B;
+				border-bottom: 0px;
+
+				a {
+					color: #F05921;
+				}
+			}
+		}
+	}
+}

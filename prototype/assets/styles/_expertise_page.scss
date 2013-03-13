@@ -1,0 +1,116 @@
+#expertise-widget {
+	background: url(layout/path.png) no-repeat center top;
+	padding-bottom: 200px;
+}
+
+.expertise-widget-journal {
+
+	text-align: right;
+	a {
+		color: #fff;
+		padding: 10px 0px 10px 26px;
+		background-image: url(layout/ico-journal-sm.png);
+		background-repeat: no-repeat;
+		background-position: left center;
+		background-size: 18px 22px;
+	}
+}
+
+.expertise-widget-detail {
+		
+	height: 207px;
+	margin-bottom: 10px;
+
+	.expertise-widget-detail-block {
+		display: inline-block;
+	}
+
+	.expertise-widget-icon {
+		background-color: #EDECE8;
+		width: 290px;
+		padding-left: 30px;
+		padding-right: 30px;
+		height: 207px;
+		float: left;
+
+		.even & {
+			float: right;
+		}
+	}
+
+	.expertise-widget-description {
+		background-color: #EDECE8;
+		width: 330px;
+		height: 207px;
+		padding-right: 20px;
+		float: left;
+
+		.even & {
+			padding-right: 0px;
+			padding-left: 20px;
+		}
+	}
+
+	.expertise-widget-blockquote {
+		width: 240px;
+		height: 207px;
+		float: right;
+		background-color: #00748B;
+
+		ul {
+			list-style: none;
+			margin: 20px 0px 0px 20px;
+			padding: 0px;
+
+			li {
+				color: #fff;
+				font-size: 1.4em;
+				margin-bottom: 5px;
+			}
+		}
+
+		.even & {
+			float: left;
+		}
+	}
+}
+
+#expertise-widget {
+	.odd, .even {
+		margin-top: 100px;
+	}
+}
+div.expertise-widget-image {
+	display: block;
+	background-repeat: no-repeat;
+	background-position: left bottom;
+	margin-top: -44px;
+
+	&.identity-design-img {
+		width: 290px;
+		height: 215px;
+		background-size: 290px 215px;
+		background-image: url(layout/iddesign-med.png);
+	}
+
+	&.web-design-img {
+		width: 290px;
+		height: 215px;
+		background-size: 290px 193px;
+		background-image: url(layout/webdesign-med.png);
+	}
+
+	&.web-development-img {
+		width: 290px;
+		height: 215px;
+		background-size: 290px 165px;
+		background-image: url(layout/webdev-med.png);
+	}
+
+	&.online-marketing-img {
+		width: 290px;
+		height: 215px;
+		background-size: 290px 167px;
+		background-image: url(layout/onlinemarketing-med.png);
+	}
+}

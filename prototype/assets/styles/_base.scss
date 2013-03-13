@@ -1,0 +1,27 @@
+// Base Styles
+
+* {
+	@include prefixer(font-smoothing, antialiased, webkit moz spec);
+}
+
+body {
+	background-color: #fff;
+
+	@include mobile-only {
+		padding: 0px;
+	}
+}
+
+p {
+	font-family: Adelle;
+	font-size: 1.1em;
+	// text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.4);
+}
+
+@import "header";
+
+@import "home_page";
+
+@import "footer";
+
+@import "interior_page_common";

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>20MilePrototype</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+
+	
+        <!-- Hammer reload -->
+          <script>
+            setInterval(function(){
+              try {
+                if(typeof ws != 'undefined' && ws.readyState == 1){return true;}
+                ws = new WebSocket('ws://'+(location.host || 'localhost').split(':')[0]+':35353')
+                ws.onopen = function(){ws.onclose = function(){document.location.reload()}}
+                ws.onmessage = function(){
+                  var links = document.getElementsByTagName('link'); 
+                    for (var i = 0; i < links.length;i++) { 
+                    var link = links[i]; 
+                    if (link.rel === 'stylesheet' && !link.href.match(/typekit/)) { 
+                      href = link.href.replace(/((&|\?)hammer=)[^&]+/,''); 
+                      link.href = href + (href.indexOf('?')>=0?'&':'?') + 'hammer='+(new Date().valueOf());
+                    }
+                  }
+                }
+              }catch(e){}
+            }, 1000)
+          </script>
+        <!-- /Hammer reload -->
+      
+
+	<link rel='stylesheet' href='assets/styles/style.css'>
+
+
+
+	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<link href="assets/favicon.ico" rel="shortcut icon">
+	<link href="assets/apple-touch-icon.png" rel="apple-touch-icon">
+
+</head>
+
+<body>
+
+    <!-- Header -->
+<div role="masterhead">
+	<div class="container">
+		<header class="row">
+			<div class="span3">
+				<a href="index.html" class="logo">20Mile Interactive</a>
+			</div>
+			<div class="span9">
+				<nav>
+	<ul>
+		<li id="nav-expertise"><a href="expertise.html"><span>Expertise</span></a></li>
+		<li id="nav-results"><a href="results.html"><span>Results</span></a></li>
+		<li id="nav-team"><a href="team.html"><span>Team</span></a></li>
+		<li class='current' id="nav-journal"><a class='current' href="journal.html"><span>Journal</span></a></li>
+		<li id="nav-contact"><a href="contact.html"><span>Contact</span></a></li>
+	</ul>
+</nav>
+			</div>
+		</header>
+	</div>
+</div><!-- END Header -->
+
+<!-- CONTENT -->
+
+<div class="row page-title">
+    <div class="container">
+        <div class="span12">
+            <header>
+                <h1 class="journal">Journal</h1>
+            </header>
+        </div>
+    </div>
+</div>
+
+<div class="row page-body journal">
+    <div class="container">
+        <div class="span12">
+            <!-- filter section -->
+            <section class="row">
+                <div class="span12">
+                    <div class="filter-wrapper">
+                        <div class="filter-label">Viewing</div>
+                        <div class="filter-bar">
+                            Posts related to
+                            <span>HTML5</span>
+                        </div>
+                        <a href="#" class="close"></a>
+                    </div>
+                </div>
+            </section>
+            <!-- blog section -->
+            <section class="row">
+                <div class="span12">
+                    <article class="featured">
+                        <header>
+                            <h1><a href="journal_detail.html">Etiam porta sem malesuada magna mollis euismod. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</a></h1>
+                        </header>
+                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nulla vitae elit libero, a pharetra augue. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        
+                        <footer>
+                            <time datetime="2013-01-12">
+                                <span class="month">Jan</span>
+                                <span class="day">12</span>
+                            </time>
+                            <div class="tags-categories">
+                                <div class="categories">
+                                    <a href="#" class="web-design"></a>
+                                    <a href="#" class="web-development"></a>
+                                    <!-- <a href="#" class="online-marketing"></a> -->
+                                    <!-- <a href="#" class="identity-design"></a> -->
+                                </div>
+                                <div class="tags">
+                                    <a href="#">HTML5</a>
+                                    &bull;
+                                    <a href="#">Responsive Web Design</a>
+                                </div>
+                            </div>
+                        </footer>
+                        <blockquote>
+                            <h3>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</h3>
+                        </blockquote>
+                    </article>
+
+                    <article class="odd">
+                        <header>
+                            <h1>Etiam porta sem malesuada magna mollis euismod. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</h1>
+                        </header>
+                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nulla vitae elit libero, a pharetra augue. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <footer>
+                            <time datetime="2013-01-13">
+                                <span class="month">Jan</span>
+                                <span class="day">13</span>
+                            </time>
+                            <div class="tags-categories">
+                                <div class="categories">
+                                    <a href="#" class="web-design"></a>
+                                    <a href="#" class="web-development"></a>
+                                    <a href="#" class="online-marketing"></a>
+                                    <a href="#" class="identity-design"></a>
+                                </div>
+                                <div class="tags">
+                                    <a href="#">HTML5</a>
+                                    &bull;
+                                    <a href="#">Responsive Web Design</a>
+                                </div>
+                            </div>
+                        </footer>
+                    </article>
+
+                    <article class="even">
+                        <header>
+                            <h1>Etiam porta sem malesuada magna mollis euismod. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</h1>
+                        </header>
+                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nulla vitae elit libero, a pharetra augue. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <footer>
+                            <time datetime="2013-01-14">
+                                <span class="month">Jan</span>
+                                <span class="day">14</span>
+                            </time>
+                            <div class="tags-categories">
+                                <div class="categories">
+                                    <a href="#" class="web-design"></a>
+                                    <a href="#" class="web-development"></a>
+                                    <a href="#" class="online-marketing"></a>
+                                    <a href="#" class="identity-design"></a>
+                                </div>
+                                <div class="tags">
+                                    <a href="#">HTML5</a>
+                                    &bull;
+                                    <a href="#">Responsive Web Design</a>
+                                </div>
+                            </div>
+                        </footer>
+                    </article>
+
+                    <article class="odd">
+                        <header>
+                            <h1>Etiam porta sem malesuada magna mollis euismod. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</h1>
+                        </header>
+                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nulla vitae elit libero, a pharetra augue. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <footer>
+                            <time datetime="2013-01-15">
+                                <span class="month">Jan</span>
+                                <span class="day">15</span>
+                            </time>
+                            <div class="tags-categories">
+                                <div class="categories">
+                                    <a href="#" class="web-design"></a>
+                                    <a href="#" class="web-development"></a>
+                                    <a href="#" class="online-marketing"></a>
+                                    <a href="#" class="identity-design"></a>
+                                </div>
+                                <div class="tags">
+                                    <a href="#">HTML5</a>
+                                    &bull;
+                                    <a href="#">Responsive Web Design</a>
+                                </div>
+                            </div>
+                        </footer>
+                    </article>
+
+                    <article class="even">
+                        <header>
+                            <h1>Etiam porta sem malesuada magna mollis euismod. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</h1>
+                        </header>
+                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nulla vitae elit libero, a pharetra augue. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <footer>
+                            <time datetime="2013-01-16">
+                                <span class="month">Jan</span>
+                                <span class="day">16</span>
+                            </time>
+                            <div class="tags-categories">
+                                <div class="categories">
+                                    <a href="#" class="web-design"></a>
+                                    <a href="#" class="web-development"></a>
+                                    <a href="#" class="online-marketing"></a>
+                                    <a href="#" class="identity-design"></a>
+                                </div>
+                                <div class="tags">
+                                    <a href="#">HTML5</a>
+                                    &bull;
+                                    <a href="#">Responsive Web Design</a>
+                                </div>
+                            </div>
+                        </footer>
+                    </article>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer role="masterfooter">
+	<div class="container">
+		<div class="row">
+			<div class="span4 hidden-phone">
+				<div class="footer-nav">
+					<ul>
+						<li><a href="#"><span>Home</span></a></li>
+						<li><a href="#"><span>Expertise</span></a></li>
+						<li><a href="#"><span>Results</span></a></li>
+						<li><a href="#"><span>Team</span></a></li>
+						<li><a href="#"><span>Journal</span></a></li>
+						<li><a href="#"><span>Contact</span></a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="span4">
+				<div class="ribbon">
+					<section class="social">
+						<a href="https://twitter.com/20Milers" 
+						   class="twitter-follow-button" 
+						   data-show-count="false">Follow @20Milers</a>
+						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+					</section>
+					<section class="phone-number">
+						<!-- TODO: Implement "callto:" link that display only on desktop (skype support)-->
+						<a href="tel:5084197439">508.419.7439</a>
+					</section>
+					<section class="email">
+						<a href="mailto:info@20mile.in">info@20mile.in</a>
+					</section>
+					<section class="office-location">
+						<!-- TODO: link to google map -->
+						<a href="#">901 Main St Osterville, MA 02655</a>
+					</section>
+					<section class="copyright">
+						&copy; 2013 20Mile Interactive. All rights reserved.
+					</section>
+				</div>
+			</div>
+			<div class="span4">
+				<div class="jobs-ticker">
+					We're currently hiring new <br>
+					20Milers. Please take a look at our <br>
+					<a href="#">open positions</a>.
+				</div>
+			</div>
+		</div>
+	</div>
+</footer><!-- END Footer -->
+
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "https://connect.facebook.net/en_US/all.js#xfbml=1&appId=420110748076323";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+
+  	<script src='assets/js/jquery-1.8.3.min.js'></script>
+  	<script src='assets/js/jquery.tools.min.js'></script>
+  	<script src='assets/js/bootstrap/bootstrap-modal.js'></script>
+  	
+  	<script src='assets/js/app.js'></script>
+  
+
+</body>
+</html>

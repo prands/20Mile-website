@@ -1,0 +1,114 @@
+div[role=masterhead] {
+	background-color: #fff;
+
+	header {
+
+		a.logo {
+			display: block;
+			width: 165px;
+			height: 60px;
+			background: url(svgs/20MileLogo.svg) no-repeat left top;
+			background-size: 165px 60px;
+			text-indent: -99999px;
+			color: transparent;
+			margin-top: 30px;
+
+			@include mobile-only {
+				width: 275px;
+				height: 100px;
+				background-size: 275px 100px;
+				margin-left: auto;
+				margin-right: auto;
+			}
+		}
+
+		nav {
+			ul {
+				list-style: none;
+				margin-top: 34px;
+
+				@include mobile-only {
+					margin: 0;
+					padding: 0;
+				}
+
+				li {
+					float: left;
+					margin-left: 50px;
+
+					@include mobile-only {
+						margin-left: 8px;
+						width: auto;
+					}
+
+					a {
+						@include inline-block;
+						padding-top: 34px;
+						padding-bottom: 20px;
+						color: #B2B2B2;
+						font-size: 1.3em;
+						font-weight: 100;
+
+						&:hover {
+							background-repeat: no-repeat;
+							background-position: center top;
+							text-decoration: none;
+						}
+					}
+
+					&#nav-expertise {
+						a:hover {
+							background-image: url(layout/icon_expertise.png);
+							background-size: 29px;
+							background-position: 15px top;
+							@include retina {
+								background-image: url(layout/ico-expertise-h1@2x.png);
+							}
+						}
+					}
+
+					&#nav-results {
+						a:hover {
+							background-image: url(layout/ico-results-nav.png);
+							background-size: 27px 29px;
+							@include retina {
+								background-image: url(layout/ico-results-nav@2x.png);
+							}
+						}
+					}
+
+					&#nav-team {
+						a:hover {
+							background-image: url(layout/ico-team-nav.png);
+							background-size: 41px 26px;
+							@include retina {
+								background-image: url(layout/ico-team-nav@2x.png);
+							}
+						}
+					}
+
+					&#nav-journal {
+						a:hover {
+							background-image: url(layout/ico-journal-nav.png);
+							background-size: 23px 27px;
+							@include retina {
+								background-image: url(layout/ico-journal-nav@2x.png);
+							}
+						}
+					}
+
+					&#nav-contact {
+						a:hover {
+							background-image: url(layout/ico-contact-nav.png);
+							background-size: 23px 33px;
+							@include retina {
+								background-image: url(layout/ico-contact-nav@2x.png);
+							}
+						}
+					}
+				}
+			}
+		}
+
+	}
+}
