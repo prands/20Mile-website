@@ -15,7 +15,7 @@ exit('Invalid file request');
 |
 | The following items are for use with ExpressionEngine.  The rest of
 | the config items are for use with CodeIgniter.
-|
+| 
 */
 
 /* Environmental Variables */
