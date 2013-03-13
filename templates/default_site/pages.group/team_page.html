@@ -1,0 +1,89 @@
+{embed="pages/_top"}
+
+{embed="pages/_header"}
+
+<!-- CONTENT -->
+{embed="pages/_page_header"}
+        <!-- Team -->
+
+        <div class="row">
+            <div class="span12">
+                <div class="team-container">
+
+                    {exp:channel:entries
+                        channel="team_profiles"
+                        disable="categories|category_fields|pagination|trackbacks"
+                        dynamic="off"
+                        fixed_order="{structure:child_ids}"
+                    }
+                    {if count == 1 OR count == 4 OR count == 7}
+                    <div class="team-row">
+                    {/if}
+                        {embed="pages/_team_member_component" name="{title}" position="{job_title}" headshot="{profile_headshot}" url_title="{url_title}" color="{profile_group_color}"}
+                        <!-- Modal Gallery -->
+                        <div 
+                            id="{url_title}" class="modal hide team-modal" tabindex="-1" 
+                            role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+                        >
+                            <div class="modal-body">
+                               <div class="top-row">
+                                   <div class="profile-picture">
+                                       <img src="{profile_photo}" alt="">
+                                   </div>
+                                   <article class="profile-bio">
+                                        <div class="close-row">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                        </div>
+                                       <header>
+                                           <h3>{job_title}</h3>
+                                           <h1>{title}</h1>
+                                       </header>
+                                       <div class="profile-content">
+                                           {team_bio}
+                                       </div>
+                                       <footer>
+                                           <a href="#" class="jornal-link">Journal Entries</a>
+                                       </footer>
+                                   </article>
+                               </div>
+                               <div class="bottom-row">
+                                    <h4>What three things would you want on a deserted island?</h4>
+                                    <p>
+                                        {profile_first_question}
+                                    </p>
+                                    <h4>What’s your favorite adult beverage?</h4>
+                                    <p>
+                                        {profile_second_question}
+                                    </p>
+                                    <h4>What’s your favorite blog/site?</h4>
+                                    <p>
+                                        {profile_third_question}
+                                    </p>
+                               </div>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="social-bar">
+                                    {if profile_twitter}
+                                    <a href="https://twitter.com/{profile_twitter}" class="twitter" target="_blank">@{profile_twitter}</a>
+                                    {/if}
+                                    {if profile_linkedin}
+                                    <a href="http://www.linkedin.com/{profile_linkedin}" target="_blank" class="linkedin">/{profile_linkedin}</a>
+                                    {/if}
+                                </div>
+                            </div>
+                        </div>
+                        <!-- @include _team_member.html -->
+                        <!-- @include _team_member.html -->
+                    {if count == 3 OR count == 6 OR count == total_results}
+                    </div>
+                    {/if}
+                    {/exp:channel:entries}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{embed="pages/_footer"}
+
+{embed="pages/_bottom"}

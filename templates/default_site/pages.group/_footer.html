@@ -1,0 +1,41 @@
+<!-- Footer -->
+<footer role="masterfooter">
+	<div class="container">
+		<div class="row">
+			<div class="span4 hidden-phone">
+				<div class="footer-nav">
+					{exp:structure:nav start_from="/" max_depth="1"}
+				</div>
+			</div>
+			<div class="span4">
+				<div class="ribbon">
+					<section class="social">
+						<a href="https://twitter.com/20Milers" 
+						   class="twitter-follow-button" 
+						   data-show-count="false">Follow @20Milers</a>
+						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+					</section>
+					<section class="phone-number">
+						<!-- TODO: Implement "callto:" link that display only on desktop (skype support)-->
+						<a href="tel:{company_phone_number}">{company_phone_number}</a>
+					</section>
+					<section class="email">
+						<a href="mailto:{company_email_address}">{company_email_address}</a>
+					</section>
+					<section class="office-location">
+						<!-- TODO: link to google map -->
+						<a href="{company_address_map_link}" target="_blank">{company_address}</a>
+					</section>
+					<section class="copyright">
+						{copywrite}
+					</section>
+				</div>
+			</div>
+			<div class="span4">
+				<div class="jobs-ticker">
+					{job_ticker}
+				</div>
+			</div>
+		</div>
+	</div>
+</footer><!-- END Footer -->
