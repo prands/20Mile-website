@@ -1751,7 +1751,7 @@ table th[class*="span"],
   *margin-right: .3em;
   line-height: 14px;
   vertical-align: text-top;
-  background-image: url("../img/glyphicons-halflings.png");
+  background-image: url(layout/glyphicons-halflings.png);
   background-position: 14px 14px;
   background-repeat: no-repeat;
   margin-top: 1px; }
@@ -1770,7 +1770,7 @@ table th[class*="span"],
 .dropdown-menu > .active > a > [class*=" icon-"],
 .dropdown-submenu:hover > a > [class^="icon-"],
 .dropdown-submenu:hover > a > [class*=" icon-"] {
-  background-image: url("../img/glyphicons-halflings-white.png"); }
+  background-image: url(layout/glyphicons-halflings-white.png); }
 
 .icon-glass {
   background-position: 0 0; }
@@ -6564,6 +6564,8 @@ svg.team_balloon {
       margin-left: -131px; }
       .journal-detail article footer svg .colored-ring {
         fill: #A5CE39; }
+    .journal-detail article footer .post-label {
+      margin-left: -14px; }
     .journal-detail article footer .bar {
       *zoom: 1;
       margin-left: -44px;
@@ -6588,8 +6590,14 @@ svg.team_balloon {
           line-height: 1.1em; }
       .journal-detail article footer .bar .social {
         display: inline-block;
-        background-color: pink;
+        background-color: #aaa9a5;
         padding: 10px 30px 10px 30px; }
+        .journal-detail article footer .bar .social .tags {
+          color: #fff;
+          margin-right: 20px; }
+          .journal-detail article footer .bar .social .tags a {
+            color: #fff;
+            text-transform: capitalize; }
 
 .contact-form-container {
   background-color: #66615B;
