@@ -114,7 +114,7 @@ $config['strict_urls'] = "n";
 $config['use_category_name'] = "y";
 $config['reserved_category_word'] = "category";
 
-/* File Upload settings
+/* File Upload settings 
 -------------------------------------------------------------------*/
 $config['upload_preferences'] = array(
     1 => array(                                                            
