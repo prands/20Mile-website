@@ -19,6 +19,7 @@
     </div>
 </div>
 {/exp:channel:entries}
+
 <div class="row page-body journal-detail">
     <div class="container">
         <div class="span12">
@@ -43,8 +44,29 @@
                         </blockquote>
 
                         {journal_content:extended}
-
-                        {embed="pages/_journal_detail_footer" author_id="{author_id}" entry_id="{entry_id}"}
+                        
+                        <footer>
+                            {embed="pages/_journal_detail_footer" author_id="{author_id}"}
+                                <div class="social">
+                                    <span class="tags">
+                                    {exp:tag:tags
+                                        entry_id="{entry_id}"
+                                        backspace="8"
+                                        orderby="tag_name"
+                                        sort="desc"
+                                        limit="3"
+                                    }<a href="{path='articles/by_tag'}/tag/{websafe_tag}">{tag}</a> &bull; {/exp:tag:tags}
+                                    </span>
+                                    <span class="cat-group">
+                                        {categories show_group="1"}
+                                            <a href="#" class="category {category_url_title}"></a>
+                                        {/categories}
+                                    </span>
+                                    facebook | twitter
+                                </div>
+                            </div>
+                        </footer>
+                        
                     </article>
                 </div>
             </section>

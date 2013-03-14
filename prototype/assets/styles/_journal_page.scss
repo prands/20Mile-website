@@ -130,6 +130,7 @@
 					float: right;
 					margin-right: 10px;
 					margin-top: 4px;
+					text-transform: capitalize;
 					a {
 						color: #fff;
 					}
@@ -138,34 +139,9 @@
 				.categories {
 					display: inline-block;
 					float: right;
+
 					a {
-						display: block;
-						width: 36px;
-						height: 27px;
 						float: right;
-						margin-left: 3px;
-						background-repeat: no-repeat;
-						background-position: left bottom;
-
-						&.web-design {
-							background-image: url(layout/webdesign-med.png);
-							background-size: 36px 24px;
-						}
-
-						&.online-marketing {
-							background-image: url(layout/onlinemarketing-med.png);
-							background-size: 36px 21px;
-						}
-
-						&.web-development {
-							background-image: url(layout/webdev-med.png);
-							background-size: 36px 20px;
-						}
-
-						&.identity-design {
-							background-image: url(layout/iddesign-med.png);
-							background-size: 36px 27px;
-						}
 					}
 				}
 			}
@@ -179,7 +155,7 @@
 			margin: 0;
 			border-left: 0;
 			margin-left: 444px;
-			margin-top: -214px;
+			margin-top: 50px;
 			h3 {
 				font-family: Adelle;
 				font-style: italic;
@@ -188,5 +164,34 @@
 				line-height: 1.6em;
 			}
 		}
+	}
+}
+
+a.category {
+	display: inline-block;
+	width: 36px;
+	height: 27px;
+	margin-left: 3px;
+	background-repeat: no-repeat;
+	background-position: left bottom;
+
+	&.web-design {
+		background-image: url(layout/webdesign-med.png);
+		background-size: 36px 24px;
+	}
+
+	&.online-marketing {
+		background-image: url(layout/onlinemarketing-med.png);
+		background-size: 36px 21px;
+	}
+
+	&.web-development {
+		background-image: url(layout/webdev-med.png);
+		background-size: 36px 20px;
+	}
+
+	&.identity-design {
+		background-image: url(layout/iddesign-med.png);
+		background-size: 36px 27px;
 	}
 }

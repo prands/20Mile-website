@@ -128,6 +128,12 @@ $config['upload_preferences'] = array(
         'server_path' => $config['server_path'] . '/images/member_photos/', 
         'url'         => $config['site_url'] . '/images/member_photos/',
         'allowed_types' => 'img'
+    ),
+    3 => array(                                                            
+        'name'        => 'Result Images',                          
+        'server_path' => $config['server_path'] . '/images/uploads/result_images/', 
+        'url'         => $config['site_url'] . '/images/uploads/result_images/',
+        'allowed_types' => 'img'
     )
 );
 

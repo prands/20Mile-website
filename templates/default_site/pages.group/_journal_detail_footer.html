@@ -1,51 +1,36 @@
-<footer>
-    {exp:profile:view member_id="{embed:author_id}"}
-    <a href="{page_uri}">
-    <svg version="1.1" class="author-balloon"
-        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve"
-        id="Layer_1" x="0px" y="0px"
-        width="225px" height="113px" 
-        viewBox="0 0 225 113" 
-        enable-background="new 0 0 225 113">
+{exp:profile:view member_id="{embed:author_id}"}
+<a href="{page_uri}">
+<svg version="1.1" class="author-balloon"
+    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve"
+    id="Layer_1" x="0px" y="0px"
+    width="225px" height="113px" 
+    viewBox="0 0 225 113" 
+    enable-background="new 0 0 225 113">
+    <g>
+        <path class="colored-ring" style="fill: #{profile_group_color};"
+            d="M0.169,44.832C0.167,53.757,2.4,62.158,6.329,69.518l92.584,0.026c3.934-7.356,6.171-15.758,6.174-24.683
+            c0.002-7.19-1.446-14.041-4.062-20.282L4.243,24.553C1.623,30.792,0.172,37.642,0.169,44.832z"/>
         <g>
-            <path class="colored-ring" style="fill: #{profile_group_color};"
-                d="M0.169,44.832C0.167,53.757,2.4,62.158,6.329,69.518l92.584,0.026c3.934-7.356,6.171-15.758,6.174-24.683
-                c0.002-7.19-1.446-14.041-4.062-20.282L4.243,24.553C1.623,30.792,0.172,37.642,0.169,44.832z"/>
-            <g>
-                <defs>
-                    <path id="ballon" d="M30.215,89.216C16.397,78.173,7.044,61.937,7.044,45.009c0-24.834,20.131-44.965,44.965-44.965
-                        c24.833,0,44.965,20.131,44.965,44.965c0,16.928-9.352,33.164-23.169,44.207c-6.458,5.16-21.795,23.544-21.795,23.544
-                        S36.671,94.376,30.215,89.216z"/>
-                </defs>
-                <clipPath id="ballon_clip">
-                    <use xlink:href="#ballon"  overflow="visible"/>
-                </clipPath>
-                <g transform="matrix(1 0 0 1 1 0)" clip-path="url(#ballon_clip)">
-                    <image overflow="visible" width="480" height="480" xlink:href="{profile_headshot}"  transform="matrix(0.2498 0 0 0.2498 -9.5 -6)">
-                    </image>
-                </g>
+            <defs>
+                <path id="ballon" d="M30.215,89.216C16.397,78.173,7.044,61.937,7.044,45.009c0-24.834,20.131-44.965,44.965-44.965
+                    c24.833,0,44.965,20.131,44.965,44.965c0,16.928-9.352,33.164-23.169,44.207c-6.458,5.16-21.795,23.544-21.795,23.544
+                    S36.671,94.376,30.215,89.216z"/>
+            </defs>
+            <clipPath id="ballon_clip">
+                <use xlink:href="#ballon"  overflow="visible"/>
+            </clipPath>
+            <g transform="matrix(1 0 0 1 1 0)" clip-path="url(#ballon_clip)">
+                <image overflow="visible" width="480" height="480" xlink:href="{profile_headshot}"  transform="matrix(0.2498 0 0 0.2498 -9.5 -6)">
+                </image>
             </g>
         </g>
-    </svg>
-    </a>
-    <span class="post-label">Posted By</span>
-    <div class="bar">
-         <div class="author-info">
-            <div class="name">{title}</div>
-            <div class="position">{job_title}</div>
-        </div>
-        <div class="social">
-            <span class="tags">
-            {exp:tag:tags
-                entry_id="{embed:entry_id}"
-                backspace="8"
-                orderby="tag_name"
-                sort="desc"
-                limit="3"
-            }<a href="{path='articles/by_tag'}/tag/{websafe_tag}">{tag}</a> &bull; {/exp:tag:tags}
-            </span>
-            facebook | twitter
-        </div>
+    </g>
+</svg>
+</a>
+<span class="post-label">Posted By</span>
+<div class="bar">
+     <div class="author-info">
+        <div class="name">{title}</div>
+        <div class="position">{job_title}</div>
     </div>
-    {/exp:profile:view}
-</footer>
+{/exp:profile:view}
