@@ -130,9 +130,21 @@ $config['upload_preferences'] = array(
         'allowed_types' => 'img'
     ),
     3 => array(                                                            
-        'name'        => 'Result Images',                          
-        'server_path' => $config['server_path'] . '/images/uploads/result_images/', 
-        'url'         => $config['site_url'] . '/images/uploads/result_images/',
+        'name'        => 'Result Desktop Images',                          
+        'server_path' => $config['server_path'] . '/images/uploads/result_images/desktop/', 
+        'url'         => $config['site_url'] . '/images/uploads/result_images/desktop/',
+        'allowed_types' => 'img'
+    ),
+    4 => array(                                                            
+        'name'        => 'Result Tablet Images',                          
+        'server_path' => $config['server_path'] . '/images/uploads/result_images/tablet/', 
+        'url'         => $config['site_url'] . '/images/uploads/result_images/tablet/',
+        'allowed_types' => 'img'
+    ),
+    5 => array(                                                            
+        'name'        => 'Result Mobile Images',                          
+        'server_path' => $config['server_path'] . '/images/uploads/result_images/mobile/', 
+        'url'         => $config['site_url'] . '/images/uploads/result_images/mobile/',
         'allowed_types' => 'img'
     )
 );

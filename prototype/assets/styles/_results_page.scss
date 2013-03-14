@@ -37,6 +37,11 @@
 				.snapshot {
 					padding: 6px;
 				}
+
+				img {
+					width: 31px;
+					height: 54px;
+				}
 			}
 
 			.tablet-screen {
@@ -56,6 +61,11 @@
 
 				.snapshot {
 					padding: 6px;
+				}
+
+				img {
+					width: 90px;
+					height: 112px;
 				}
 			}
 		}
@@ -81,6 +91,11 @@
 				.snapshot {
 					padding: 12px;
 				}
+
+				img {
+					width: 355px;
+					height: 202px;
+				}
 			}
 		}
 	}
@@ -105,25 +120,8 @@
 				float: left;
 			}
 
-			a.case-study-btn {
-				display: inline-block;
-				background-color: #F05921;
-				color: #fff;
-				padding: 12px 24px;
-				font-size: 1.3em;
-				@include animation-name(background-color);
-				@include transition-duration(.1s);
-				@include transition-timing-function(linear);
-
-				&:hover {
-					text-decoration: none;
-					background-color: saturate(#F05921, 15%);
-				}
-			}
-
 			.categories {
 				display: inline-block;
-				background-color: #E0DED9;
 				height: 40px;
 				padding: 4px 10px;
 
@@ -135,7 +133,7 @@
 					background-position: center bottom;
 					margin: 0px 4px;
 
-					&.id-design {
+					&.identity-design {
 						background-size: 54px 40px;
 						background-image: url(layout/iddesign-med.png);
 
@@ -170,6 +168,26 @@
 							background-image: url(layout/onlinemarketing-med@2x.png);
 						}
 					}
+				}
+			}
+
+			a.case-study-btn {
+				display: inline-block;
+				background-color: #F05921;
+				color: #fff;
+				padding: 12px 24px;
+				font-size: 1.3em;
+				@include animation-name(background-color);
+				@include transition-duration(.1s);
+				@include transition-timing-function(linear);
+
+				&:hover {
+					text-decoration: none;
+					background-color: saturate(#F05921, 15%);
+				}
+
+				& + .categories {
+					background-color: #E0DED9;
 				}
 			}
 		}
@@ -270,6 +288,8 @@
 
 						img {
 							margin: 6px;
+							width: 128px;
+							height: 71px;
 						}
 					}
 
@@ -292,6 +312,8 @@
 
 						img {
 							margin: 5px;
+							width: 53px;
+							height: 66px;
 						}
 					}
 
@@ -313,6 +335,8 @@
 
 						img {
 							margin: 4px;
+							width: 27px;
+							height: 46px;
 						}
 					}
 

@@ -6,57 +6,70 @@
 
 {embed="pages/_page_header"}
         <!-- First Row -->
+
+        {exp:channel:entries
+        	channel="results"
+        	disable="category_fields|member_data|pagination|trackbacks"
+        	dynamic="off"
+        	require_entry="yes"
+        }
+
         <div class="row">
             <div class="span12">
                 <article class="result-item">
                      <div class="result-screens">
                         <div class="top">
+                        	{if "{result_tablet_images:total_files}" != "0"}
                             <div class="tablet-screen">
                                 <div class="snapshot">
-                                    <a href="#result-gallery-1" data-toggle="modal">
-                                        <img src="http://placehold.it/90x112" alt="">
+                                    <a href="#{url_title}-modal" data-toggle="modal">
+                                        <img src="{result_tablet_images:url:thumb}" alt="">
                                     </a>
                                 </div>
                             </div>
+                            {/if}
+                            {if "{result_mobile_images:total_files}" != "0"}
                             <div class="mobile-screen">
                                 <div class="snapshot">
-                                    <a href="#result-gallery-1" data-toggle="modal">
-                                        <img src="http://placehold.it/31x54" alt="">
+                                    <a href="#{url_title}-modal" data-toggle="modal">
+                                        <img src="{result_mobile_images:url:thumb}" alt="">
                                     </a>
                                 </div>
                             </div>
+                            {/if}
                         </div>
                         <div class="bottom">
+                        	{if "{result_desktop_images:total_files}" != "0"}
                             <div class="desktop-screen">
                                 <div class="snapshot">
-                                    <a href="#result-gallery-1" data-toggle="modal">
-                                        <img src="http://placehold.it/355x202" alt="">
+                                    <a href="#{url_title}-modal" data-toggle="modal">
+                                        <img src="{result_desktop_images:url:thumb}" alt="">
                                     </a>
                                 </div>
                             </div>
+                            {/if}
+
                         </div>
                     </div>
                     <div class="result-description">
                         <header>
-                            <h1>The Lanes</h1>
+                            <h1>{title}</h1>
                         </header>
-                        <p>
-                            Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam quis risus eget urna mollis ornare vel eu leo.
-                        </p>
+
+                        {result_description}
 
                         <footer>
-                            <a href="<!-- @path case_study.html -->" class="case-study-btn">Read the Case Study</a>
+                            {!-- <a href="<!-- @path case_study.html -->" class="case-study-btn">Read the Case Study</a> --}
                             <div class="categories">
-                                <div class="id-design"></div>
-                                <div class="web-design"></div>
-                                <div class="web-development"></div>
-                                <div class="online-marketing"></div>
+                                {categories show_group="1"}
+                                    <div class="{category_url_title}"></div>
+                                {/categories}
                             </div>
                         </footer>
                     </div>
                     <!-- Modal Gallery -->
                     <div 
-                        id="result-gallery-1" class="modal hide results-modal" tabindex="-1" 
+                        id="{url_title}-modal" class="modal hide results-modal" tabindex="-1" 
                         role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
                     >
                         <div class="modal-header">
@@ -64,36 +77,27 @@
                             &nbsp;
                         </div>
                         <div class="modal-body">
-                            <img src="http://placehold.it/780x646" alt="">
+                            <img src="{result_desktop_images:url:full}" alt="">
                         </div>
                         <div class="modal-footer">
                             <div class="thumb-wrapper">
                                 <div class="scrollable">
                                     <div class="items">
+                                    	{result_desktop_images}
                                         <div class="thumb-screen desktop">
-                                            <img src="http://placehold.it/128x71" data-src="http://placehold.it/780x546" alt="">
+                                            <img src="{url:thumb}" data-src="{url:full}" alt="">
                                         </div>
-                                        <div class="thumb-screen desktop">
-                                            <img src="http://placehold.it/128x71" data-src="http://placehold.it/780x546" alt="">
-                                        </div>
-                                        <div class="thumb-screen desktop">
-                                            <img src="http://placehold.it/128x71" data-src="http://placehold.it/780x546" alt="">
-                                        </div>
+                                        {/result_desktop_images}
+                                        {result_tablet_images}
                                         <div class="thumb-screen tablet">
-                                            <img src="http://placehold.it/53x66" data-src="http://placehold.it/580x646" alt="">
+                                            <img src="{url:thumb}" data-src="{url:full}" alt="">
                                         </div>
-                                        <div class="thumb-screen tablet">
-                                            <img src="http://placehold.it/53x66" data-src="http://placehold.it/580x646" alt="">
-                                        </div>
+                                        {/result_tablet_images}
+                                        {result_mobile_images}
                                         <div class="thumb-screen mobile">
-                                            <img src="http://placehold.it/27x46" data-src="http://placehold.it/380x646" alt="">
+                                            <img src="{url:thumb}" data-src="{url:full}" alt="">
                                         </div>
-                                        <div class="thumb-screen mobile">
-                                            <img src="http://placehold.it/27x46" data-src="http://placehold.it/380x646" alt="">
-                                        </div>
-                                        <div class="thumb-screen mobile">
-                                            <img src="http://placehold.it/27x46" data-src="http://placehold.it/380x646" alt="">
-                                        </div>
+                                        {/result_mobile_images}
                                     </div>
                                 </div>
                                 <a class="prev browse left"></a>
@@ -104,7 +108,7 @@
                 </article>
             </div>
         </div>
-        
+		{/exp:channel:entries}
     </div>
 </div>
 

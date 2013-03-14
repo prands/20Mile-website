@@ -5724,6 +5724,9 @@ div.expertise-widget-image {
             background-image: url(layout/iphone-lg@2x.png); } }
         .result-item .result-screens .top .mobile-screen .snapshot {
           padding: 6px; }
+        .result-item .result-screens .top .mobile-screen img {
+          width: 31px;
+          height: 54px; }
       .result-item .result-screens .top .tablet-screen {
         float: right;
         margin-right: 24px;
@@ -5739,6 +5742,9 @@ div.expertise-widget-image {
             background-image: url(layout/ipad-lg@2x.png); } }
         .result-item .result-screens .top .tablet-screen .snapshot {
           padding: 6px; }
+        .result-item .result-screens .top .tablet-screen img {
+          width: 90px;
+          height: 112px; }
     .result-item .result-screens .bottom {
       width: 379px;
       height: 268px; }
@@ -5755,6 +5761,9 @@ div.expertise-widget-image {
             background-image: url(layout/imac-lg@2x.png); } }
         .result-item .result-screens .bottom .desktop-screen .snapshot {
           padding: 12px; }
+        .result-item .result-screens .bottom .desktop-screen img {
+          width: 355px;
+          height: 202px; }
   .result-item .result-description {
     margin-left: 339px;
     margin-top: 12px;
@@ -5771,6 +5780,41 @@ div.expertise-widget-image {
         clear: both; }
       .result-item .result-description footer * {
         float: left; }
+      .result-item .result-description footer .categories {
+        display: inline-block;
+        height: 40px;
+        padding: 4px 10px; }
+        .result-item .result-description footer .categories div {
+          display: block;
+          width: 54px;
+          height: 40px;
+          background-repeat: no-repeat;
+          background-position: center bottom;
+          margin: 0px 4px; }
+          .result-item .result-description footer .categories div.identity-design {
+            background-size: 54px 40px;
+            background-image: url(layout/iddesign-med.png); }
+            @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+              .result-item .result-description footer .categories div.identity-design {
+                background-image: url(layout/iddesign-med@2x.png); } }
+          .result-item .result-description footer .categories div.web-design {
+            background-size: 54px 36px;
+            background-image: url(layout/webdesign-med.png); }
+            @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+              .result-item .result-description footer .categories div.web-design {
+                background-image: url(layout/webdesign-med@2x.png); } }
+          .result-item .result-description footer .categories div.web-development {
+            background-size: 54px 31px;
+            background-image: url(layout/webdev-med.png); }
+            @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+              .result-item .result-description footer .categories div.web-development {
+                background-image: url(layout/webdev-med@2x.png); } }
+          .result-item .result-description footer .categories div.online-marketing {
+            background-size: 54px 31px;
+            background-image: url(layout/onlinemarketing-med.png); }
+            @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+              .result-item .result-description footer .categories div.online-marketing {
+                background-image: url(layout/onlinemarketing-med@2x.png); } }
       .result-item .result-description footer a.case-study-btn {
         display: inline-block;
         background-color: #F05921;
@@ -5793,42 +5837,8 @@ div.expertise-widget-image {
         .result-item .result-description footer a.case-study-btn:hover {
           text-decoration: none;
           background-color: #ff5212; }
-      .result-item .result-description footer .categories {
-        display: inline-block;
-        background-color: #E0DED9;
-        height: 40px;
-        padding: 4px 10px; }
-        .result-item .result-description footer .categories div {
-          display: block;
-          width: 54px;
-          height: 40px;
-          background-repeat: no-repeat;
-          background-position: center bottom;
-          margin: 0px 4px; }
-          .result-item .result-description footer .categories div.id-design {
-            background-size: 54px 40px;
-            background-image: url(layout/iddesign-med.png); }
-            @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
-              .result-item .result-description footer .categories div.id-design {
-                background-image: url(layout/iddesign-med@2x.png); } }
-          .result-item .result-description footer .categories div.web-design {
-            background-size: 54px 36px;
-            background-image: url(layout/webdesign-med.png); }
-            @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
-              .result-item .result-description footer .categories div.web-design {
-                background-image: url(layout/webdesign-med@2x.png); } }
-          .result-item .result-description footer .categories div.web-development {
-            background-size: 54px 31px;
-            background-image: url(layout/webdev-med.png); }
-            @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
-              .result-item .result-description footer .categories div.web-development {
-                background-image: url(layout/webdev-med@2x.png); } }
-          .result-item .result-description footer .categories div.online-marketing {
-            background-size: 54px 31px;
-            background-image: url(layout/onlinemarketing-med.png); }
-            @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
-              .result-item .result-description footer .categories div.online-marketing {
-                background-image: url(layout/onlinemarketing-med@2x.png); } }
+        .result-item .result-description footer a.case-study-btn + .categories {
+          background-color: #E0DED9; }
   .result-item .thumb-wrapper {
     *zoom: 1;
     margin: 0 auto;
@@ -5907,7 +5917,9 @@ div.expertise-widget-image {
                 .result-item .thumb-wrapper .scrollable .items .thumb-screen.desktop.active {
                   background-image: url(layout/imac-sm-on@2x.png); } }
             .result-item .thumb-wrapper .scrollable .items .thumb-screen.desktop img {
-              margin: 6px; }
+              margin: 6px;
+              width: 128px;
+              height: 71px; }
           .result-item .thumb-wrapper .scrollable .items .thumb-screen.tablet {
             width: 63px;
             height: 83px;
@@ -5922,7 +5934,9 @@ div.expertise-widget-image {
                 .result-item .thumb-wrapper .scrollable .items .thumb-screen.tablet.active {
                   background-image: url(layout/ipad-sm@2x.png); } }
             .result-item .thumb-wrapper .scrollable .items .thumb-screen.tablet img {
-              margin: 5px; }
+              margin: 5px;
+              width: 53px;
+              height: 66px; }
           .result-item .thumb-wrapper .scrollable .items .thumb-screen.mobile {
             width: 35px;
             height: 54px;
@@ -5937,7 +5951,9 @@ div.expertise-widget-image {
                 .result-item .thumb-wrapper .scrollable .items .thumb-screen.mobile.active {
                   background-image: url(layout/iphone-sm@2x.png); } }
             .result-item .thumb-wrapper .scrollable .items .thumb-screen.mobile img {
-              margin: 4px; }
+              margin: 4px;
+              width: 27px;
+              height: 46px; }
           .result-item .thumb-wrapper .scrollable .items .thumb-screen img {
             cursor: pointer; }
 
