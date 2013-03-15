@@ -244,7 +244,7 @@ class Text_freeform_ft extends Freeform_base_ft
 			'field_length' 			=> $field_length,
 			'field_content_type'	=> $field_content_type,
 			'disallow_html_rendering'	=> (
-				ee()->input->get_post('disallow_html_rendering') == 'n' ? 'n' : 'y'
+				$this->EE->input->get_post('disallow_html_rendering') == 'n' ? 'n' : 'y'
 			)
 		);
 	}
@@ -335,7 +335,7 @@ class Text_freeform_ft extends Freeform_base_ft
 			}
 			else if ($content_type == 'email')
 			{
-				ee()->load->helper('email');
+				$this->EE->load->helper('email');
 
 				if ( ! valid_email($data))
 				{

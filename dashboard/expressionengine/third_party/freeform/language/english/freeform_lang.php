@@ -8,7 +8,7 @@
  * @copyright	Copyright (c) 2008-2013, Solspace, Inc.
  * @link		http://solspace.com/docs/freeform
  * @license		http://www.solspace.com/license_agreement
- * @version		4.0.10
+ * @version		4.0.11
  * @filesource	freeform/language/english/freeform_lang.php
  */
 
@@ -352,7 +352,7 @@ $lang = array(
 "Auto Generate Name",
 
 'click_drag_add_remove_sort'=>
-"Click or drag to add and remove fields. Drag the fields in the right column to sort. The fields in the right column will be available in this form on output and they will display in this order when using the {all_form_fields} tag pair.",
+"Click or drag to add and remove fields. Drag the fields in the right column to sort. The fields in the right column will be available in this form on output and they will display in this order when using the {freeform:all_form_fields} tag pair.",
 
 'return_page_field' =>
 "Enter a Return path to send users to once they have submitted this form (ex: 'form/thank_you'):",
@@ -996,6 +996,12 @@ $lang = array(
 'filename' =>
 'File Name',
 
+'download' =>
+'Download',
+
+'front_end_link' =>
+'Front End Link',
+
 'file_location' =>
 'File Location',
 
@@ -1026,8 +1032,8 @@ $lang = array(
 'cannot_find_file' =>
 "Cannot find file",
 
-'upload_directory_name' =>
-"Upload Directory Name",
+'upload_preference_name' =>
+"Upload Preference Name",
 
 // -------------------------------------
 //	MultiSelect
@@ -1683,6 +1689,9 @@ Here are the details:
 //----------------------------------------
 //  Errors
 //----------------------------------------
+
+'missing_post_data' =>
+"Missing required valid POST variable",
 
 'call_to_undefined_method' =>
 "Fatal error: Call to undefined method %class%::%method%()",

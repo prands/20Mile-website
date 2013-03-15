@@ -10,11 +10,10 @@
  * @copyright	Copyright (c) 2008-2013, Solspace, Inc.
  * @link		http://solspace.com/docs/freeform
  * @license		http://www.solspace.com/license_agreement
- * @version		4.0.10
+ * @version		4.0.11
  * @filesource	freeform/config.php
  */
 
-//since we are 1.x/2.x compatible, we only want this to run in 1.x just in case
 if ( ! defined('FREEFORM_VERSION'))
 {
 	require_once 'constants.freeform.php';

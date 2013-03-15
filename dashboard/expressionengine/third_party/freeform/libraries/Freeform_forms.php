@@ -11,9 +11,6 @@
  * @filesource	freeform/libraries/Freeform_forms.php
  */
 
-// EE 2.0's Wizard doesn't set this constant
-if ( ! defined('APP_VER')) define('APP_VER', '2.0');
-
 $__parent_folder = rtrim(realpath(rtrim(dirname(__FILE__), "/") . '/../'), '/') . '/';
 
 if ( ! class_exists('Addon_builder_freeform'))
@@ -44,9 +41,9 @@ class Freeform_forms extends Addon_builder_freeform
 	{
 		parent::__construct('freeform');
 
-		ee()->load->model('freeform_field_model');
-		ee()->load->model('freeform_form_model');
-		ee()->load->library('freeform_fields');
+		$this->EE->load->model('freeform_field_model');
+		$this->EE->load->model('freeform_form_model');
+		$this->EE->load->library('freeform_fields');
 	}
 	//END __construct
 
@@ -74,7 +71,7 @@ class Freeform_forms extends Addon_builder_freeform
 			return FALSE;
 		}
 
-		$form_name = ee()->freeform_form_model->table_name($form_id);
+		$form_name = $this->EE->freeform_form_model->table_name($form_id);
 
 		//custom dupe check?
 		if ( is_string($prevent_on) AND
@@ -85,7 +82,7 @@ class Freeform_forms extends Addon_builder_freeform
 			)
 		)
 		{
-			$prevent_field = ee()->freeform_field_model->get_column_name(
+			$prevent_field = $this->EE->freeform_field_model->get_column_name(
 				$prevent_on,
 				'name'
 			);
@@ -93,9 +90,9 @@ class Freeform_forms extends Addon_builder_freeform
 			//this is sep because we dont want to fall back on
 			//something else if this fails. That would confuse
 			if ($prevent_field AND
-				ee()->db->field_exists($prevent_field, $form_name))
+				$this->EE->db->field_exists($prevent_field, $form_name))
 			{
-				ee()->db->where($prevent_field, $check);
+				$this->EE->db->where($prevent_field, $check);
 			}
 			else
 			{
@@ -104,14 +101,14 @@ class Freeform_forms extends Addon_builder_freeform
 		}
 		//user logged in?
 		else if ($prevent_on !== 'ip_address' AND
-				 ee()->session->userdata['member_id'] != '0' )
+				 $this->EE->session->userdata['member_id'] != '0' )
 		{
-			ee()->db->where('author_id', ee()->session->userdata['member_id']);
+			$this->EE->db->where('author_id', $this->EE->session->userdata['member_id']);
 		}
 		//anonymous users
-		else if ( ee()->input->ip_address() != '0.0.0.0')
+		else if ( $this->EE->input->ip_address() != '0.0.0.0')
 		{
-			ee()->db->where('ip_address', ee()->input->ip_address());
+			$this->EE->db->where('ip_address', $this->EE->input->ip_address());
 		}
 		else
 		{
@@ -120,14 +117,14 @@ class Freeform_forms extends Addon_builder_freeform
 
 		if ($site_id)
 		{
-			ee()->db->where('site_id', ee()->config->item('site_id'));
+			$this->EE->db->where('site_id', $this->EE->config->item('site_id'));
 		}
 
-		ee()->db->where('complete', 'y');
+		$this->EE->db->where('complete', 'y');
 
-		ee()->db->from($form_name);
+		$this->EE->db->from($form_name);
 
-		return ( ee()->db->count_all_results() > 0 );
+		return ( $this->EE->db->count_all_results() > 0 );
 	}
 	//END check_duplicate
 
@@ -162,20 +159,20 @@ class Freeform_forms extends Addon_builder_freeform
 		$field_save_data = array(
 			'author_id'		=> isset($field_input_data['author_id']) ?
 								$field_input_data['author_id'] :
-								ee()->session->userdata('member_id'),
+								$this->EE->session->userdata('member_id'),
 			'ip_address'	=> isset($field_input_data['ip_address']) ?
 								$field_input_data['ip_address'] :
-								ee()->input->ip_address(),
+								$this->EE->input->ip_address(),
 			'entry_date'	=> isset($field_input_data['entry_date']) ?
 								$field_input_data['entry_date'] :
-								ee()->localize->now,
+								$this->EE->localize->now,
 			'edit_date'		=> isset($field_input_data['edit_date']) ?
 								$field_input_data['edit_date'] :
 								0,
 			'status'		=> isset($field_input_data['status']) ?
 									$field_input_data['status'] :
 									$form_data['default_status'],
-			'site_id'		=> ee()->config->item('site_id')
+			'site_id'		=> $this->EE->config->item('site_id')
 		);
 
 		if ((int) $entry_id !== 0)
@@ -186,7 +183,7 @@ class Freeform_forms extends Addon_builder_freeform
 
 				//we don't want to undo the previous data
 				$field_save_data = array(
-					'edit_date' 	=> ee()->localize->now
+					'edit_date' 	=> $this->EE->localize->now
 				);
 
 				if (isset($field_input_data['status']))
@@ -212,10 +209,10 @@ class Freeform_forms extends Addon_builder_freeform
 				continue;
 			}
 
-			$fid = ee()->freeform_form_model->form_field_prefix . $field_id;
+			$fid = $this->EE->freeform_form_model->form_field_prefix . $field_id;
 
 			//get class instance of field
-			$instance =& ee()->freeform_fields->get_field_instance(array(
+			$instance =& $this->EE->freeform_fields->get_field_instance(array(
 				'field_id'			=> $field_id,
 				'form_id'			=> $form_id,
 				'edit'				=> $edit,
@@ -229,20 +226,20 @@ class Freeform_forms extends Addon_builder_freeform
 			);
 		}
 
-		ee()->load->model('freeform_entry_model');
+		$this->EE->load->model('freeform_entry_model');
 
-		ee()->freeform_entry_model->id($form_id);
+		$this->EE->freeform_entry_model->id($form_id);
 
 		if ($edit)
 		{
-			ee()->freeform_entry_model->update(
+			$this->EE->freeform_entry_model->update(
 				$field_save_data,
 				array('entry_id' => $entry_id)
 			);
 		}
 		else
 		{
-			$entry_id = ee()->freeform_entry_model->insert(
+			$entry_id = $this->EE->freeform_entry_model->insert(
 				$field_save_data
 			);
 		}
@@ -259,7 +256,7 @@ class Freeform_forms extends Addon_builder_freeform
 			}
 
 			//get class instance of field
-			$instance =& ee()->freeform_fields->get_field_instance(array(
+			$instance =& $this->EE->freeform_fields->get_field_instance(array(
 				'field_id'			=> $field_id,
 				'form_id'			=> $form_id,
 				'entry_id'			=> $entry_id,
@@ -267,7 +264,7 @@ class Freeform_forms extends Addon_builder_freeform
 				'extra_settings'	=> array('entry_id' => $entry_id)
 			));
 
-			$fid = ee()->freeform_form_model->form_field_prefix . $field_id;
+			$fid = $this->EE->freeform_form_model->form_field_prefix . $field_id;
 
 			$post_save_data = isset($field_input_data[$field_data['field_name']]) ?
 									$field_input_data[$field_data['field_name']] :
@@ -359,7 +356,7 @@ class Freeform_forms extends Addon_builder_freeform
 			return $this->actions()->full_stop(lang('invalid_form_id'));
 		}
 
-		$hash_query = ee()->db->get_where(
+		$hash_query = $this->EE->db->get_where(
 			'freeform_multipage_hashes',
 			array('hash' => $hash)
 		);
@@ -398,8 +395,8 @@ class Freeform_forms extends Addon_builder_freeform
 			$this->remove_hash($hash);
 
 			//remove edit date (this could be optimized elsewhere)
-			ee()->db->update(
-				ee()->freeform_form_model->table_name($form_id),
+			$this->EE->db->update(
+				$this->EE->freeform_form_model->table_name($form_id),
 				array('edit_date' 	=> 0),
 				array('entry_id' 	=> $entry_id)
 			);
@@ -427,7 +424,7 @@ class Freeform_forms extends Addon_builder_freeform
 
 			$num  = $this->is_positive_intlike($pref) ? $pref : 7200;
 
-			$this->cookie_expire = ee()->localize->now + $num;
+			$this->cookie_expire = $this->EE->localize->now + $num;
 		}
 
 		return $this->cookie_expire;
@@ -448,19 +445,19 @@ class Freeform_forms extends Addon_builder_freeform
 	{
 		$hash = md5(uniqid(mt_rand(), TRUE));
 
-		ee()->functions->set_cookie(
+		$this->EE->functions->set_cookie(
 			$this->hash_cookie_name,
 			$hash,
 			$this->hash_expire_time()
 		);
 
-		ee()->db->insert(
+		$this->EE->db->insert(
 			'freeform_multipage_hashes',
 			array(
 				'hash' 			=> $hash,
-				'site_id'		=> ee()->config->item('site_id'),
-				'date' 			=> ee()->localize->now,
-				'ip_address'	=> ee()->input->ip_address(),
+				'site_id'		=> $this->EE->config->item('site_id'),
+				'date' 			=> $this->EE->localize->now,
+				'ip_address'	=> $this->EE->input->ip_address(),
 				'form_id' 		=> $form_id,
 				'entry_id'		=> $this->is_positive_intlike($entry_id) ? $entry_id : 0,
 				'edit'			=> $edit ? 'y' : 'n'
@@ -488,15 +485,15 @@ class Freeform_forms extends Addon_builder_freeform
 			return;
 		}
 
-		ee()->functions->set_cookie(
+		$this->EE->functions->set_cookie(
 			$this->hash_cookie_name,
 			$hash,
 			$this->cookie_expire_time()
 		);
 
-		ee()->db->update(
+		$this->EE->db->update(
 			'freeform_multipage_hashes',
-			array_merge($data, array('date' => ee()->localize->now)),
+			array_merge($data, array('date' => $this->EE->localize->now)),
 			array('hash' => $hash)
 		);
 	}
@@ -519,13 +516,13 @@ class Freeform_forms extends Addon_builder_freeform
 			return;
 		}
 
-		ee()->functions->set_cookie(
+		$this->EE->functions->set_cookie(
 			$this->hash_cookie_name,
 			'',
 			''
 		);
 
-		ee()->db->delete(
+		$this->EE->db->delete(
 			'freeform_multipage_hashes',
 			array('hash' => $hash)
 		);
@@ -560,20 +557,20 @@ class Freeform_forms extends Addon_builder_freeform
 		// --------------------------------------------
 
 		if ( ! in_array(
-			ee()->input->post($this->hash_cookie_name),
+			$this->EE->input->post($this->hash_cookie_name),
 			array('', FALSE),
 			TRUE
 		))
 		{
-			$hash = ee()->input->post($this->hash_cookie_name);
+			$hash = $this->EE->input->post($this->hash_cookie_name);
 		}
 		else if ( ! in_array(
-			ee()->input->cookie($this->hash_cookie_name),
+			$this->EE->input->cookie($this->hash_cookie_name),
 			array('', FALSE),
 			TRUE
 		))
 		{
-			$hash = ee()->input->cookie($this->hash_cookie_name);
+			$hash = $this->EE->input->cookie($this->hash_cookie_name);
 		}
 
 		//make sure its 32 chars only
@@ -584,17 +581,17 @@ class Freeform_forms extends Addon_builder_freeform
 
 		if ($this->is_positive_intlike($entry_id) AND $entry_id > 0)
 		{
-			ee()->db->where('entry_id', $entry_id);
+			$this->EE->db->where('entry_id', $entry_id);
 		}
 
-		ee()->db->where('edit', $edit ? 'y' : 'n');
+		$this->EE->db->where('edit', $edit ? 'y' : 'n');
 
 		//optional to keep queries down
-		if (ee()->db->get_where(
+		if ($this->EE->db->get_where(
 				'freeform_multipage_hashes',
 				array(
 					'hash' 			=> $hash,
-					'ip_address'	=> ee()->input->ip_address(),
+					'ip_address'	=> $this->EE->input->ip_address(),
 					'form_id' 		=> $form_id
 				)
 			)->num_rows() == 0)
@@ -627,7 +624,7 @@ class Freeform_forms extends Addon_builder_freeform
 
 			$num  = $this->is_positive_intlike($pref) ? $pref : 7200;
 
-			$this->hash_expire = ee()->localize->now - $num;
+			$this->hash_expire = $this->EE->localize->now - $num;
 		}
 
 		return $this->hash_expire;
@@ -658,16 +655,16 @@ class Freeform_forms extends Addon_builder_freeform
 		//all sites or just this one?
 		if ( ! $this->data->show_all_sites())
 		{
-			ee()->db->where('site_id', ee()->config->item('site_id'));
+			$this->EE->db->where('site_id', $this->EE->config->item('site_id'));
 		}
 
 		//could be faster if we have a lot
 		if ( ! $delete_entries)
 		{
-			ee()->db->select('hash');
+			$this->EE->db->select('hash');
 		}
 
-		$hashes_q = ee()->db->get_where(
+		$hashes_q = $this->EE->db->get_where(
 			'freeform_multipage_hashes',
 			array('date <' => $this->hash_expire_time())
 		);
@@ -694,16 +691,16 @@ class Freeform_forms extends Addon_builder_freeform
 
 			if ($delete_entries)
 			{
-				ee()->load->model('freeform_form_model');
-				ee()->load->model('freeform_entry_model');
-				ee()->load->library('freeform_fields');
+				$this->EE->load->model('freeform_form_model');
+				$this->EE->load->model('freeform_entry_model');
+				$this->EE->load->library('freeform_fields');
 
 				//delete all entries in each form
 				//but ONLY if they are incomplete
 				foreach ($entry_ids as $form_id => $f_entry_ids)
 				{
-					if ( ! ee()->db->table_exists(
-							ee()->freeform_form_model->table_name($form_id)
+					if ( ! $this->EE->db->table_exists(
+							$this->EE->freeform_form_model->table_name($form_id)
 						)
 					)
 					{
@@ -711,7 +708,7 @@ class Freeform_forms extends Addon_builder_freeform
 					}
 
 					//lets make sure they are not complete
-					$delete_q = ee()->freeform_entry_model
+					$delete_q = $this->EE->freeform_entry_model
 									->id($form_id)
 									->where_in('entry_id', $f_entry_ids)
 									->where('complete', 'n')
@@ -727,13 +724,13 @@ class Freeform_forms extends Addon_builder_freeform
 							$delete_ids[] = $row['entry_id'];
 						}
 
-						ee()->freeform_fields->apply_field_method(array(
+						$this->EE->freeform_fields->apply_field_method(array(
 							'method' 	=> 'delete',
 							'form_id' 	=> $form_id,
 							'entry_id'	=> $delete_ids
 						));
 
-						ee()->freeform_entry_model
+						$this->EE->freeform_entry_model
 							->id($form_id)
 							->where_in('entry_id', $delete_ids)
 							->delete();
@@ -743,8 +740,8 @@ class Freeform_forms extends Addon_builder_freeform
 
 			if ( ! empty($hashes))
 			{
-				ee()->db->where_in('hash', $hashes);
-				ee()->db->delete('freeform_multipage_hashes');
+				$this->EE->db->where_in('hash', $hashes);
+				$this->EE->db->delete('freeform_multipage_hashes');
 			}
 		}
 	}
@@ -765,9 +762,9 @@ class Freeform_forms extends Addon_builder_freeform
 
 	public function get_multipage_form_data ($form_id, $hash)
 	{
-		ee()->load->model('freeform_entry_model');
+		$this->EE->load->model('freeform_entry_model');
 
-		$previous_inputs = ee()->freeform_entry_model->get_multipage(
+		$previous_inputs = $this->EE->freeform_entry_model->get_multipage(
 			$form_id,
 			$hash
 		);
@@ -942,7 +939,7 @@ class Freeform_forms extends Addon_builder_freeform
 
 	public function remove_field_from_form ($form_id, $field_id)
 	{
-		$form_data = ee()->freeform_form_model->get_row($form_id);
+		$form_data = $this->EE->freeform_form_model->get_row($form_id);
 
 		$field_ids = $form_data['field_ids'];
 		$order_ids = $this->actions()->pipe_split($form_data['field_order']);
@@ -983,9 +980,9 @@ class Freeform_forms extends Addon_builder_freeform
 		//	call remove
 		// -------------------------------------
 
-		ee()->load->library('freeform_fields');
+		$this->EE->load->library('freeform_fields');
 
-		$instance =& ee()->freeform_fields->get_field_instance($field_id);
+		$instance =& $this->EE->freeform_fields->get_field_instance($field_id);
 
 		if (is_callable(array($instance, 'remove_from_form')))
 		{
@@ -1021,9 +1018,9 @@ class Freeform_forms extends Addon_builder_freeform
 
 	public function create_form ($data)
 	{
-		ee()->load->model('freeform_form_model');
+		$this->EE->load->model('freeform_form_model');
 
-		$form_id = ee()->freeform_form_model->insert($data);
+		$form_id = $this->EE->freeform_form_model->insert($data);
 
 		//add fields
 		if ( isset($data['field_ids']) AND
@@ -1052,9 +1049,9 @@ class Freeform_forms extends Addon_builder_freeform
 
 	public function update_form ($form_id, $data)
 	{
-		ee()->load->model('freeform_form_model');
+		$this->EE->load->model('freeform_form_model');
 
-		ee()->freeform_form_model->update($data, array('form_id' => $form_id));
+		$this->EE->freeform_form_model->update($data, array('form_id' => $form_id));
 
 		//add fields
 		if ( isset($data['field_ids']))
@@ -1083,33 +1080,33 @@ class Freeform_forms extends Addon_builder_freeform
 			return FALSE;
 		}
 
-		ee()->load->dbforge();
-		ee()->load->model('freeform_form_model');
-		ee()->load->model('freeform_entry_model');
+		$this->EE->load->dbforge();
+		$this->EE->load->model('freeform_form_model');
+		$this->EE->load->model('freeform_entry_model');
 
 		// -------------------------------------
 		//	form data? form data
 		// -------------------------------------
 
-		$table_name 			= ee()->freeform_form_model->table_name($form_id);
+		$table_name 			= $this->EE->freeform_form_model->table_name($form_id);
 		$p_table_name			= (
-			substr($table_name, 0,strlen(ee()->db->dbprefix)
-		) !== ee()->db->dbprefix) ?
-			ee()->db->dbprefix . $table_name :
+			substr($table_name, 0,strlen($this->EE->db->dbprefix)
+		) !== $this->EE->db->dbprefix) ?
+			$this->EE->db->dbprefix . $table_name :
 			$table_name;
 
 		// -------------------------------------
 		//	get a list of current fields so we don't overwrite
 		// -------------------------------------
 
-		$current_fields 		= ee()->freeform_entry_model
+		$current_fields 		= $this->EE->freeform_entry_model
 									  ->id($form_id)
 									  ->list_table_fields(FALSE);
 
 		//we only want the fields aside from the defaults to test against
 		$current_field_names 	= array_diff(
 			array_keys(
-				ee()->freeform_form_model->default_form_table_columns
+				$this->EE->freeform_form_model->default_form_table_columns
 			),
 			$current_fields
 		);
@@ -1120,13 +1117,13 @@ class Freeform_forms extends Addon_builder_freeform
 		foreach ($current_fields as $field_name)
 		{
 			if (preg_match(
-					'/^' . ee()->freeform_form_model->form_field_prefix . '/',
+					'/^' . $this->EE->freeform_form_model->form_field_prefix . '/',
 					$field_name
 				)
 			)
 			{
 				$old_fields[(int) str_replace(
-					ee()->freeform_form_model->form_field_prefix,
+					$this->EE->freeform_form_model->form_field_prefix,
 					'',
 					$field_name
 				)] = $field_name;
@@ -1174,7 +1171,7 @@ class Freeform_forms extends Addon_builder_freeform
 		//removing?
 		if ( ! empty($remove))
 		{
-			ee()->load->library('freeform_fields');
+			$this->EE->load->library('freeform_fields');
 
 			foreach ($remove as $remove_id)
 			{
@@ -1185,7 +1182,7 @@ class Freeform_forms extends Addon_builder_freeform
 					//	call remove before actually removing
 					// -------------------------------------
 
-					$instance =& ee()->freeform_fields->get_field_instance($remove_id);
+					$instance =& $this->EE->freeform_fields->get_field_instance($remove_id);
 
 					if (is_callable(array($instance, 'remove_from_form')))
 					{
@@ -1195,7 +1192,7 @@ class Freeform_forms extends Addon_builder_freeform
 					//because db->list_fields is a stupid POS
 					if ($this->column_exists($old_fields[$remove_id], $p_table_name, FALSE))
 					{
-						ee()->dbforge->drop_column(
+						$this->EE->dbforge->drop_column(
 							$table_name,
 							$old_fields[$remove_id]
 						);
@@ -1214,14 +1211,14 @@ class Freeform_forms extends Addon_builder_freeform
 				//lets not do anything hokey
 				if ( ! array_key_exists($add_id, $old_fields))
 				{
-					$fid = ee()->freeform_form_model->form_field_prefix . $add_id;
-					$add_fields[$fid] = ee()->freeform_form_model->custom_field_info;
+					$fid = $this->EE->freeform_form_model->form_field_prefix . $add_id;
+					$add_fields[$fid] = $this->EE->freeform_form_model->custom_field_info;
 				}
 			}
 
 			if ( ! empty($add_fields))
 			{
-				ee()->dbforge->add_column($table_name, $add_fields);
+				$this->EE->dbforge->add_column($table_name, $add_fields);
 			}
 		}
 	}
@@ -1253,7 +1250,7 @@ class Freeform_forms extends Addon_builder_freeform
 			return FALSE;
 		}
 
-		ee()->load->library('freeform_fields');
+		$this->EE->load->library('freeform_fields');
 
 		if ( ! empty($form_data['field_ids']))
 		{
@@ -1263,7 +1260,7 @@ class Freeform_forms extends Addon_builder_freeform
 
 			foreach ($form_data['field_ids'] as $field_id)
 			{
-				$instance =& ee()->freeform_fields->get_field_instance($field_id);
+				$instance =& $this->EE->freeform_fields->get_field_instance($field_id);
 
 				if (is_callable(array($instance, 'remove_from_form')))
 				{
@@ -1285,7 +1282,7 @@ class Freeform_forms extends Addon_builder_freeform
 		if ($this->is_positive_intlike($form_data['composer_id']))
 		{
 			//only want to remove it if its just used here.
-			$total_used = ee()->freeform_form_model
+			$total_used = $this->EE->freeform_form_model
 							  ->where(
 							  	'composer_id',
 							  	$form_data['composer_id']
@@ -1294,14 +1291,14 @@ class Freeform_forms extends Addon_builder_freeform
 
 			if ($total_used <= 1)
 			{
-				ee()->load->model('freeform_composer_model');
-				ee()->freeform_composer_model
+				$this->EE->load->model('freeform_composer_model');
+				$this->EE->freeform_composer_model
 					->where('composer_id', $form_data['composer_id'])
 					->delete();
 			}
 		}
 
-		return ee()->freeform_form_model->delete($form_id);
+		return $this->EE->freeform_form_model->delete($form_id);
 	}
 	//END delete_form
 
@@ -1351,33 +1348,33 @@ class Freeform_forms extends Addon_builder_freeform
 		//	pre hook
 		// -------------------------------------
 
-		if (ee()->extensions->active_hook('freeform_module_entry_delete') === TRUE)
+		if ($this->EE->extensions->active_hook('freeform_module_entry_delete') === TRUE)
 		{
-			ee()->extensions->universal_call(
+			$this->EE->extensions->universal_call(
 				'freeform_module_entry_delete',
 				$form_id,
 				$entry_ids,
 				$this
 			);
 
-			if (ee()->extensions->end_script === TRUE) return;
+			if ($this->EE->extensions->end_script === TRUE) return;
 		}
 
 		// -------------------------------------
 		//	MUSH!
 		// -------------------------------------
 
-		ee()->load->library('freeform_fields');
+		$this->EE->load->library('freeform_fields');
 
-		ee()->freeform_fields->apply_field_method(array(
+		$this->EE->freeform_fields->apply_field_method(array(
 			'method'	=> 'delete',
 			'form_id'	=> $form_id,
 			'entry_id'	=> $entry_ids
 		));
 
-		ee()->load->model('freeform_entry_model');
+		$this->EE->load->model('freeform_entry_model');
 
-		return ee()->freeform_entry_model
+		return $this->EE->freeform_entry_model
 					->id($form_id)
 					->where_in('entry_id', $entry_ids)
 					->delete();

@@ -11,16 +11,10 @@
  * @filesource	freeform/libraries/Freeform_migration.php
  */
 
-if ( ! defined('APP_VER')) define('APP_VER', '2.0'); // EE 2.0's Wizard doesn't like CONSTANTs
-
-$__parent_folder = rtrim(realpath(rtrim(dirname(__FILE__), "/") . '/../'), '/') . '/';
-
 if ( ! class_exists('Addon_builder_freeform'))
 {
-	require_once $__parent_folder . 'addon_builder/addon_builder.php';
+	require_once realpath(dirname(__FILE__) . '/../addon_builder/addon_builder.php');
 }
-
-unset($__parent_folder);
 
 class Freeform_migration extends Addon_builder_freeform
 {
@@ -44,22 +38,6 @@ class Freeform_migration extends Addon_builder_freeform
 		'exp_freeform_preferences',
 		'exp_freeform_user_email'
 	);
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Constructor
-	 *
-	 * @access	public
-	 * @return	object this
-	 */
-
-	public function __construct()
-	{
-		parent::__construct('freeform');
-	}
-	//END __construct
-
 
 	// --------------------------------------------------------------------
 
@@ -91,25 +69,25 @@ class Freeform_migration extends Addon_builder_freeform
 		//	Capture from legacy
 		// -------------------------------------
 
-		$query	= ee()->db->get('exp_freeform_templates' . $this->table_suffix);
+		$query	= $this->EE->db->get('exp_freeform_templates' . $this->table_suffix);
 
 		// -------------------------------------
 		//	Loop for each template
 		// -------------------------------------
 
-		foreach ( $query->result_array() as $row )
+		foreach ($query->result_array() as $row)
 		{
 			$insert	= array(
-				'site_id'	=> ee()->config->item('site_id')
+				'site_id'	=> $this->EE->config->item('site_id')
 			);
 
 			// -------------------------------------
 			//	Remap data
 			// -------------------------------------
 
-			foreach ( $trans as $key => $val )
+			foreach ($trans as $key => $val)
 			{
-				if ( ! empty( $row[$key] ) )
+				if ( ! empty($row[$key]))
 				{
 					$insert[$val]	= $row[$key];
 				}
@@ -119,7 +97,7 @@ class Freeform_migration extends Addon_builder_freeform
 			//	Reply to
 			// -------------------------------------
 
-			if ( ! empty( $insert['from_email'] ) )
+			if ( ! empty($insert['from_email']))
 			{
 				$insert['reply_to_email']	= $insert['from_email'];
 			}
@@ -128,8 +106,8 @@ class Freeform_migration extends Addon_builder_freeform
 			//	Enable attachments?
 			// -------------------------------------
 
-			if ( ! empty( $insert['template_data'] ) AND
-				strpos( $insert['template_data'], 'attach' ) !== FALSE )
+			if ( ! empty($insert['template_data']) AND
+				strpos($insert['template_data'], 'attach') !== FALSE)
 			{
 				$insert['include_attachments']	= 'y';
 			}
@@ -142,13 +120,13 @@ class Freeform_migration extends Addon_builder_freeform
 				'{all_custom_fields}'	=> '{all_form_fields_string}'
 			);
 
-			$insert	= str_replace( array_keys( $replace ), $replace, $insert );
+			$insert	= str_replace(array_keys($replace), $replace, $insert);
 
 			// -------------------------------------
 			//	Insert to new table
 			// -------------------------------------
 
-			ee()->db->insert(
+			$this->EE->db->insert(
 				'freeform_notification_templates',
 				$insert
 			);
@@ -178,11 +156,19 @@ class Freeform_migration extends Addon_builder_freeform
 		//	Drop
 		// -------------------------------------
 
-		ee()->db->query(
-			'DROP TABLE IF EXISTS ' .
-				implode( $this->table_suffix . ',', $this->tables ) .
-				$this->table_suffix
-		);
+		$this->EE->load->dbforge();
+
+		foreach ($this->tables as $table)
+		{
+			//oh, dbforge, you card
+			$t_name = preg_replace(
+				'/^exp_/ms',
+				'',
+				$table . $this->table_suffix
+			);
+
+			$this->EE->dbforge->drop_table($t_name);
+		}
 
 		// -------------------------------------
 		//	Return
@@ -208,10 +194,10 @@ class Freeform_migration extends Addon_builder_freeform
 		//	make sure prefs legacy is there
 		// -------------------------------------
 
-		$query = ee()->db->query(
+		$query = $this->EE->db->query(
 			"SHOW TABLES
 			 LIKE 'exp_freeform_preferences" .
-			 	ee()->db->escape_str($this->table_suffix) . "'"
+			 	$this->EE->db->escape_str($this->table_suffix) . "'"
 		);
 
 		if ($query->num_rows() == 0)
@@ -233,24 +219,24 @@ class Freeform_migration extends Addon_builder_freeform
 		//	Capture from legacy
 		// -------------------------------------
 
-		$query	= ee()->db->get('exp_freeform_preferences' . $this->table_suffix);
+		$query	= $this->EE->db->get('exp_freeform_preferences' . $this->table_suffix);
 
 		// -------------------------------------
 		//	Push into new prefs table
 		// -------------------------------------
 
-		foreach ( $query->result_array() as $row )
+		foreach ($query->result_array() as $row)
 		{
-			if ( isset( $prefs[ $row['preference_name'] ] ) === TRUE AND
-				$prefs[ $row['preference_name'] ] != $row['preference_value'] )
+			if (isset($prefs[$row['preference_name']]) === TRUE AND
+				$prefs[$row['preference_name']] != $row['preference_value'])
 			{
 
-				ee()->db->insert(
+				$this->EE->db->insert(
 					'freeform_preferences',
 					array(
 						'preference_name'	=> $row['preference_name'],
 						'preference_value'	=> $row['preference_value'],
-						'site_id'			=> ee()->config->item('site_id')
+						'site_id'			=> $this->EE->config->item('site_id')
 					)
 				);
 			}
@@ -276,22 +262,42 @@ class Freeform_migration extends Addon_builder_freeform
 
 	public function upgrade_rename_tables()
 	{
+		$this->EE->load->dbforge();
+
 		// -------------------------------------
 		//	Loop and rename
 		// -------------------------------------
 
-		foreach ( $this->tables as $name )
+		foreach ($this->tables as $name)
 		{
-			if ( ee()->db->table_exists($name) === FALSE AND
-				ee()->db->table_exists($name.$this->table_suffix) === TRUE )
+			// -------------------------------------
+			//	dbforge doesn't check for prefixes.
+			//	FUN! :D
+			// -------------------------------------
+
+			$np_name = preg_replace(
+				'/^exp_/ms',
+				'',
+				$name
+			);
+
+			$np_legacy = preg_replace(
+				'/^exp_/ms',
+				'',
+				$name.$this->table_suffix
+			);
+
+			//all legit? shoo shoo
+			if ($this->EE->db->table_exists($name) === FALSE AND
+				$this->EE->db->table_exists($name.$this->table_suffix) === TRUE)
 			{
 				continue;
 			}
 			//do both the old and new tables exist?
 			//whoops...
 			else if (
-				ee()->db->table_exists($name) === TRUE AND
-				ee()->db->table_exists($name.$this->table_suffix) === TRUE
+				$this->EE->db->table_exists($name) === TRUE AND
+				$this->EE->db->table_exists($name.$this->table_suffix) === TRUE
 			)
 			{
 				//irrelevant table?
@@ -310,45 +316,48 @@ class Freeform_migration extends Addon_builder_freeform
 				//so update can add the new table with proper schema
 				else
 				{
-					$table_count	= ee()->db->count_all($name);
-					$l_table_count	= ee()->db->count_all($name.$this->table_suffix);
+					$table_count	= $this->EE->db->count_all($name);
+					$l_table_count	= $this->EE->db->count_all($name.$this->table_suffix);
 
 					//if the legacy table is empty and the old one isn't
 					//then we need to keep the one with entries
 					if ($table_count > 0 AND $l_table_count == 0)
 					{
-						ee()->db->query('DROP TABLE IF EXISTS ' . $name.$this->table_suffix);
+						$this->EE->dbforge->drop_table($np_legacy);
 						//no continue here because we now need the rename_table
 						//to run
 					}
 					//drop bad table and move on
 					else
 					{
-						ee()->db->query('DROP TABLE IF EXISTS ' . $name);
+						$this->EE->dbforge->drop_table($np_name);
 						continue;
 					}
 
 				}
 			}
 
-			ee()->db->query(
-				'ALTER TABLE ' . $name .
-				' RENAME TO ' . $name . $this->table_suffix
-			);
+			$this->EE->dbforge->rename_table($np_name, $np_legacy);
 		}
 
 		// -------------------------------------
 		//	Add tracking column
 		// -------------------------------------
 
-		if ( $this->column_exists(
+		if ($this->column_exists(
 				'new_entry_id',
 				'exp_freeform_entries' . $this->table_suffix
-			) === FALSE )
+			) === FALSE)
 		{
-			ee()->db->query(
-				'ALTER TABLE `exp_freeform_entries' . $this->table_suffix . '`
-				 ADD `new_entry_id` INT(10) UNSIGNED NOT NULL default 0'
+			$this->EE->dbforge->add_column(
+				'freeform_entries' . $this->table_suffix,
+				array('new_entry_id' => array(
+					'type'			=> 'INT',
+					'constraint'	=> 10,
+					'unsigned'		=> TRUE,
+					'null'			=> FALSE,
+					'default'		=> 0
+				))
 			);
 		}
 
@@ -356,7 +365,7 @@ class Freeform_migration extends Addon_builder_freeform
 		//	Rename any empty form_name column to the default of freeform_form
 		// -------------------------------------
 
-		ee()->db->update(
+		$this->EE->db->update(
 			'exp_freeform_entries' . $this->table_suffix,
 			array('form_name'	=> 'freeform_form'),
 			array('form_name'	=> '')
@@ -366,48 +375,43 @@ class Freeform_migration extends Addon_builder_freeform
 		//	Add form label column
 		// -------------------------------------
 
-		if ( $this->column_exists(
+		if ($this->column_exists(
 				'form_label',
 				'exp_freeform_entries' . $this->table_suffix
-			) === FALSE )
+			) === FALSE)
 		{
-			ee()->db->query(
-				'ALTER TABLE `exp_freeform_entries' . $this->table_suffix . '`
-				ADD `form_label` VARCHAR(120) NOT NULL AFTER form_name'
+
+			$this->EE->dbforge->add_column(
+				'freeform_entries' . $this->table_suffix,
+				array('form_label' => array(
+					'type'			=> 'TEXT'
+				)),
+				'form_name'
 			);
 		}
-
-		// -------------------------------------
-		//	Copy form names over
-		// -------------------------------------
-
-		ee()->db->query(
-			"UPDATE	exp_freeform_entries" . $this->table_suffix . "
-			 SET	form_label = form_name"
-		);
 
 		// -------------------------------------
 		//	Get form names
 		// -------------------------------------
 
-		$query = ee()->db->query(
-			"SELECT		form_name
-			 FROM		exp_freeform_entries" . $this->table_suffix . "
-			 GROUP BY	form_name"
-		);
+		$query = $this->EE->db
+					->select('form_name')
+					->group_by('form_name')
+					->get("exp_freeform_entries" . $this->table_suffix);
 
-		ee()->load->helper('url');
+		$this->EE->load->helper('url');
 
-		foreach ( $query->result_array() as $row )
+		foreach ($query->result_array() as $row)
 		{
-			ee()->db->update(
+			$this->EE->db->update(
 				"exp_freeform_entries" . $this->table_suffix,
 				array(
 					'form_name' => url_title(
 						$row['form_name'],
-						ee()->config->item('word_separator'),
+						$this->EE->config->item('word_separator'),
 						TRUE
-					)
+					),
+					'form_label' => $row['form_name']
 				),
 				array(
 					'form_name' => $row['form_name']
@@ -433,24 +437,24 @@ class Freeform_migration extends Addon_builder_freeform
 	 * @return boolean
 	 */
 
-	public function assign_fields_to_form ($form_id = '', $field_ids = array() )
+	public function assign_fields_to_form ($form_id = '', $field_ids = array())
 	{
 		// -------------------------------------
 		//	Validate
 		// -------------------------------------
 
-		if ( empty( $form_id ) OR empty( $field_ids ) ) return FALSE;
+		if (empty($form_id) OR empty($field_ids)) return FALSE;
 
 		// -------------------------------------
 		//	Go to Greg
 		// -------------------------------------
 
-		ee()->load->library('freeform_forms');
+		$this->EE->load->library('freeform_forms');
 
-		$data['field_ids']		= implode( '|', $field_ids );
+		$data['field_ids']		= implode('|', $field_ids);
 		$data['field_order']	= $data['field_ids'];
 
-		ee()->freeform_forms->update_form( $form_id, $data );
+		$this->EE->freeform_forms->update_form($form_id, $data);
 
 		// -------------------------------------
 		//	Return
@@ -470,14 +474,14 @@ class Freeform_migration extends Addon_builder_freeform
 	 * @return integer
 	 */
 
-	public function create_field ($form_id = '', $field_name = '', $field_attr = array() )
+	public function create_field ($form_id = '', $field_name = '', $field_attr = array())
 	{
 		// -------------------------------------
 		//	Validate
 		// -------------------------------------
 
-		if ( empty( $form_id ) OR
-			empty( $field_name ) )
+		if (empty($form_id) OR
+			empty($field_name))
 		{
 			$this->errors['missing_data_for_field_creation'] = lang(
 				'missing_data_for_field_creation'
@@ -490,7 +494,7 @@ class Freeform_migration extends Addon_builder_freeform
 		//	Workaround name?
 		// -------------------------------------
 
-		if ( in_array( $field_name, array( 'status' ) ) )
+		if (in_array($field_name, array('status')))
 		{
 			$field_name	= $field_name . $this->table_suffix;
 		}
@@ -499,7 +503,7 @@ class Freeform_migration extends Addon_builder_freeform
 		//	Cached?
 		// -------------------------------------
 
-		if ( ! empty( $this->cache['create_field'][$form_id.$field_name] ) )
+		if ( ! empty($this->cache['create_field'][$form_id.$field_name]))
 		{
 			return $this->cache['create_field'][$form_id.$field_name];
 		}
@@ -508,7 +512,7 @@ class Freeform_migration extends Addon_builder_freeform
 		//	Valid name?
 		// -------------------------------------
 
-		if ( in_array($field_name, $this->data->prohibited_names ) )
+		if (in_array($field_name, $this->data->prohibited_names))
 		{
 			$this->errors['field_name'] = str_replace(
 				'%name%',
@@ -523,15 +527,16 @@ class Freeform_migration extends Addon_builder_freeform
 		//	Exists?
 		// -------------------------------------
 
-		ee()->load->model('freeform_field_model');
-		ee()->freeform_field_model->clear_cache();
-		//ee()->freeform_field_model->cache_enabled = FALSE;
+		$this->EE->load->model('freeform_field_model');
+		$this->EE->freeform_field_model->clear_cache();
 
-		$row =	ee()->freeform_field_model
+		$row =	$this->EE->freeform_field_model
 					->where('field_name', $field_name)
 					->get_row();
 
-		if ( $row AND isset( $row['field_id'] ) )
+
+		//field exists? Move on.
+		if ($row AND isset($row['field_id']))
 		{
 			$this->cache['create_field'][$form_id.$field_name] = $row['field_id'];
 			return $this->cache['create_field'][$form_id.$field_name];
@@ -541,7 +546,7 @@ class Freeform_migration extends Addon_builder_freeform
 		//	field label
 		// -------------------------------------
 
-		$field_label = ( empty( $field_attr['field_label'] ) ) ?
+		$field_label = (empty($field_attr['field_label'])) ?
 							$field_name :
 							$field_attr['field_label'];
 
@@ -549,17 +554,33 @@ class Freeform_migration extends Addon_builder_freeform
 		//	field type
 		// -------------------------------------
 
-		$field_type = ( $field_attr['field_type'] != 'textarea' ) ? 'text': 'textarea';
+		$field_type = ($field_attr['field_type'] != 'textarea') ? 'text': 'textarea';
+
+		// -------------------------------------
+		//	default text size
+		// -------------------------------------
+
+		//grab old post just in case
+		$old_post = $_POST;
+
+		if ($field_type == 'text' AND
+			isset($field_attr['field_length']) AND
+			$this->is_positive_intlike($field_attr['field_length']))
+		{
+			$_POST = array(
+				'field_length' => $field_attr['field_length']
+			);
+		}
 
 		// -------------------------------------
 		//	load and save field
 		// -------------------------------------
 
-		ee()->load->library('freeform_fields');
+		$this->EE->load->library('freeform_fields');
 
-		$available_fieldtypes = ee()->freeform_fields->get_available_fieldtypes();
+		$available_fieldtypes = $this->EE->freeform_fields->get_available_fieldtypes();
 
-		$field_instance =& ee()->freeform_fields->get_fieldtype_instance($field_type);
+		$field_instance =& $this->EE->freeform_fields->get_fieldtype_instance($field_type);
 
 		// -------------------------------------
 		//	field type
@@ -588,20 +609,23 @@ class Freeform_migration extends Addon_builder_freeform
 			'settings'			=> json_encode($field_instance->save_settings())
 		);
 
-		ee()->load->model('freeform_field_model');
+		$this->EE->load->model('freeform_field_model');
 
-		$field_id = ee()->freeform_field_model->insert(
+		$field_id = $this->EE->freeform_field_model->insert(
 			array_merge(
 				$data,
 				array(
-					'author_id'		=> ee()->session->userdata('member_id'),
-					'entry_date'	=> ee()->localize->now,
-					'site_id' 		=> ee()->config->item('site_id')
+					'author_id'		=> $this->EE->session->userdata('member_id'),
+					'entry_date'	=> $this->EE->localize->now,
+					'site_id' 		=> $this->EE->config->item('site_id')
 				)
 			)
 		);
 
 		$field_instance->field_id = $field_id;
+
+		//reset old post if changed
+		$_POST = $old_post;
 
 		$field_instance->post_save_settings();
 
@@ -623,15 +647,18 @@ class Freeform_migration extends Addon_builder_freeform
 	 * @return integer
 	 */
 
-	public function create_upload_field ($form_id = '', $field_name = '', $field_attr = array() )
+	public function create_upload_field ($form_id = '', $field_name = '', $field_attr = array())
 	{
 		// -------------------------------------
 		//	Validate
 		// -------------------------------------
 
-		if ( empty( $form_id ) OR empty( $field_name ) )
+		if (empty($form_id) OR empty($field_name))
 		{
-			$this->errors['missing_data_for_field_creation']	= lang('missing_data_for_field_creation');
+			$this->errors['missing_data_for_field_creation'] = lang(
+				'missing_data_for_field_creation'
+			);
+
 			return FALSE;
 		}
 
@@ -647,15 +674,19 @@ class Freeform_migration extends Addon_builder_freeform
 		//	field name
 		// -------------------------------------
 
-		ee()->load->helper('url');
+		$this->EE->load->helper('url');
 
-		$field_name	= url_title( $field_name, ee()->config->item('word_separator'), TRUE );
+		$field_name	= url_title(
+			$field_name,
+			$this->EE->config->item('word_separator'),
+			TRUE
+		);
 
 		// -------------------------------------
 		//	Cached?
 		// -------------------------------------
 
-		if ( ! empty( $this->cache['create_upload_field'][$form_id.$field_name] ) )
+		if ( ! empty($this->cache['create_upload_field'][$form_id.$field_name]))
 		{
 			return $this->cache['create_upload_field'][$form_id.$field_name];
 		}
@@ -664,7 +695,7 @@ class Freeform_migration extends Addon_builder_freeform
 		//	Valid name?
 		// -------------------------------------
 
-		if ( in_array($field_name, $this->data->prohibited_names ) )
+		if (in_array($field_name, $this->data->prohibited_names))
 		{
 			$this->errors['field_name'] = str_replace(
 				'%name%',
@@ -679,13 +710,20 @@ class Freeform_migration extends Addon_builder_freeform
 		//	Exists?
 		// -------------------------------------
 
-		ee()->load->model('freeform_field_model');
+		$this->EE->load->model('freeform_field_model');
+		$this->EE->freeform_field_model->clear_cache();
 
-		$row = ee()->freeform_field_model->get_row(array('field_name' => $field_name));
+		$row = $this->EE->freeform_field_model->get_row(array(
+			'field_name' => $field_name
+		));
 
-		if ( $row AND isset( $row['field_id'] ) )
+
+		//do we already have an upload field?
+		if ($row AND isset($row['field_id']))
 		{
-			return $this->cache['create_field'][$form_id.$field_name] = $row['field_id'];
+			$this->cache['create_field'][$form_id.$field_name] = $row['field_id'];
+
+			return $row['field_id'];
 		}
 
 		// -------------------------------------
@@ -694,10 +732,10 @@ class Freeform_migration extends Addon_builder_freeform
 
 		$field_type = 'file_upload';
 
-		ee()->load->library('freeform_fields');
+		$this->EE->load->library('freeform_fields');
 
-		$available_fieldtypes = ee()->freeform_fields->get_available_fieldtypes();
-		$field_instance =& ee()->freeform_fields->get_fieldtype_instance($field_type);
+		$available_fieldtypes = $this->EE->freeform_fields->get_available_fieldtypes();
+		$field_instance =& $this->EE->freeform_fields->get_fieldtype_instance($field_type);
 
 		// -------------------------------------
 		//	field type
@@ -713,11 +751,11 @@ class Freeform_migration extends Addon_builder_freeform
 		//	default settings
 		// -------------------------------------
 
-		foreach ( $field_instance->default_settings as $key => $val )
+		foreach ($field_instance->default_settings as $key => $val)
 		{
 			$settings[$key]	= $val;
 
-			if ( ! empty( $field_attr[$key] ) )
+			if ( ! empty($field_attr[$key]))
 			{
 				$settings[$key]	= $field_attr[$key];
 			}
@@ -727,13 +765,13 @@ class Freeform_migration extends Addon_builder_freeform
 		//	allowed file types forced?
 		// -------------------------------------
 
-		if ( ! empty( $field_attr['allowed_types'] ) )
+		if ( ! empty($field_attr['allowed_types']))
 		{
-			if ( $field_attr['allowed_types'] == 'all' )
+			if ($field_attr['allowed_types'] == 'all')
 			{
 				$settings['allowed_file_types']	= '*';
 			}
-			elseif ( $field_attr['allowed_types'] != 'img' )
+			elseif ($field_attr['allowed_types'] != 'img')
 			{
 				$settings['allowed_file_types']	= '';
 			}
@@ -743,14 +781,14 @@ class Freeform_migration extends Addon_builder_freeform
 		//	allowed upload count
 		// -------------------------------------
 
-		if ( ! empty( $field_attr['allowed_upload_count'] ) )
+		if ( ! empty($field_attr['allowed_upload_count']))
 		{
 			$settings['allowed_upload_count']	= $field_attr['allowed_upload_count'];
 
 			// You know. Maybe a spammer went to town on this person's
 			// site and dumped a bunch of attachments in.
 			// I think we protected against that in FF3, but whatevs
-			if ( $settings['allowed_upload_count'] > $field_instance->max_files )
+			if ($settings['allowed_upload_count'] > $field_instance->max_files)
 			{
 				$settings['allowed_upload_count']	= 3;
 			}
@@ -760,7 +798,7 @@ class Freeform_migration extends Addon_builder_freeform
 		//	file upload location
 		// -------------------------------------
 
-		if ( ! empty( $field_attr['pref_id'] ) )
+		if ( ! empty($field_attr['pref_id']))
 		{
 			$settings['file_upload_location']	= $field_attr['pref_id'];
 		}
@@ -774,9 +812,11 @@ class Freeform_migration extends Addon_builder_freeform
 			$_POST[$key] = $value;
 		}
 
-		if ( ( $errors = $field_instance->validate_settings() ) !== TRUE )
+		$errors = $field_instance->validate_settings();
+
+		if ($errors !== TRUE)
 		{
-			$this->errors	= array_merge( $this->errors, $errors );
+			$this->errors	= array_merge($this->errors, $errors);
 			return FALSE;
 		}
 
@@ -796,15 +836,15 @@ class Freeform_migration extends Addon_builder_freeform
 			'settings'			=> json_encode($field_instance->save_settings())
 		);
 
-		ee()->load->model('freeform_field_model');
+		$this->EE->load->model('freeform_field_model');
 
-		$field_id = ee()->freeform_field_model->insert(
+		$field_id = $this->EE->freeform_field_model->insert(
 			array_merge(
 				$data,
 				array(
-					'author_id'		=> ee()->session->userdata('member_id'),
-					'entry_date'	=> ee()->localize->now,
-					'site_id' 		=> ee()->config->item('site_id')
+					'author_id'		=> $this->EE->session->userdata('member_id'),
+					'entry_date'	=> $this->EE->localize->now,
+					'site_id' 		=> $this->EE->config->item('site_id')
 				)
 			)
 		);
@@ -825,21 +865,22 @@ class Freeform_migration extends Addon_builder_freeform
 	// --------------------------------------------------------------------
 
 	/**
-	 * Create form
+	 * Create Form
 	 *
-	 * @access public
-	 * @return array
+	 * @access	public
+	 * @param	string $form_name	name of form to create
+	 * @return	mixed				boolean false if errors, array if not
 	 */
 
-	public function create_form ( $form_name = '' )
+	public function create_form ($form_name = '')
 	{
 		// -------------------------------------
 		//	Migrated / Unmigrated
 		// -------------------------------------
 
-		if ( empty( $form_name ) )
+		if (empty($form_name))
 		{
-			$this->errors['empty_form_name']	= lang('empty_form_name');
+			$this->errors['empty_form_name'] = lang('empty_form_name');
 			return FALSE;
 		}
 
@@ -847,7 +888,7 @@ class Freeform_migration extends Addon_builder_freeform
 		//	Cached?
 		// -------------------------------------
 
-		if ( ! empty( $this->cache['create_form'][$form_name] ) )
+		if ( ! empty($this->cache['create_form'][$form_name]))
 		{
 			return $this->cache['forms'][$form_name];
 		}
@@ -857,13 +898,13 @@ class Freeform_migration extends Addon_builder_freeform
 
 		$out['form_label']	= $form_name;
 
-		$query	= ee()->db->query(
-			"SELECT form_label
-			 FROM exp_freeform_entries" . $this->table_suffix . "
-			 WHERE form_name = '" . ee()->db->escape_str( $form_name ) . "'" );
+		$query = $this->EE->db
+						->select('form_label')
+						->where('form_name', $form_name)
+						->get("exp_freeform_entries" . $this->table_suffix);
 
 
-		if ( $query->num_rows() > 0 )
+		if ($query->num_rows() > 0)
 		{
 			$out['form_label']	= $query->row('form_label');
 		}
@@ -872,14 +913,19 @@ class Freeform_migration extends Addon_builder_freeform
 		//	Clean name
 		// -------------------------------------
 
-		ee()->load->helper('url');
-		$form_name		= url_title( $form_name, ee()->config->item('word_separator'), TRUE );
+		$this->EE->load->helper('url');
+
+		$form_name = url_title(
+			$form_name,
+			$this->EE->config->item('word_separator'),
+			TRUE
+		);
 
 		// -------------------------------------
 		//	Prohibited name?
 		// -------------------------------------
 
-		if ( in_array($form_name, $this->data->prohibited_names ) )
+		if (in_array($form_name, $this->data->prohibited_names))
 		{
 			$this->errors['form_name'] = str_replace(
 				'%name%',
@@ -894,13 +940,13 @@ class Freeform_migration extends Addon_builder_freeform
 		//	Collision?
 		// -------------------------------------
 
-		$query	= ee()->db->query(
-			"SELECT form_id, form_name, form_label
-			 FROM exp_freeform_forms
-			 WHERE site_id = " . ee()->db->escape_str( ee()->config->item('site_id') ) . "
-			 AND form_name = '" . ee()->db->escape_str( $form_name ) . "'" );
+		$query = $this->EE->db
+						->select('form_id, form_name, form_label')
+						->where('site_id', $this->EE->config->item('site_id'))
+						->where('form_name', $form_name)
+						->get('freeform_forms');
 
-		if ( $query->num_rows() > 0 )
+		if ($query->num_rows() > 0)
 		{
 			$out['form_name']	= $query->row('form_name');
 			$out['form_label']	= $query->row('form_label');
@@ -913,34 +959,40 @@ class Freeform_migration extends Addon_builder_freeform
 		//	Load
 		// -------------------------------------
 
-		ee()->load->model('freeform_form_model');
-		ee()->load->library('freeform_forms');
+		$this->EE->load->model('freeform_form_model');
+		$this->EE->load->library('freeform_forms');
+
+		// -------------------------------------
+		//	former parameter only fields
+		// -------------------------------------
+		//	The legacy FF did not save these values
+		//	in the DB.
+		// -------------------------------------
+		//	These values may be available in templates,
+		//	but since it could be different from
+		//	template to template and the same
+		//	collections used for different forms,
+		//	it's rather impossible to guess
+		//	correctly.
+		// -------------------------------------
 
 		// -------------------------------------
 		//	Admin notification email
 		// -------------------------------------
 
-		//	The legacy FF did not save this value in the DB. But this value may be available in templates. We could search templates to determine that.
-
 		// -------------------------------------
 		//	User email field
 		// -------------------------------------
 
-		//	The legacy FF did not save this value in the DB. But this value may be available in templates. We could search templates to determine that.
-
 		// -------------------------------------
 		//	Notify admin
 		// -------------------------------------
-
-		//	The legacy FF did not save this value in the DB. But this value may be available in templates. We could search templates to determine that.
 
 		$notify_admin	= 'n';
 
 		// -------------------------------------
 		//	Notify user
 		// -------------------------------------
-
-		//	The legacy FF did not save this value in the DB. But this value may be available in templates. We could search templates to determine that.
 
 		$notify_user	= 'n';
 
@@ -952,12 +1004,12 @@ class Freeform_migration extends Addon_builder_freeform
 			'form_name'					=> $form_name,
 			'form_label'				=> $out['form_label'],
 			'default_status'			=> 'open',
-			'author_id' 				=> ee()->session->userdata('member_id'),
+			'author_id' 				=> $this->EE->session->userdata('member_id'),
 			'notify_admin'				=> $notify_admin,
 			'notify_user'				=> $notify_user
 		);
 
-		$form_id = ee()->freeform_forms->create_form($data);
+		$form_id = $this->EE->freeform_forms->create_form($data);
 
 		// -------------------------------------
 		//	Return
@@ -968,71 +1020,98 @@ class Freeform_migration extends Addon_builder_freeform
 
 		return $this->cache['create_form'][$form_name] = $out;
 	}
+	//END create form
 
-	//	End create form
 
 	// --------------------------------------------------------------------
 
 	/**
 	 * Get attachment profiles
 	 *
-	 * @access public
-	 * @return array
+	 * @access	public
+	 * @param	string	$collection		limit to collection
+	 * @return	mixed					array of results of boolean false
 	 */
 
-	public function get_attachment_profiles( $collection = '' )
+	public function get_attachment_profiles($collection = '')
 	{
 		// -------------------------------------
 		//	Cached?
 		// -------------------------------------
 
-		if ( isset( $this->cache['get_attachment_profiles'][$collection] ) ) return $this->cache['get_attachment_profiles'][$collection];
+		if (isset($this->cache['get_attachment_profiles'][$collection]))
+		{
+			return $this->cache['get_attachment_profiles'][$collection];
+		}
 
 		// -------------------------------------
 		//	Query
 		// -------------------------------------
 
-		$query	= ee()->db->query(
-			"SELECT a.pref_id, p.name, p.allowed_types
-			FROM exp_freeform_attachments" . $this->table_suffix . " a
-			LEFT JOIN exp_upload_prefs p ON p.id = a.pref_id
-			WHERE p.site_id = " . ee()->db->escape_str( ee()->config->item('site_id') ) . "
-			GROUP BY p.id"
-		);
+		$query = $this->EE->db
+					->select('a.pref_id, p.name, p.allowed_types')
+					->from("exp_freeform_attachments" . $this->table_suffix . ' a')
+					->join('exp_upload_prefs p', 'p.id = a.pref_id', 'left')
+					->where('p.site_id', $this->EE->config->item('site_id'))
+					->group_by('p.id')
+					->get();
 
-		if ( $query->num_rows() == 0 ) return $this->cache['get_attachment_profiles'][$collection] = FALSE;
+		if ($query->num_rows() == 0)
+		{
+			$this->cache['get_attachment_profiles'][$collection] = FALSE;
+			return FALSE;
+		}
 
 		// -------------------------------------
 		//	Get allowed_upload_count
 		// -------------------------------------
-		// I thought a simple DB query could do this, but I gave up
+
+		$cquery = $this->EE->db
+						->select('entry_id, pref_id')
+						->get("exp_freeform_attachments" . $this->table_suffix);
+
+		//1!
+		$temp = array();
+
+		//2! 2 arrays, ah ah ah ah! }:[
+		$counts = array();
+
+		// -------------------------------------
+		//	build a count for each pref->entry_id
+		//	so we can get an upload count for
+		//	each entry
 		// -------------------------------------
 
-		$cquery	= ee()->db->query(
-			"SELECT entry_id, pref_id
-			FROM exp_freeform_attachments" . $this->table_suffix
-		);
-
-		foreach ( $cquery->result_array() as $row )
+		foreach ($cquery->result_array() as $row)
 		{
-			$temp[ $row['pref_id'] ][ $row['entry_id'] ][]	= 1;
+			$temp[$row['pref_id']][$row['entry_id']][]	= 1;
 		}
 
-		foreach ( $temp as $pref_id => $entries )
+		foreach ($temp as $pref_id => $entries)
 		{
-			rsort( $entries );
+			//dump entry_ids and sort on highest count
+			//so we can assume a highest count on an entry was
+			//the previous limit
+			rsort($entries);
 
-			$counts[ $pref_id ]	= ( isset( $counts[ $pref_id ] ) AND count( $entries[0] ) > $counts[ $pref_id ] ) ? count( $entries[0] ): count( $entries[0] );
-		}
-
-		foreach ( $query->result_array() as $row )
-		{
-			$out[ $row['pref_id'] ]	= $row;
-			$out[ $row['pref_id'] ]['allowed_upload_count']	= 1;
-
-			if ( ! empty( $counts[ $row['pref_id'] ] ) )
+			//if not set or we don't already have a
+			//higher count, set pref ID
+			if ( ! isset($counts[$pref_id]) OR
+				(count($entries[0]) > $counts[$pref_id]))
 			{
-				$out[ $row['pref_id'] ]['allowed_upload_count']	= $counts[ $row['pref_id'] ];
+				$counts[$pref_id] = count($entries[0]);
+			}
+		}
+
+		//foreach pref id,
+		foreach ($query->result_array() as $row)
+		{
+			$out[$row['pref_id']]	= $row;
+			$out[$row['pref_id']]['allowed_upload_count']	= 1;
+
+			if ( ! empty($counts[$row['pref_id']]))
+			{
+				$out[$row['pref_id']]['allowed_upload_count']	= $counts[$row['pref_id']];
 			}
 		}
 
@@ -1040,10 +1119,12 @@ class Freeform_migration extends Addon_builder_freeform
 		//	Return
 		// -------------------------------------
 
-		return $this->cache['get_attachment_profiles'][$collection] = $out;
-	}
+		$this->cache['get_attachment_profiles'][$collection] = $out;
 
-	//	End get attachment profiles
+		return $this->cache['get_attachment_profiles'][$collection];
+	}
+	//END get_attachment_profiles
+
 
 	// --------------------------------------------------------------------
 
@@ -1054,7 +1135,7 @@ class Freeform_migration extends Addon_builder_freeform
 	 * @return array
 	 */
 
-	public function get_collection_counts( $collections = array() )
+	public function get_collection_counts($collections = array())
 	{
 		$counts	= array();
 
@@ -1062,55 +1143,57 @@ class Freeform_migration extends Addon_builder_freeform
 		//	Bother?
 		// -------------------------------------
 
-		if ( $this->legacy() === FALSE ) return $counts;
-
-		// -------------------------------------
-		//	Clean incoming
-		// -------------------------------------
-
-		foreach ( $collections as $key => $val )
+		if ($this->legacy() === FALSE)
 		{
-			$collections[ $key ]	= ee()->db->escape_str( $val );
+			return $counts;
 		}
+		//Oh, bother.
 
 		// -------------------------------------
-		//	Migrated / Unmigrated
+		//	Migrated
 		// -------------------------------------
 
 		$table	= 'exp_freeform_entries' . $this->table_suffix;
 
-		$sql	= "SELECT COUNT(*) AS count, form_name FROM " . $table . " WHERE new_entry_id = 0";
-
-		if ( ! empty( $collections ) )
+		if ( ! empty($collections))
 		{
-			$sql	.= " AND form_name IN ('" . implode( "','", $collections ) . "')";
+			$this->EE->db->where_in('form_name', $collections);
 		}
 
-		$sql	.= " GROUP BY form_name";
+		$query = $this->EE->db
+					->select('COUNT(*) AS count, form_name')
+					->where('new_entry_id', 0)
+					->group_by('form_name')
+					->get($table);
 
-		$query	= ee()->db->query( $sql );
-
-		foreach ( $query->result_array() as $row )
+		foreach ($query->result_array() as $row)
 		{
-			$counts[ $row['form_name'] ][ 'migrated' ]		= 0;
-			$counts[ $row['form_name'] ][ 'unmigrated' ]	= $row['count'];
+			$counts[$row['form_name']]['migrated']		= 0;
+			$counts[$row['form_name']]['unmigrated']	= $row['count'];
 		}
 
-		$sql	= "SELECT COUNT(*) AS count, form_name FROM " . $table . " WHERE new_entry_id != 0";
+		// -------------------------------------
+		//	unmigrated
+		// -------------------------------------
 
-		if ( ! empty( $collections ) )
+		if ( ! empty($collections))
 		{
-			$sql	.= " AND form_name IN ('" . implode( "','", $collections ) . "')";
+			$this->EE->db->where_in('form_name', $collections);
 		}
 
-		$sql	.= " GROUP BY form_name";
+		$query = $this->EE->db
+					->select('COUNT(*) AS count, form_name')
+					->where('new_entry_id !=', 0)
+					->group_by('form_name')
+					->get($table);
 
-		$query	= ee()->db->query( $sql );
-
-		foreach ( $query->result_array() as $row )
+		foreach ($query->result_array() as $row)
 		{
-			$counts[ $row['form_name'] ][ 'unmigrated' ]	= ( empty( $counts[ $row['form_name'] ][ 'unmigrated' ] ) ) ? 0: $counts[ $row['form_name'] ][ 'unmigrated' ];
-			$counts[ $row['form_name'] ][ 'migrated' ]	= $row['count'];
+			$counts[$row['form_name']]['unmigrated']	= (
+				empty($counts[$row['form_name']]['unmigrated'])
+			) ? 0: $counts[$row['form_name']]['unmigrated'];
+
+			$counts[$row['form_name']]['migrated']		= $row['count'];
 		}
 
 		// -------------------------------------
@@ -1119,39 +1202,50 @@ class Freeform_migration extends Addon_builder_freeform
 
 		return $counts;
 	}
-
 	//	End get collection counts
+
 
 	// --------------------------------------------------------------------
 
 	/**
 	 * Get field type installed
 	 *
-	 * @access public
-	 * @return boolean
+	 * @access	public
+	 * @param	string $field_type	fieldtype to check as installed
+	 * @return	boolean				fieldtype installed
 	 */
-
 	public function get_field_type_installed($field_type = '')
 	{
-		if ( empty( $field_type ) ) return FALSE;
+		if (empty($field_type))
+		{
+			return FALSE;
+		}
 
 		// -------------------------------------
 		//	Cached?
 		// -------------------------------------
 
-		if ( ! empty( $this->cache['get_field_type_installed'][$field_type] ) ) return $this->cache['get_field_type_installed'][$field_type];
+		if ( ! empty($this->cache['get_field_type_installed'][$field_type]))
+		{
+			return $this->cache['get_field_type_installed'][$field_type];
+		}
 
 		// -------------------------------------
 		//	Query
 		// -------------------------------------
 
-		ee()->load->model('freeform_fieldtype_model');
-		$field_types	= ee()->freeform_fieldtype_model->installed_fieldtypes();
+		$this->EE->load->model('freeform_fieldtype_model');
 
-		return ! empty( $field_types['file_upload'] );
+		$this->EE->freeform_fieldtype_model->clear_cache();
+
+		$field_types = $this->EE->freeform_fieldtype_model->installed_fieldtypes();
+
+		$this->cache['get_field_type_installed'][$field_type] = ! empty($field_types[$field_type]);
+
+		return $this->cache['get_field_type_installed'][$field_type];
 	}
+	//END get_field_type_installed
 
-	//	End get field type installed
 
 	// --------------------------------------------------------------------
 
@@ -1159,7 +1253,7 @@ class Freeform_migration extends Addon_builder_freeform
 	 * Get fields
 	 *
 	 * @access public
-	 * @return array
+	 * @return array	array of legacy fields
 	 */
 
 	public function get_fields()
@@ -1168,29 +1262,43 @@ class Freeform_migration extends Addon_builder_freeform
 		//	Cached?
 		// -------------------------------------
 
-		if ( ! empty( $this->cache['get_fields'] ) ) return $this->cache['get_fields'];
+		if ( ! empty($this->cache['get_fields']))
+		{
+			return $this->cache['get_fields'];
+		}
 
 		// -------------------------------------
 		//	DB fetch
 		// -------------------------------------
 
-		$query	= ee()->db->query( "SELECT field_id, field_type, field_order, name AS field_name, label AS field_label FROM exp_freeform_fields" . $this->table_suffix . " ORDER BY field_order" );
+		$query = $this->EE->db
+						->select('field_id, field_type, field_order, field_length')
+						->select('name AS field_name, label AS field_label')
+						->order_by('field_order')
+						->get("exp_freeform_fields" . $this->table_suffix);
 
-		return $this->cache['get_fields']	= $this->prepare_keyed_result( $query, 'field_name' );
+		$this->cache['get_fields'] = $this->prepare_keyed_result(
+			$query,
+			'field_name'
+		);
+
+		return $this->cache['get_fields'];
 	}
+	//END get_fields
 
-	//	End get fields
 
 	// --------------------------------------------------------------------
 
 	/**
 	 * Get fields for collection
 	 *
-	 * @access public
-	 * @return array
+	 * @access	public
+	 * @param	string $collection		limit results to collection
+	 * @param	string $show_empties	include empty fields
+	 * @return	mixed					bool false if no results, or array of fields
 	 */
 
-	public function get_fields_for_collection( $collection = '', $show_empties = 'n' )
+	public function get_fields_for_collection($collection = '', $show_empties = 'n')
 	{
 		// -------------------------------------
 		//	Get fields
@@ -1198,13 +1306,16 @@ class Freeform_migration extends Addon_builder_freeform
 
 		$fields	= $this->get_fields();
 
-		if ( empty( $fields ) ) return FALSE;
+		if (empty($fields))
+		{
+			return FALSE;
+		}
 
 		// -------------------------------------
 		//	Show empties?
 		// -------------------------------------
 
-		if ( $show_empties != 'n' )
+		if ($show_empties != 'n')
 		{
 			return $fields;
 		}
@@ -1215,82 +1326,80 @@ class Freeform_migration extends Addon_builder_freeform
 
 		$ors	= array();
 
-		foreach ( array_keys( $fields ) as $val )
+		foreach (array_keys($fields) as $val)
 		{
-			$ors[]	= $val . " != ''";
+			$ors[]	= "`" .$val . "` != ''";
 		}
 
-		$sql	= "SELECT " . implode( ',', array_keys( $fields ) ) . "
-			FROM exp_freeform_entries" . $this->table_suffix . "
-			WHERE form_name = '" . ee()->db->escape_str( $collection ) . "'
-			AND (" . implode( ' OR ', $ors ) . ")";
+		$query	= $this->EE->db->select(implode(',', array_keys($fields)))
+					->where('form_name', $collection)
+					->where("(" . implode(' OR ', $ors) . ")")
+					->get("exp_freeform_entries" . $this->table_suffix);
 
-		$query	= ee()->db->query( $sql );
-
-		if ( $query->num_rows() == 0 ) return FALSE;
+		if ($query->num_rows() == 0)
+		{
+			return FALSE;
+		}
 
 		$out	= array();
 
-		foreach ( $query->result_array() as $row )
+		foreach ($query->result_array() as $row)
 		{
-			foreach ( $row as $key => $val )
+			foreach ($row as $key => $val)
 			{
-				if ( $val == '' ) continue;
-
-				$out[$key]	= $key;
+				if ($val != '')
+				{
+					$out[$key]	= $key;
+				}
 			}
 		}
 
-		foreach ( array_keys( $fields ) as $val )
+		foreach (array_keys($fields) as $val)
 		{
-			if ( in_array( $val, $out ) === FALSE ) unset( $fields[$val] );
+			if (in_array($val, $out) === FALSE)
+			{
+				unset($fields[$val]);
+			}
 		}
 
-		if ( empty( $fields ) ) return FALSE;
-
-		return $fields;
+		return (empty($fields) ? FALSE : $fields);
 	}
 
 	//	End get fields for collection
+
 
 	// --------------------------------------------------------------------
 
 	/**
 	 * Get migration count
 	 *
-	 * @access public
-	 * @return boolean
+	 * @access	public
+	 * @param	array	$collections	sets of collections to limit count to
+	 * @return	int						number of results for unmigrated entries
 	 */
 
-	public function get_migration_count( $collections = array() )
+	public function get_migration_count($collections = array())
 	{
-		foreach ( $collections as $key => $val )
-		{
-			$collections[ $key ]	= ee()->db->escape_str( $val );
-		}
-
 		// -------------------------------------
 		//	Unmigrated
 		// -------------------------------------
 
-		$table	= 'exp_freeform_entries' . $this->table_suffix;
-
-		$sql	= "SELECT COUNT(*) AS count FROM " . $table . " WHERE new_entry_id = 0";
-
-		if ( ! empty( $collections ) )
+		if ( ! empty($collections))
 		{
-			$sql	.= " AND form_name IN ('" . implode( "','", $collections ) . "')";
+			$this->EE->db->where_in('form_name', $collections);
 		}
-
-		$query	= ee()->db->query( $sql );
 
 		// -------------------------------------
 		//	Return
 		// -------------------------------------
 
-		return $query->row('count');
+		return $this->EE->db
+					->where('new_entry_id', 0)
+					->count_all_results(
+						'exp_freeform_entries' . $this->table_suffix
+					);
 	}
-	//	End get migration count
+	//END get_migration_count
 
 
 	// --------------------------------------------------------------------
@@ -1302,7 +1411,7 @@ class Freeform_migration extends Addon_builder_freeform
 	 * @return boolean
 	 */
 
-	public function legacy ()
+	public function legacy()
 	{
 		if (isset($this->cache['legacy']))
 		{
@@ -1315,20 +1424,20 @@ class Freeform_migration extends Addon_builder_freeform
 		//	DB check
 		// -------------------------------------
 
-		$query = ee()->db->query(
+		$query = $this->EE->db->query(
 			"SHOW TABLES
-			 LIKE 'exp_freeform_entries" . ee()->db->escape_str($this->table_suffix) . "'"
+			 LIKE 'exp_freeform_entries" . $this->EE->db->escape_str($this->table_suffix) . "'"
 		);
 
 		if ($query->num_rows() > 0)
 		{
-			$count = ee()->db
+			$count = $this->EE->db
 						->where('new_entry_id', 0)
 						->count_all_results(
 							'exp_freeform_entries' . $this->table_suffix
 						);
 
-			if ($count > 0 )
+			if ($count > 0)
 			{
 				$this->cache['legacy'] = TRUE;
 			}
@@ -1373,21 +1482,22 @@ class Freeform_migration extends Addon_builder_freeform
 	 * @return	array
 	 */
 
-	public function get_legacy_entry( $form_name )
+	public function get_legacy_entry($form_name)
 	{
 		// -------------------------------------
 		//	SQL
 		// -------------------------------------
 
-		$sql	= "SELECT *
-			FROM exp_freeform_entries" . $this->table_suffix . "
-			WHERE new_entry_id = 0
-			AND form_name = '" . ee()->db->escape_str( $form_name ) . "'
-			LIMIT 1";
+		$query = $this->EE->db
+						->where('new_entry_id', 0)
+						->where('form_name', $form_name)
+						->limit(1)
+						->get('exp_freeform_entries' . $this->table_suffix);
 
-		$query	= ee()->db->query( $sql );
-
-		if ( $query->num_rows() == 0 ) return FALSE;
+		if ($query->num_rows() == 0)
+		{
+			return FALSE;
+		}
 
 		$entry	= $query->row_array();
 
@@ -1395,13 +1505,11 @@ class Freeform_migration extends Addon_builder_freeform
 		//	Get attachments
 		// -------------------------------------
 
-		$sql	= "SELECT *
-			FROM exp_freeform_attachments" . $this->table_suffix . "
-			WHERE entry_id = " . ee()->db->escape_str( $query->row('entry_id') );
+		$aquery = $this->EE->db
+						->where('entry_id', $query->row('entry_id'))
+						->get("exp_freeform_attachments" . $this->table_suffix);
 
-		$aquery	= ee()->db->query( $sql );
-
-		foreach ( $aquery->result_array() as $row )
+		foreach ($aquery->result_array() as $row)
 		{
 			$entry['attachments'][]	= $row;
 		}
@@ -1410,13 +1518,12 @@ class Freeform_migration extends Addon_builder_freeform
 		//	Get email log
 		// -------------------------------------
 
-		$sql	= "SELECT email_count
-			FROM exp_freeform_user_email" . $this->table_suffix . "
-			WHERE entry_id = " . ee()->db->escape_str( $query->row('entry_id') );
+		$equery = $this->EE->db
+						->select('email_count')
+						->where('entry_id', $query->row('entry_id'))
+						->get("exp_freeform_user_email" . $this->table_suffix);
 
-		$aquery	= ee()->db->query( $sql );
-
-		foreach ( $aquery->result_array() as $row )
+		foreach ($equery->result_array() as $row)
 		{
 			$entry['user_emails'][]	= $row['email_count'];
 		}
@@ -1439,54 +1546,56 @@ class Freeform_migration extends Addon_builder_freeform
 	 * @return	array
 	 */
 
-	public function get_legacy_entries( $form_name )
+	public function get_legacy_entries($form_name)
 	{
 		// -------------------------------------
 		//	SQL
 		// -------------------------------------
 
-		$sql	= "SELECT *
-			FROM exp_freeform_entries" . $this->table_suffix . "
-			WHERE new_entry_id = 0
-			AND form_name = '" . ee()->db->escape_str( $form_name ) . "'
-			LIMIT " . $this->batch_limit;
+		$query = $this->EE->db
+						->where('new_entry_id', 0)
+						->where('form_name', $form_name)
+						->limit($this->batch_limit)
+						->get('exp_freeform_entries' . $this->table_suffix);
 
-		$query	= ee()->db->query( $sql );
+		if ($query->num_rows() == 0)
+		{
+			return FALSE;
+		}
 
-		if ( $query->num_rows() == 0 ) return FALSE;
-
-		$entries	= $this->prepare_keyed_result( $query, 'entry_id' );
+		$entries = $this->prepare_keyed_result($query, 'entry_id');
 
 		// -------------------------------------
 		//	Get attachments
 		// -------------------------------------
 
-		$sql	= "SELECT *
-			FROM exp_freeform_attachments" . $this->table_suffix . "
-			WHERE entry_id IN (" . ee()->db->escape_str( implode( ',', array_keys( $entries ) ) ) . ")";
+		$aquery = $this->EE->db
+						->where_in('entry_id', array_keys($entries))
+						->get("exp_freeform_attachments" . $this->table_suffix);
 
-		$aquery	= ee()->db->query( $sql );
-
-		foreach ( $aquery->result_array() as $row )
+		foreach ($aquery->result_array() as $row)
 		{
-			if ( empty( $row['entry_id'] ) ) continue;
-			$entries[$row['entry_id']]['attachments'][]	= $row;
+			if ( ! empty($row['entry_id']))
+			{
+				$entries[$row['entry_id']]['attachments'][]	= $row;
+			}
 		}
 
 		// -------------------------------------
 		//	Get email log
 		// -------------------------------------
 
-		$sql	= "SELECT email_count
-			FROM exp_freeform_user_email" . $this->table_suffix . "
-			WHERE entry_id IN (" . ee()->db->escape_str( implode( ',', array_keys( $entries ) ) ) . ")";
+		$equery = $this->EE->db
+						->select('email_count')
+						->where_in('entry_id', array_keys($entries))
+						->get("exp_freeform_user_email" . $this->table_suffix);
 
-		$equery	= ee()->db->query( $sql );
-
-		foreach ( $equery->result_array() as $row )
+		foreach ($equery->result_array() as $row)
 		{
-			if ( empty( $row['entry_id'] ) ) continue;
-			$entries[$row['entry_id']]['user_emails'][]	= $row['email_count'];
+			if ( ! empty($row['entry_id']))
+			{
+				$entries[$row['entry_id']]['user_emails'][]	= $row['email_count'];
+			}
 		}
 
 		// -------------------------------------
@@ -1495,8 +1604,8 @@ class Freeform_migration extends Addon_builder_freeform
 
 		return $entries;
 	}
-
 	// End get legacy entries
+
 
 	// --------------------------------------------------------------------
 
@@ -1507,13 +1616,13 @@ class Freeform_migration extends Addon_builder_freeform
 	 * @return	array
 	 */
 
-	public function set_legacy_entry( $form_id = '', $entry = array() )
+	public function set_legacy_entry($form_id = '', $entry = array())
 	{
 		// -------------------------------------
 		//	Validate
 		// -------------------------------------
 
-		if ( empty( $form_id ) OR empty( $entry ) )
+		if (empty($form_id) OR empty($entry))
 		{
 			$this->errors['empty_form_name']	= lang('empty_form_name');
 			return FALSE;
@@ -1523,9 +1632,9 @@ class Freeform_migration extends Addon_builder_freeform
 		//	Library
 		// -------------------------------------
 
-		ee()->load->library('freeform_forms');
-		ee()->load->library('freeform_fields');
-		ee()->load->model('freeform_form_model');
+		$this->EE->load->library('freeform_forms');
+		$this->EE->load->library('freeform_fields');
+		$this->EE->load->model('freeform_form_model');
 
 		// -------------------------------------
 		//	form data
@@ -1537,12 +1646,12 @@ class Freeform_migration extends Addon_builder_freeform
 		//	Workaround name?
 		// -------------------------------------
 
-		foreach ( array( 'status') as $name )
+		foreach (array('status') as $name)
 		{
-			if ( isset( $entry[$name] ) )
+			if (isset($entry[$name]))
 			{
 				$entry[$name.$this->table_suffix]	= $entry[$name];
-				unset( $entry[$name] );
+				unset($entry[$name]);
 			}
 		}
 
@@ -1557,7 +1666,7 @@ class Freeform_migration extends Addon_builder_freeform
 		{
 			$field_list[$field_data['field_name']] = $field_data['field_label'];
 
-			$field_post	= ( ! empty( $entry[ $field_data['field_name'] ] ) ) ? $entry[ $field_data['field_name'] ]: '';
+			$field_post	= ( ! empty($entry[$field_data['field_name']])) ? $entry[$field_data['field_name']]: '';
 
 			$field_input_data[$field_data['field_name']] = $field_post;
 		}
@@ -1570,11 +1679,11 @@ class Freeform_migration extends Addon_builder_freeform
 			'status'
 		);
 
-		foreach ( $defaults as $default )
+		foreach ($defaults as $default)
 		{
-			if ( ! empty( $entry[ $default ] ) )
+			if ( ! empty($entry[$default]))
 			{
-				$field_input_data[ $default ]	= $entry[ $default ];
+				$field_input_data[$default]	= $entry[$default];
 			}
 		}
 
@@ -1582,7 +1691,7 @@ class Freeform_migration extends Addon_builder_freeform
 		//	correct for edit date
 		// -------------------------------------
 
-		if ( ! empty( $field_input_data['entry_date'] ) AND ! empty( $field_input_data['edit_date'] ) AND $field_input_data['entry_date'] == $field_input_data['edit_date'] )
+		if ( ! empty($field_input_data['entry_date']) AND ! empty($field_input_data['edit_date']) AND $field_input_data['entry_date'] == $field_input_data['edit_date'])
 		{
 			$field_input_data['edit_date']	= 0;
 		}
@@ -1591,7 +1700,7 @@ class Freeform_migration extends Addon_builder_freeform
 		//	attachments?
 		// -------------------------------------
 
-		if ( $this->migrate_attachments === TRUE AND ! empty( $entry['attachments'] ) )
+		if ($this->migrate_attachments === TRUE AND ! empty($entry['attachments']))
 		{
 			//--------------------------------------
 			//  Attachments? Add to entries table.
@@ -1601,37 +1710,41 @@ class Freeform_migration extends Addon_builder_freeform
 
 			$temp	= array();
 
-			foreach ( $attachments as $val )
+			foreach ($attachments as $val)
 			{
-				$temp[ $val['pref_id'] ][]	= $val['filename'] . $val['extension'];
+				$temp[$val['pref_id']][]	= $val['filename'] . $val['extension'];
 			}
 
-			foreach ( $temp as $pref_id => $names )
+			foreach ($temp as $pref_id => $names)
 			{
-				if ( isset( $this->upload_pref_id_map[ $pref_id ]['field_id'] ) === TRUE )
+				if (isset($this->upload_pref_id_map[$pref_id]['field_id']) === TRUE)
 				{
-					$field_input_data[ $form_data['fields'][ $this->upload_pref_id_map[ $pref_id ]['field_id'] ]['field_name'] ]	= implode( "\n", $names );
+					$field_input_data[$form_data['fields'][$this->upload_pref_id_map[$pref_id]['field_id']]['field_name']]	= implode("\n", $names);
 				}
 			}
 		}
 
-		unset( $entry['attachments'] );
+		unset($entry['attachments']);
 
 		//form fields do thier own validation,
 		//so lets just get results! (sexy results?)
+		/*
+		//skipping validation, because these entries are
+		//already approved if we are importing.
 		$this->errors = array_merge(
 			$this->errors,
-			ee()->freeform_fields->validate(
+			$this->EE->freeform_fields->validate(
 				$form_id,
 				$field_input_data
 			)
 		);
+		*/
 
 		// -------------------------------------
 		//	Errors
 		// -------------------------------------
 
-		if ( ! empty( $this->errors ) )
+		if ( ! empty($this->errors))
 		{
 			return FALSE;
 		}
@@ -1640,7 +1753,7 @@ class Freeform_migration extends Addon_builder_freeform
 		//	Insert
 		// -------------------------------------
 
-		$entry_id = ee()->freeform_forms->insert_new_entry(
+		$entry_id = $this->EE->freeform_forms->insert_new_entry(
 			$form_id,
 			$field_input_data
 		);
@@ -1649,17 +1762,28 @@ class Freeform_migration extends Addon_builder_freeform
 		//  Add attachments to file uploads table
 		//--------------------------------------
 
-		if ( ! empty( $attachments ) )
+		if ( ! empty($attachments))
 		{
-			foreach ( $attachments as $attachment )
+			foreach ($attachments as $attachment)
 			{
-				if ( empty( $this->upload_pref_id_map[ $attachment['pref_id'] ]['field_id'] ) ) continue;
+				if (empty($this->upload_pref_id_map[$attachment['pref_id']]['field_id']))
+				{
+					continue;
+				}
 
-				$field_id	= $this->upload_pref_id_map[ $attachment['pref_id'] ]['field_id'];
+				$field_id	= $this->upload_pref_id_map[$attachment['pref_id']]['field_id'];
+				$file_id	= $this->set_legacy_attachment(
+					$form_id,
+					$entry_id,
+					$field_id,
+					$attachment
+				);
 
-				if ( ( $file_id = $this->set_legacy_attachment( $form_id, $entry_id, $field_id, $attachment ) ) === FALSE )
+				if ($file_id === FALSE)
 				{
 					//	return FALSE;
+					//	why we don't return false?
+					//	it is a mystery
 				}
 			}
 		}
@@ -1668,25 +1792,27 @@ class Freeform_migration extends Addon_builder_freeform
 		//	User emails?
 		// -------------------------------------
 
-		if ( ! empty( $entry['user_emails'] ) )
+		if ( ! empty($entry['user_emails']))
 		{
 			$insert	= array(
-				'site_id'		=> ee()->config->item('site_id'),
-				'author_id'		=> ( ! empty( $field_input_data['author_id'] ) ) ? $field_input_data['author_id']: '',
-				'ip_address'	=> ( ! empty( $field_input_data['ip_address'] ) ) ? $field_input_data['ip_address']: '',
+				'site_id'		=> $this->EE->config->item('site_id'),
+				'author_id'		=> (
+					! empty($field_input_data['author_id'])
+				) ? $field_input_data['author_id']: '',
+				'ip_address'	=> (
+					! empty($field_input_data['ip_address'])
+				) ? $field_input_data['ip_address']: '',
 				'form_id'		=> $form_id,
 				'entry_id'		=> $entry_id
 			);
 
-			foreach ( $entry['user_emails'] as $email_count )
+			foreach ($entry['user_emails'] as $email_count)
 			{
 				$insert['email_count']	= $email_count;
 
-				ee()->db->query(
-					ee()->db->insert_string(
-						'exp_freeform_user_email',
-						$insert
-					)
+				$this->EE->db->insert(
+					'exp_freeform_user_email',
+					$insert
 				);
 			}
 		}
@@ -1695,9 +1821,11 @@ class Freeform_migration extends Addon_builder_freeform
 		//	Record new entry id
 		// -------------------------------------
 
-		$sql	= ee()->db->update_string( 'exp_freeform_entries' . $this->table_suffix, array( 'new_entry_id' => $entry_id ), array( 'entry_id' => $entry['entry_id'] ) );
-
-		ee()->db->query( $sql );
+		$this->EE->db->update(
+			'exp_freeform_entries' . $this->table_suffix,
+			array('new_entry_id' => $entry_id),
+			array('entry_id' => $entry['entry_id'])
+		);
 
 		// -------------------------------------
 		//	Return
@@ -1708,6 +1836,7 @@ class Freeform_migration extends Addon_builder_freeform
 
 	// End set legacy entry
 
+
 	// --------------------------------------------------------------------
 
 	/**
@@ -1717,13 +1846,24 @@ class Freeform_migration extends Addon_builder_freeform
 	 * @return	array
 	 */
 
-	public function set_legacy_attachment( $form_id = '', $entry_id = '', $field_id = '', $attachment = array() )
-	{
+	public function set_legacy_attachment(
+		$form_id = '',
+		$entry_id = '',
+		$field_id = '',
+		$attachment = array()
+	) {
 		// -------------------------------------
 		//	Validate
 		// -------------------------------------
 
-		if ( empty( $form_id ) OR empty( $entry_id ) OR empty( $field_id ) OR empty( $attachment ) ) return FALSE;
+		if (empty($form_id) OR
+			 empty($entry_id) OR
+			 empty($field_id) OR
+			 empty($attachment)
+		)
+		{
+			return FALSE;
+		}
 
 		// -------------------------------------
 		//	Prep
@@ -1746,13 +1886,13 @@ class Freeform_migration extends Addon_builder_freeform
 		//	Library
 		// -------------------------------------
 
-		ee()->load->model('freeform_file_upload_model');
+		$this->EE->load->model('freeform_file_upload_model');
 
 		// -------------------------------------
 		//	Insert
 		// -------------------------------------
 
-		$file_id = ee()->freeform_file_upload_model->insert($insert);
+		$file_id = $this->EE->freeform_file_upload_model->insert($insert);
 
 		// -------------------------------------
 		//	Return
@@ -1760,28 +1900,30 @@ class Freeform_migration extends Addon_builder_freeform
 
 		return $file_id;
 	}
-
 	// End set legacy attachment
+
 
 	// --------------------------------------------------------------------
 
 	/**
-	 * Set property
+	 * Propery Setter
 	 *
 	 * @access	public
-	 * @return	null
+	 * @param	string	$property	string name of object property to set
+	 * @param	mixed	$value		value of $property
+	 * @return	bool				value was successfuly set anew
 	 */
-
-	public function set_property( $property, $value )
+	public function set_property($property, $value)
 	{
-		if ( isset( $this->$property ) === FALSE ) return FALSE;
+		if (isset($this->$property) === FALSE)
+		{
+			return FALSE;
+		}
 
 		$this->$property	= $value;
 
 		return TRUE;
 	}
-
 	// End set property
 }
-
 //END Freeform_migration

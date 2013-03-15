@@ -13,7 +13,7 @@
 
 if ( ! class_exists('Freeform_cacher'))
 {
-	require_once realpath(rtrim(dirname(__FILE__), "/") . '/../cacher.freeform.php');
+	require_once realpath(rtrim(dirname(__FILE__), "/") . '/../libraries/Freeform_cacher.php');
 }
 
 class Freeform_Model extends CI_Model

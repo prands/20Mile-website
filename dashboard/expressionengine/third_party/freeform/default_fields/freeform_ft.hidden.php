@@ -57,7 +57,7 @@ class Hidden_freeform_ft extends Freeform_base_ft
 
 	public function display_field ($data = '', $params = array(), $attr = array())
 	{
-		return form_hidden(
+		$output = form_hidden(
 			$this->field_name,
 			$this->parse_specials(
 				trim($data) !== '' ?
@@ -69,6 +69,17 @@ class Hidden_freeform_ft extends Freeform_base_ft
 					)
 			)
 		);
+
+		if ( ! empty($attr))
+		{
+			$output = preg_replace(
+				"/[\/]?>$/ms",
+				$this->stringify_attributes($attr) . ' />',
+				$output
+			);
+		}
+
+		return $output;
 	}
 	//END display_field
 

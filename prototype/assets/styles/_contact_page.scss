@@ -86,9 +86,18 @@
 		}
 	}
 
-	label.completed {
-		background-color: #A5CD38;
-		border-color: #A5CD38;
+	label{
+
+		&.completed {
+			background-color: #A5CD38;
+			border-color: #A5CD38;
+		}
+
+		&.error {
+			background-color: rgb(182, 0, 36);
+			border-color: rgb(182, 0, 36);
+		}
+
 	}
 }
 

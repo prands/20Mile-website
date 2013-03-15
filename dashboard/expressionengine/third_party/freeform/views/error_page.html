@@ -1,7 +1,7 @@
 <?php echo $this->view('header.html');?>
-	
-	<h4 class="alertHeadingCenter"><?php echo ee()->lang->line('error');?></h4>
-	
+
+	<h4 class="alertHeadingCenter"><?php echo lang('error');?></h4>
+
 	<div class='defaultCenter' >
 		<div class="box">
 			<strong><?=$error_message?></strong>
@@ -9,5 +9,5 @@
 			<strong><a href='javascript:history.go(-1)' style='text-transform:uppercase;'>&#171; <?=lang('back')?></a></strong>
 		</div>
 	</div>
-	
+
 <?php echo $this->view('footer.html'); ?>

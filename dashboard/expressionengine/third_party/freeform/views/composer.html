@@ -160,6 +160,7 @@
 			<input type="hidden" id="composer_save_data" name="composer_data" value="" />
 			<input type="hidden" name="preview" value="n" />
 			<input type="hidden" id="composer_template_id" name="template_id" value="0" />
+			<button id="quicksave" class="submit"><?=lang('quick_save')?></button>
 			<button id="save_and_finish" class="submit"><?=lang('save_and_finish')?></button>
 		</form>
 	</div>
@@ -269,7 +270,7 @@
 	<div class="editable_dynrec">
 	<{ if (typeof data !== 'undefined' && typeof jsonData !== 'undefined') { }>
 		<{ if (typeof label !== 'undefined') { }>
-			<div class="element_label"><{= label }></div>
+			<div class="element_label"><{= label }><span class="element_required">*</span></div>
 		<{ } }>
 		<div data-recipients='<{= jsonData }>'
 			 data-type="<{ if (typeof type !== 'undefined'){}><{= type }><{ }}>"
@@ -424,6 +425,7 @@
 		<{ } else { }>
 			<?=lang('notify_friends')?>
 		<{ } }>
+		<span class="element_required">*</span>
 		</div>
 		<div class="inner_element">
 			<input type="text" name="recipient_email_user" />
@@ -465,7 +467,8 @@
 									<?=lang('delete_field_lower')?>
 								</a>
 							</li>
-						<{ if (elementId.indexOf('nonfield') == -1){ }>
+						<{ if (elementId.indexOf('nonfield') == -1 ||
+							(typeof requireable !== 'undefined' && requireable == 'yes')){ }>
 							<li>
 								<a class="element_require" href="#">
 									<?=lang('require_field_lower')?>
@@ -503,16 +506,16 @@
 		var Freeform = global.Freeform = global.Freeform || {};
 
 		Freeform.composerLang			= {
-			"cancel"				: "<?=htmlentities(lang('dialog_cancel'), ENT_QUOTES)?>",
-			"continueAnyway"		: "<?=htmlentities(lang('dialog_continue_anyway'), ENT_QUOTES)?>",
-			"clearAllWarn"			: "<?=htmlentities(lang('clear_all_warning'), ENT_QUOTES)?>",
-			"dblClickEdit"			: "<?=htmlentities(lang('double_click_to_edit'), ENT_QUOTES)?>",
-			"dblClickEditDynrec"	: "<?=htmlentities(lang('double_click_to_edit_recipients'), ENT_QUOTES)?>",
-			"formLabel"				: "<?=htmlentities($form_data['form_label'], ENT_QUOTES)?>",
-			"missingSubmits"		: "<?=htmlentities(lang('missing_submits'), ENT_QUOTES)?>",
-			"notfyFriends"			: "<?=htmlentities(lang('notify_friends'), ENT_QUOTES)?>",
-			"previewTitle"			: "<?=htmlentities(lang('composer_preview'), ENT_QUOTES)?>",
-			"submit"				: "<?=htmlentities(lang('submit'), ENT_QUOTES)?>"
+			"cancel"				: "<?=htmlentities(lang('dialog_cancel'), ENT_QUOTES, 'UTF-8')?>",
+			"continueAnyway"		: "<?=htmlentities(lang('dialog_continue_anyway'), ENT_QUOTES, 'UTF-8')?>",
+			"clearAllWarn"			: "<?=htmlentities(lang('clear_all_warning'), ENT_QUOTES, 'UTF-8')?>",
+			"dblClickEdit"			: "<?=htmlentities(lang('double_click_to_edit'), ENT_QUOTES, 'UTF-8')?>",
+			"dblClickEditDynrec"	: "<?=htmlentities(lang('double_click_to_edit_recipients'), ENT_QUOTES, 'UTF-8')?>",
+			"formLabel"				: "<?=htmlentities($form_data['form_label'], ENT_QUOTES, 'UTF-8')?>",
+			"missingSubmits"		: "<?=htmlentities(lang('missing_submits'), ENT_QUOTES, 'UTF-8')?>",
+			"notfyFriends"			: "<?=htmlentities(lang('notify_friends'), ENT_QUOTES, 'UTF-8')?>",
+			"previewTitle"			: "<?=htmlentities(lang('composer_preview'), ENT_QUOTES, 'UTF-8')?>",
+			"submit"				: "<?=htmlentities(lang('submit'), ENT_QUOTES, 'UTF-8')?>"
 		};
 		Freeform.prohibitedFieldNames	= [
 			'<?=implode("','", array_unique($prohibited_field_names))?>'

@@ -10,13 +10,13 @@
  * @copyright	Copyright (c) 2008-2013, Solspace, Inc.
  * @link		http://solspace.com/docs/freeform
  * @license		http://www.solspace.com/license_agreement
- * @version		4.0.10
+ * @version		4.0.11
  * @filesource	freeform/data.freeform.php
  */
 
 if ( ! class_exists('Freeform_cacher'))
 {
-	require_once 'cacher.freeform.php';
+	require_once 'libraries/Freeform_cacher.php';
 }
 
 class Freeform_base_ft
@@ -331,14 +331,15 @@ class Freeform_base_ft
 	 * @return	string 	output data
 	 */
 
-	public function display_email_data ($data, $notification_obj)
+	public function display_email_data ($data, $notification_obj = null)
 	{
 		if (is_array($data))
 		{
 			$data = implode("\n", $data);
 		}
 
-		return $this->EE->functions->encode_ee_tags($data, TRUE);
+		$this->EE->load->helper('text');
+		return $this->EE->functions->encode_ee_tags(entities_to_ascii($data), TRUE);
 	}
 	//END display_email_data
 
@@ -919,7 +920,7 @@ class Freeform_base_ft
 	 * @return	string			parsed tagdata
 	 */
 
-	protected function multi_item_replace_tag ($data, $tagdata = '', $prefix = FALSE)
+	protected function multi_item_replace_tag ($data, $tagdata = '', $prefix = FALSE, $params = array())
 	{
 		if (empty($data))
 		{
@@ -948,13 +949,26 @@ class Freeform_base_ft
 				return '';
 			}
 
-			return $this->EE->TMPL->parse_variables($tagdata, $rows);
+			$output = $this->EE->TMPL->parse_variables($tagdata, $rows);
+
+			// -------------------------------------
+			//	backspace?
+			// -------------------------------------
+
+			if (isset($params['backspace']) AND ctype_digit((string) $params['backspace']))
+			{
+				$output = substr($output, 0, $params['backspace'] * -1);
+			}
+
+			return $output;
 		}
 		else
 		{
 			$output	= array();
 
-			foreach ($this->get_field_options($prefix, FALSE) as $key => $val)
+			$options = $this->get_field_options($prefix, FALSE);
+
+			foreach ($options as $key => $val)
 			{
 				if (isset($data[$key]) OR in_array($key, $data))
 				{
@@ -973,12 +987,12 @@ class Freeform_base_ft
 	/**
 	 * Preps multi item from the database
 	 *
-	 * @access	protected
+	 * @access	public
 	 * @param	string	$data	string from DB to get parsed out to choices
 	 * @return	array			array of choices
 	 */
 
-	protected function prep_multi_item_data ($data)
+	public function prep_multi_item_data ($data)
 	{
 		if ( ! is_string($data))
 		{

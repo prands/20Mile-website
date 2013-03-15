@@ -6391,6 +6391,9 @@ a.category {
   .contact-form-container label.completed {
     background-color: #A5CD38;
     border-color: #A5CD38; }
+  .contact-form-container label.error {
+    background-color: #b60024;
+    border-color: #b60024; }
 
 .contact-info {
   margin-left: -20px;

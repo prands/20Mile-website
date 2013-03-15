@@ -1507,25 +1507,21 @@ class Freeform_entry_model extends Freeform_Model
 			//for pagination vars
 			$has_range = FALSE;
 
-			if ($date_range_start AND
-				preg_match('/[0-9\/-]+/', $date_range_start))
+			if ($date_range_start)
 			{
 				$start = strtotime($date_range_start);
 
-				if (ctype_digit($start))
+				if (ctype_digit((string) $start))
 				{
 					$this->where('entry_date >=', $start);
 				}
 			}
 
-			if ($date_range_end AND
-				preg_match('/[0-9\/-]+/', $date_range_end))
+			if ($date_range_end)
 			{
-				//adding 23 hours 59 minutes to the timestamp so we can have
-				//the entire day, because the date parses as 00:00 otherwise
-				$end = strtotime($date_range_end . ' 23:59');
+				$end = strtotime($date_range_end);
 
-				if (ctype_digit($end))
+				if (ctype_digit((string) $end))
 				{
 					$this->where('entry_date <=', $end);
 				}

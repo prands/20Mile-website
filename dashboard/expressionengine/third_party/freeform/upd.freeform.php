@@ -10,12 +10,9 @@
  * @copyright	Copyright (c) 2008-2013, Solspace, Inc.
  * @link		http://solspace.com/docs/freeform
  * @license		http://www.solspace.com/license_agreement
- * @version		4.0.10
+ * @version		4.0.11
  * @filesource	freeform/upd.freeform.php
  */
-
-// EE 2.0's Wizard doesn't like CONSTANTs
-if ( ! defined('APP_VER')) define('APP_VER', '2.0');
 
 if ( ! class_exists('Module_builder_freeform'))
 {
@@ -40,7 +37,7 @@ class Freeform_upd extends Module_builder_freeform
 
 	public function __construct()
 	{
-		parent::__construct('freeform');
+		parent::__construct();
 
 		// --------------------------------------------
 		//  Module Actions
@@ -112,9 +109,9 @@ class Freeform_upd extends Module_builder_freeform
 			//  Load default field types
 			// --------------------------------------------
 
-			ee()->load->library('freeform_fields');
+			$this->EE->load->library('freeform_fields');
 
-			ee()->freeform_fields->install_default_freeform_fields();
+			$this->EE->freeform_fields->install_default_freeform_fields();
 
 			// --------------------------------------------
 			//  Install sample fields and form
@@ -127,7 +124,7 @@ class Freeform_upd extends Module_builder_freeform
 		//  Module Install
 		// --------------------------------------------
 
-		ee()->db->insert(
+		$this->EE->db->insert(
 			'exp_modules',
 			array(
 				'module_name'		=> $this->class_name,
@@ -136,9 +133,9 @@ class Freeform_upd extends Module_builder_freeform
 			)
 		);
 
-		ee()->load->model('freeform_preference_model');
+		$this->EE->load->model('freeform_preference_model');
 
-		ee()->freeform_preference_model->insert(array(
+		$this->EE->freeform_preference_model->insert(array(
 			'preference_name' 	=> 'ffp',
 			'preference_value'	=> FREEFORM_PRO ? 'y' : 'n',
 			'site_id' 			=> '0'
@@ -164,7 +161,7 @@ class Freeform_upd extends Module_builder_freeform
 		//  Get default site id
 		// --------------------------------------------
 
-		$query		= ee()->db->select('site_id')
+		$query		= $this->EE->db->select('site_id')
 							  ->order_by('site_id')
 							  ->get('sites', '1');
 
@@ -174,7 +171,7 @@ class Freeform_upd extends Module_builder_freeform
 		//  Get default author id
 		// --------------------------------------------
 
-		$query		= ee()->db->select('member_id, email')
+		$query		= $this->EE->db->select('member_id, email')
 							  ->where('group_id', '1')
 							  ->order_by('member_id')
 							  ->get('members', 1);
@@ -198,7 +195,7 @@ class Freeform_upd extends Module_builder_freeform
 					'field_content_type'	=> 'any'
 				),
 				'author_id'		=> $author_id,
-				'entry_date'	=> ee()->localize->now,
+				'entry_date'	=> $this->EE->localize->now,
 				'required'		=> 'n',
 				'submissions_page'	=> 'y',
 				'moderation_page'	=> 'y',
@@ -216,7 +213,7 @@ class Freeform_upd extends Module_builder_freeform
 					'field_content_type'	=> 'any'
 				),
 				'author_id'		=> $author_id,
-				'entry_date'	=> ee()->localize->now,
+				'entry_date'	=> $this->EE->localize->now,
 				'required'		=> 'n',
 				'submissions_page'	=> 'y',
 				'moderation_page'	=> 'y',
@@ -234,7 +231,7 @@ class Freeform_upd extends Module_builder_freeform
 					'field_content_type'	=> 'email'
 				),
 				'author_id'		=> $author_id,
-				'entry_date'	=> ee()->localize->now,
+				'entry_date'	=> $this->EE->localize->now,
 				'required'		=> 'n',
 				'submissions_page'	=> 'y',
 				'moderation_page'	=> 'y',
@@ -251,7 +248,7 @@ class Freeform_upd extends Module_builder_freeform
 					'field_ta_rows'			=> 6
 				),
 				'author_id'		=> $author_id,
-				'entry_date'	=> ee()->localize->now,
+				'entry_date'	=> $this->EE->localize->now,
 				'required'		=> 'n',
 				'submissions_page'	=> 'y',
 				'moderation_page'	=> 'y',
@@ -264,13 +261,13 @@ class Freeform_upd extends Module_builder_freeform
 		//  Loop and create fields
 		// --------------------------------------------
 
-		ee()->load->model('freeform_field_model');
+		$this->EE->load->model('freeform_field_model');
 
 		foreach ( $fields as $key => $data )
 		{
 			$data['settings']	= json_encode($data['settings']);
 
-			$field_ids[$key] = ee()->freeform_field_model->insert($data);
+			$field_ids[$key] = $this->EE->freeform_field_model->insert($data);
 		}
 
 		// --------------------------------------------
@@ -289,7 +286,7 @@ class Freeform_upd extends Module_builder_freeform
 				'form_description'	=> 'This is a basic contact form.',
 				'field_ids'			=> implode( '|', $field_ids ),
 				'author_id'			=> $author_id,
-				'entry_date'		=> ee()->localize->now
+				'entry_date'		=> $this->EE->localize->now
 			)
 		);
 
@@ -297,11 +294,11 @@ class Freeform_upd extends Module_builder_freeform
 		//  Create form
 		// --------------------------------------------
 
-		ee()->load->model('freeform_form_model');
-		ee()->load->library('freeform_forms');
+		$this->EE->load->model('freeform_form_model');
+		$this->EE->load->library('freeform_forms');
 
-		$prefix 	= ee()->freeform_form_model->form_field_prefix;
-		$form_id 	= ee()->freeform_forms->create_form($forms['contact']);
+		$prefix 	= $this->EE->freeform_form_model->form_field_prefix;
+		$form_id 	= $this->EE->freeform_forms->create_form($forms['contact']);
 
 		// --------------------------------------------
 		//  Sample entry
@@ -313,7 +310,7 @@ class Freeform_upd extends Module_builder_freeform
 				'author_id'		=> 0,
 				'complete'		=> 'y',
 				'ip_address'	=> '127.0.0.1',
-				'entry_date'	=> ee()->localize->now,
+				'entry_date'	=> $this->EE->localize->now,
 				'status'		=> 'pending',
 				$prefix . $field_ids['first_name']		=> 'Jake',
 				$prefix . $field_ids['last_name']		=> 'Solspace',
@@ -322,8 +319,8 @@ class Freeform_upd extends Module_builder_freeform
 			)
 		);
 
-		ee()->db->insert_batch(
-			ee()->freeform_form_model->table_name($form_id),
+		$this->EE->db->insert_batch(
+			$this->EE->freeform_form_model->table_name($form_id),
 			$entries
 		);
 
@@ -352,16 +349,16 @@ class Freeform_upd extends Module_builder_freeform
 		//  uninstall routine for fieldtypes
 		// -------------------------------------
 
-		ee()->load->library('freeform_fields');
-		ee()->load->model('freeform_fieldtype_model');
+		$this->EE->load->library('freeform_fields');
+		$this->EE->load->model('freeform_fieldtype_model');
 
-		$installed_fieldtypes = ee()->freeform_fieldtype_model->installed_fieldtypes();
+		$installed_fieldtypes = $this->EE->freeform_fieldtype_model->installed_fieldtypes();
 
 		if ( $installed_fieldtypes !== FALSE )
 		{
 			foreach ($installed_fieldtypes as $name => $data)
 			{
-				ee()->freeform_fields->uninstall_fieldtype($name);
+				$this->EE->freeform_fields->uninstall_fieldtype($name);
 			}
 		}
 
@@ -369,15 +366,15 @@ class Freeform_upd extends Module_builder_freeform
 		//  delete all extra form tables
 		// -------------------------------------
 
-		ee()->load->model('freeform_form_model');
+		$this->EE->load->model('freeform_form_model');
 
-		$query = ee()->freeform_form_model->select('form_id')->get();
+		$query = $this->EE->freeform_form_model->select('form_id')->get();
 
 		if ($query)
 		{
 			foreach ($query as $row)
 			{
-				ee()->freeform_form_model->delete($row['form_id']);
+				$this->EE->freeform_form_model->delete($row['form_id']);
 			}
 		}
 
@@ -385,8 +382,8 @@ class Freeform_upd extends Module_builder_freeform
 		//  Delete legacy tables if a migration was done from FF3 to FF4
 		// -------------------------------------
 
-		ee()->load->library('freeform_migration');
-		ee()->freeform_migration->uninstall();
+		$this->EE->load->library('freeform_migration');
+		$this->EE->freeform_migration->uninstall();
 
 		// --------------------------------------------
 		//  Default Module Uninstall
@@ -413,26 +410,19 @@ class Freeform_upd extends Module_builder_freeform
 
 	public function update()
 	{
-		// --------------------------------------------
-		//  ExpressionEngine 2.x attempts to do automatic updates.
-		//	- Mitchell questioned clients/customers and discovered
-		//    that the majority preferred to update
-		//	  themselves, especially on higher traffic sites.
-		//    So, we forbid EE 2.x from doing updates
-		//	  unless it comes through our update form.
-		// --------------------------------------------
-
+		/*
 		if ( ! isset($_POST['run_update']) OR $_POST['run_update'] != 'y')
 		{
 			return FALSE;
 		}
+		*/
 
 		if ($this->version_compare(
 				$this->database_version(TRUE),
 				'==',
 				constant(strtoupper($this->lower_name).'_VERSION')
 			)
-			AND ee()->input->get_post('update_pro') !== 'true'
+			AND $this->EE->input->get_post('update_pro') !== 'true'
 		)
 		{
 			return TRUE;
@@ -451,8 +441,8 @@ class Freeform_upd extends Module_builder_freeform
 
 		$this->actions();
 
-		ee()->load->library('freeform_fields');
-		ee()->load->library('freeform_migration');
+		$this->EE->load->library('freeform_fields');
+		$this->EE->load->library('freeform_migration');
 
 		// --------------------------------------------
 		// rename legacy (<=3.x) tables before we install new sql
@@ -460,7 +450,7 @@ class Freeform_upd extends Module_builder_freeform
 
 		if ($this->version_compare($this->database_version(), '<', '4.0.0.d1'))
 		{
-			ee()->freeform_migration->upgrade_rename_tables();
+			$this->EE->freeform_migration->upgrade_rename_tables();
 		}
 
 		// --------------------------------------------
@@ -470,7 +460,7 @@ class Freeform_upd extends Module_builder_freeform
 		//all db tables should have create if not exists, so this is safe
 		$this->install_module_sql();
 
-		ee()->load->model('freeform_preference_model');
+		$this->EE->load->model('freeform_preference_model');
 
 
 		// --------------------------------------------
@@ -479,26 +469,26 @@ class Freeform_upd extends Module_builder_freeform
 
 		if ($this->version_compare($this->database_version(), '<', '4.0.0.d5'))
 		{
-			ee()->db->truncate('freeform_multipage_hashes');
+			$this->EE->db->truncate('freeform_multipage_hashes');
 
-			ee()->load->model(array(
+			$this->EE->load->model(array(
 				'freeform_field_model',
 				'freeform_fieldtype_model',
 				'freeform_param_model',
 				'freeform_preference_model'
 			));
 
-			ee()->freeform_param_model->clear_table();
+			$this->EE->freeform_param_model->clear_table();
 
 			// -------------------------------------
 			//	update field global settings (none yet)
 			// -------------------------------------
 
-			ee()->freeform_fieldtype_model->update(
+			$this->EE->freeform_fieldtype_model->update(
 				array('settings' => json_encode(array()))
 			);
 
-			$fields =	ee()->freeform_field_model
+			$fields =	$this->EE->freeform_field_model
 							->key('field_id', 'settings')
 							->get();
 
@@ -512,7 +502,7 @@ class Freeform_upd extends Module_builder_freeform
 				{
 					$un_settings = @unserialize(@base64_decode($settings));
 
-					ee()->freeform_field_model->update(
+					$this->EE->freeform_field_model->update(
 						array(
 							'settings'	=> (is_array($un_settings) ?
 											json_encode($un_settings) :
@@ -527,7 +517,7 @@ class Freeform_upd extends Module_builder_freeform
 			//	update prefs settings
 			// -------------------------------------
 
-			$prefs =	ee()->freeform_preference_model
+			$prefs =	$this->EE->freeform_preference_model
 							->where('preference_name', 'form_statuses')
 							->key('preference_id', 'preference_value')
 							->get();
@@ -538,7 +528,7 @@ class Freeform_upd extends Module_builder_freeform
 				{
 					$preference_value = @unserialize(@base64_decode($preference_value));
 
-					ee()->freeform_preference_model->update(
+					$this->EE->freeform_preference_model->update(
 						array(
 							'preference_value'	=> (is_array($preference_value) ?
 											json_encode($preference_value) :
@@ -557,9 +547,9 @@ class Freeform_upd extends Module_builder_freeform
 		//if we are coming from 3.x we need to install some defaults
 		if ($this->version_compare($this->database_version(), '<', '4.0.0.d1'))
 		{
-			ee()->freeform_fields->install_default_freeform_fields();
+			$this->EE->freeform_fields->install_default_freeform_fields();
 
-			ee()->freeform_preference_model->insert(array(
+			$this->EE->freeform_preference_model->insert(array(
 				'preference_name' 	=> 'ffp',
 				'preference_value'	=> FREEFORM_PRO ? 'y' : 'n',
 				'site_id' 			=> '0'
@@ -567,7 +557,7 @@ class Freeform_upd extends Module_builder_freeform
 		}
 		else
 		{
-			ee()->freeform_fields->update_default_freeform_fields($pro_update);
+			$this->EE->freeform_fields->update_default_freeform_fields($pro_update);
 		}
 
 		// --------------------------------------------
@@ -576,8 +566,8 @@ class Freeform_upd extends Module_builder_freeform
 
 		if ($this->version_compare($this->database_version(), '<', '4.0.0.d1'))
 		{
-			ee()->freeform_migration->upgrade_migrate_preferences();
-			ee()->freeform_migration->upgrade_notification_templates();
+			$this->EE->freeform_migration->upgrade_migrate_preferences();
+			$this->EE->freeform_migration->upgrade_notification_templates();
 		}
 
 		// --------------------------------------------
@@ -587,8 +577,8 @@ class Freeform_upd extends Module_builder_freeform
 		if ($this->version_compare($this->database_version(), '<', '4.0.0.b2') AND
 			! $this->column_exists('param_data', 'exp_freeform_composer_templates'))
 		{
-			ee()->load->dbforge();
-			ee()->dbforge->add_column(
+			$this->EE->load->dbforge();
+			$this->EE->dbforge->add_column(
 				'freeform_composer_templates',
 				array(
 					'param_data' => array('type' => 'TEXT')
@@ -603,12 +593,12 @@ class Freeform_upd extends Module_builder_freeform
 		if ($this->version_compare($this->database_version(), '<', '4.0.0.b3'))
 		{
 
-			ee()->db->query(
+			$this->EE->db->query(
 				"UPDATE exp_freeform_composer_layouts
 				 SET	composer_data = REPLACE(composer_data,'nonfield_submit_button','nonfield_submit')"
 			);
 
-			ee()->db->query(
+			$this->EE->db->query(
 				"UPDATE exp_freeform_composer_templates
 				 SET	template_data = REPLACE(template_data,'nonfield_submit_button','nonfield_submit')"
 			);
@@ -621,8 +611,8 @@ class Freeform_upd extends Module_builder_freeform
 		if ($this->version_compare($this->database_version(), '<', '4.0.4') AND
 			$this->column_exists('edit_date', 'exp_freeform_user_email'))
 		{
-			ee()->load->dbforge();
-			ee()->dbforge->modify_column(
+			$this->EE->load->dbforge();
+			$this->EE->dbforge->modify_column(
 				'freeform_user_email',
 				array(
 					'edit_date' => array(
@@ -648,22 +638,22 @@ class Freeform_upd extends Module_builder_freeform
 		//down to free
 		else
 		{
-			ee()->load->model('freeform_field_model');
+			$this->EE->load->model('freeform_field_model');
 
-			ee()->freeform_field_model
+			$this->EE->freeform_field_model
 				->where_not_in('field_type', $this->data->defaults['default_fields'])
 				->update(array('field_type' => 'text'));
 
 			$this->uninstall_ffp_channel_field();
 		}
 
-		if (ee()->freeform_preference_model->count(array(
+		if ($this->EE->freeform_preference_model->count(array(
 				'site_id'			=> 0,
 				'preference_name'	=> 'ffp'
 			)) > 0
 		)
 		{
-			ee()->freeform_preference_model->update(
+			$this->EE->freeform_preference_model->update(
 				array(
 					'preference_value'	=> FREEFORM_PRO ? 'y' : 'n',
 				),
@@ -675,7 +665,7 @@ class Freeform_upd extends Module_builder_freeform
 		}
 		else
 		{
-			ee()->freeform_preference_model->insert(array(
+			$this->EE->freeform_preference_model->insert(array(
 				'preference_name' 	=> 'ffp',
 				'preference_value'	=> FREEFORM_PRO ? 'y' : 'n',
 				'site_id' 			=> '0'
@@ -691,7 +681,7 @@ class Freeform_upd extends Module_builder_freeform
 			'has_publish_fields'	=> 'n'
 		);
 
-		ee()->db->update(
+		$this->EE->db->update(
 			'modules',
 			$data,
 			array(
@@ -715,12 +705,12 @@ class Freeform_upd extends Module_builder_freeform
 
 	public function uninstall_ffp_channel_field ()
 	{
-		ee()->load->library('addons/addons_installer');
-		ee()->load->model('addons_model');
+		$this->EE->load->library('addons/addons_installer');
+		$this->EE->load->model('addons_model');
 
-		if (ee()->addons_model->fieldtype_installed($this->lower_name))
+		if ($this->EE->addons_model->fieldtype_installed($this->lower_name))
 		{
-			ee()->addons_installer->uninstall($this->lower_name, 'fieldtype', FALSE);
+			$this->EE->addons_installer->uninstall($this->lower_name, 'fieldtype', FALSE);
 		}
 	}
 	//END uninstall_ffp_channel_field
@@ -737,12 +727,12 @@ class Freeform_upd extends Module_builder_freeform
 
 	public function install_ffp_channel_field ()
 	{
-		ee()->load->library('addons/addons_installer');
-		ee()->load->model('addons_model');
+		$this->EE->load->library('addons/addons_installer');
+		$this->EE->load->model('addons_model');
 
-		if ( ! ee()->addons_model->fieldtype_installed($this->lower_name))
+		if ( ! $this->EE->addons_model->fieldtype_installed($this->lower_name))
 		{
-			ee()->addons_installer->install($this->lower_name, 'fieldtype', FALSE);
+			$this->EE->addons_installer->install($this->lower_name, 'fieldtype', FALSE);
 		}
 	}
 	//END install_ffp_channel_field

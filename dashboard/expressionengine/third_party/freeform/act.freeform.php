@@ -3,14 +3,14 @@
 /**
  * Freeform - Actions
  *
- * Handles All Form Submissions and Action Requests Used on both User and CP areas of EE.
+ * Shared functions between many libraries
  *
  * @package		Solspace:Freeform
  * @author		Solspace, Inc.
  * @copyright	Copyright (c) 2008-2013, Solspace, Inc.
  * @link		http://solspace.com/docs/freeform
  * @license		http://www.solspace.com/license_agreement
- * @version		4.0.10
+ * @version		4.0.11
  * @filesource	freeform/act.freeform.php
  */
 
@@ -21,22 +21,6 @@ if ( ! class_exists('Addon_builder_freeform'))
 
 class Freeform_actions extends Addon_builder_freeform
 {
-	// --------------------------------------------------------------------
-
-	/**
-	 * Constructor
-	 *
-	 * @access	public
-	 * @return	null
-	 */
-
-	public function __construct()
-	{
-		parent::__construct('freeform');
-	}
-	// END
-
-
 	// --------------------------------------------------------------------
 
 	/**
@@ -85,7 +69,7 @@ class Freeform_actions extends Addon_builder_freeform
 				}
 			}
 
-			ee()->output->show_user_error(
+			$this->EE->output->show_user_error(
 				$error_type,
 				$error_return
 			);
@@ -168,17 +152,17 @@ class Freeform_actions extends Addon_builder_freeform
 
 	public function template ()
 	{
-		if ( ! isset(ee()->TMPL) OR ! is_object(ee()->TMPL))
+		if ( ! isset($this->EE->TMPL) OR ! is_object($this->EE->TMPL))
 		{
 			if ( ! class_exists('Addon_builder_parser_freeform'))
 			{
 				require_once $this->addon_path . 'addon_builder/parser.addon_builder.php';
 			}
 
-			ee()->TMPL = new Addon_builder_parser_freeform ();
+			$this->EE->TMPL = new Addon_builder_parser_freeform ();
 		}
 
-		return ee()->TMPL;
+		return $this->EE->TMPL;
 	}
 	//END template_parser
 
@@ -214,5 +198,37 @@ class Freeform_actions extends Addon_builder_freeform
 		}
 	}
 	//END decode_entities
+
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Is a file upload present for the field?
+	 *
+	 * @access	public
+	 * @param	string $name	name of field to check
+	 * @return	boolean			false if nothing found,
+	 *							true if at least one file upload
+	 */
+
+	public function file_upload_present($name = '')
+	{
+		$result = FALSE;
+
+		if (isset($_FILES[$name]['error']))
+		{
+			foreach($_FILES[$name]['error'] as $error)
+			{
+				if ($error !== UPLOAD_ERR_NO_FILE)
+				{
+					$result = TRUE;
+					break;
+				}
+			}
+		}
+
+		return $result;
+	}
+	//END file_upload_present
 }
 // END Freeform_actions Class

@@ -11,8 +11,6 @@
  * @filesource	freeform/libraries/Freeform_notifications.php
  */
 
-if ( ! defined('APP_VER')) define('APP_VER', '2.0'); // EE 2.0's Wizard doesn't like CONSTANTs
-
 $__parent_folder = rtrim(realpath(rtrim(dirname(__FILE__), "/") . '/../'), '/') . '/';
 
 if ( ! class_exists('Addon_builder_freeform'))
@@ -35,12 +33,12 @@ class Freeform_notifications extends Addon_builder_freeform
 
 	public function __construct()
 	{
-		parent::__construct('freeform');
-		ee()->load->model('freeform_form_model');
-		ee()->load->library('email');
-		ee()->load->library('freeform_forms');
-		ee()->load->library('template');
-		ee()->load->helper(array('text', 'email'));
+		parent::__construct();
+		$this->EE->load->model('freeform_form_model');
+		$this->EE->load->library('email');
+		$this->EE->load->library('freeform_forms');
+		$this->EE->load->library('template');
+		$this->EE->load->helper(array('text', 'email'));
 	}
 	//END __construct()
 
@@ -69,8 +67,8 @@ class Freeform_notifications extends Addon_builder_freeform
 			'recipients'			=> array(),
 			'form_input_data'		=> array(),
 			'extra_message'			=> '',
-			'from_name'				=> ee()->config->item('webmaster_name'),
-			'from_email'			=> ee()->config->item('webmaster_email'),
+			'from_name'				=> $this->EE->config->item('webmaster_name'),
+			'from_email'			=> $this->EE->config->item('webmaster_email'),
 			'reply_to_name'			=> '',
 			'reply_to_email'		=> '',
 			'cc_recipients'			=> array(),
@@ -120,7 +118,7 @@ class Freeform_notifications extends Addon_builder_freeform
 		if ($notification_type == 'admin' AND
 			empty($recipients))
 		{
-			$recipients = array(ee()->config->item('webmaster_email'));
+			$recipients = array($this->EE->config->item('webmaster_email'));
 		}
 
 		if ( empty($recipients))
@@ -156,7 +154,7 @@ class Freeform_notifications extends Addon_builder_freeform
 		// -------------------------------------
 
 		//just in case someone else didn't clean up their mess
-		ee()->email->clear(TRUE);
+		$this->EE->email->clear(TRUE);
 
 		// -------------------------------------
 		//	get notification template
@@ -189,9 +187,9 @@ class Freeform_notifications extends Addon_builder_freeform
 									'notification_id' :
 									'notification_name';
 
-			ee()->load->model('freeform_notification_model');
+			$this->EE->load->model('freeform_notification_model');
 
-			$t_query = ee()->freeform_notification_model->get_row(array(
+			$t_query = $this->EE->freeform_notification_model->get_row(array(
 				$on_column => $template_id
 			));
 
@@ -251,10 +249,10 @@ class Freeform_notifications extends Addon_builder_freeform
 		//	prep variables for field parsing
 		//----------------------------------------
 
-		$this->subject 					= $template_data['email_subject'];
+		$this->subject					= $template_data['email_subject'];
 		$this->message					= $template_data['template_data'];
-		$this->email 					=& ee()->email;
-		$this->all_form_fields 			= array();
+		$this->email					=& $this->EE->email;
+		$this->all_form_fields			= array();
 		$this->all_form_fields_string	= array();
 		$this->fields					= array();
 		$this->wordwrap					= $this->check_yes($template_data['wordwrap']);
@@ -278,11 +276,51 @@ class Freeform_notifications extends Addon_builder_freeform
 		$this->field_outputs	= array();
 
 		// -------------------------------------
+		//	get field order for all_form_fields
+		// -------------------------------------
+
+		$field_loop_ids = array_keys($form_data['fields']);
+		$field_order	= $form_data['field_order'];
+
+		// -------------------------------------
+		//	order ids?
+		// -------------------------------------
+
+		if ( ! is_array($field_order) AND is_string($field_order))
+		{
+			$field_order = $this->actions()->pipe_split($field_order);
+		}
+
+		$order_ids = array();
+
+		if (is_array($field_order))
+		{
+			$order_ids = array_filter($field_order, array($this, 'is_positive_intlike'));
+		}
+
+		if ( ! empty($order_ids))
+		{
+			//this makes sure that any fields in 'fields' are in the
+			//order set as well. Will add missing at the end like this
+			$field_loop_ids = array_merge(
+				$order_ids,
+				array_diff($field_loop_ids, $order_ids)
+			);
+		}
+
+		// -------------------------------------
 		//	get instance of field and parse
 		// -------------------------------------
 
-		foreach ($form_data['fields'] as $field_id => $field_data)
+		foreach ($field_loop_ids as $field_id)
 		{
+			if ( ! isset($form_data['fields'][$field_id]))
+			{
+				continue;
+			}
+
+			$field_data = $form_data['fields'][$field_id];
+
 			//if this is a composer form, and the field is not a
 			//member of the form, continue out
 			if ( ! empty( $form_data['composer_field_ids'] ) AND
@@ -292,7 +330,7 @@ class Freeform_notifications extends Addon_builder_freeform
 			}
 
 			//get class instance of field
-			$instance =& ee()->freeform_fields->get_fieldtype_instance(
+			$instance =& $this->EE->freeform_fields->get_fieldtype_instance(
 				$field_data['field_type']
 			);
 
@@ -338,9 +376,10 @@ class Freeform_notifications extends Addon_builder_freeform
 												$output_data;
 
 			$this->all_form_fields[] = array(
-				'field_label'	=> $field_data['field_label'],
-				'field_type'	=> $field_data['field_type'],
-				'field_data'	=> $output_data
+				'field_label'		=> $field_data['field_label'],
+				'field_description'	=> $field_data['field_description'],
+				'field_type'		=> $field_data['field_type'],
+				'field_data'		=> $output_data
 			);
 
 			$this->field_outputs[$field_data['field_name']] = $output_data;
@@ -359,7 +398,7 @@ class Freeform_notifications extends Addon_builder_freeform
 		{
 			//this is going to clear any attachments
 			//that any of these fields have had privy to add
-			ee()->email->clear(TRUE);
+			$this->EE->email->clear(TRUE);
 			$this->variables['attachment_count'] = 0;
 		}
 		//we want all attachments at the top
@@ -381,27 +420,27 @@ class Freeform_notifications extends Addon_builder_freeform
 		//	conditionals, date formats, replacements, etc. FUN!
 		// -------------------------------------
 
-		$this->subject	= ee()->template->parse_variables(
+		$this->subject	= $this->EE->template->parse_variables(
 			$this->subject,
 			array(array_merge($this->variables, $this->field_outputs))
 		);
 
-		$from_email		= ee()->template->parse_variables(
+		$from_email		= $this->EE->template->parse_variables(
 			$from_email,
 			array(array_merge($this->variables, $this->field_outputs))
 		);
 
-		$from_name		= ee()->template->parse_variables(
+		$from_name		= $this->EE->template->parse_variables(
 			$from_name,
 			array(array_merge($this->variables, $this->field_outputs))
 		);
 
-		$reply_to_email	= ee()->template->parse_variables(
+		$reply_to_email	= $this->EE->template->parse_variables(
 			$reply_to_email,
 			array(array_merge($this->variables, $this->field_outputs))
 		);
 
-		$reply_to_name	= ee()->template->parse_variables(
+		$reply_to_name	= $this->EE->template->parse_variables(
 			$reply_to_name,
 			array(array_merge($this->variables, $this->field_outputs))
 		);
@@ -415,7 +454,7 @@ class Freeform_notifications extends Addon_builder_freeform
 
 		$this->variables['all_form_fields'] = $this->all_form_fields;
 
-		$this->message = ee()->template->parse_variables(
+		$this->message = $this->EE->template->parse_variables(
 			$this->message,
 			array(array_merge($this->variables, $this->field_outputs))
 		);
@@ -463,9 +502,9 @@ class Freeform_notifications extends Addon_builder_freeform
 			$hook_name = 'freeform_module_user_notification';
 		}
 
-		if (ee()->extensions->active_hook($hook_name) === TRUE)
+		if ($this->EE->extensions->active_hook($hook_name) === TRUE)
 		{
-			$this->variables = ee()->extensions->universal_call(
+			$this->variables = $this->EE->extensions->universal_call(
 				$hook_name,
 				$this->fields,
 				$entry_id,
@@ -474,7 +513,7 @@ class Freeform_notifications extends Addon_builder_freeform
 				$this
 			);
 
-			if (ee()->extensions->end_script === TRUE) return;
+			if ($this->EE->extensions->end_script === TRUE) return;
 		}
 
 		// -------------------------------------
@@ -504,10 +543,10 @@ class Freeform_notifications extends Addon_builder_freeform
 		//	Send email
 		//	----------------------------------------
 
-		ee()->email->wordwrap	= $this->wordwrap;
-		ee()->email->mailtype	= $this->mailtype;
+		$this->EE->email->wordwrap	= $this->wordwrap;
+		$this->EE->email->mailtype	= $this->mailtype;
 
-		$ascii_message 			= entities_to_ascii($this->message, ! $template_data['allow_html']);
+		$ascii_message = entities_to_ascii($this->message, ! $template_data['allow_html']);
 
 		// -------------------------------------
 		//	cc/bcc?
@@ -516,12 +555,12 @@ class Freeform_notifications extends Addon_builder_freeform
 
 		if (is_array($cc_recipients) AND ! empty($cc_recipients))
 		{
-			ee()->email->cc($cc_recipients);
+			$this->EE->email->cc($cc_recipients);
 		}
 
 		if (is_array($bcc_recipients) AND ! empty($bcc_recipients))
 		{
-			ee()->email->bcc($bcc_recipients);
+			$this->EE->email->bcc($bcc_recipients);
 		}
 
 		//all recipients
@@ -529,23 +568,23 @@ class Freeform_notifications extends Addon_builder_freeform
 		{
 			if ($reply_to_email AND valid_email($reply_to_email))
 			{
-				ee()->email->reply_to($reply_to_email, $reply_to_name);
+				$this->EE->email->reply_to($reply_to_email, $reply_to_name);
 			}
 
-			ee()->email->from($from_email, $from_name);
-			ee()->email->to($email_address);
-			ee()->email->subject(entities_to_ascii($this->subject, TRUE));
-			ee()->email->message($ascii_message);
-			ee()->email->send();
+			$this->EE->email->from($from_email, $from_name);
+			$this->EE->email->to($email_address);
+			$this->EE->email->subject(entities_to_ascii($this->subject, TRUE));
+			$this->EE->email->message($ascii_message);
+			$this->EE->email->send();
 
 			//clear out but keep attachments
 			//clear last so the first email can get the CC and BCC
 			//on the first item sent
-			ee()->email->clear(FALSE);
+			$this->EE->email->clear(FALSE);
 		}
 
 		//needs a cleanout so the next notification can go
-		ee()->email->clear(TRUE);
+		$this->EE->email->clear(TRUE);
 
 		// -------------------------------------
 		//	clear local vars
@@ -593,17 +632,17 @@ class Freeform_notifications extends Addon_builder_freeform
 
 	private function save_spam_interval ($form_id, $entry_id, $email_list)
 	{
-		ee()->db->insert(
+		$this->EE->db->insert(
 			'freeform_user_email',
 			array(
 				'email_count' 		=> count($email_list),
 				'email_addresses' 	=> implode(', ', $email_list),
 				'entry_id' 			=> $entry_id,
 				'form_id'			=> $form_id,
-				'entry_date'		=> ee()->localize->now,
-				'ip_address' 		=> ee()->input->ip_address(),
-				'author_id' 		=> ee()->session->userdata('member_id'),
-				'site_id' 			=> ee()->config->item('site_id')
+				'entry_date'		=> $this->EE->localize->now,
+				'ip_address' 		=> $this->EE->input->ip_address(),
+				'author_id' 		=> $this->EE->session->userdata('member_id'),
+				'site_id' 			=> $this->EE->config->item('site_id')
 			)
 		);
 
@@ -612,12 +651,12 @@ class Freeform_notifications extends Addon_builder_freeform
 		// -------------------------------------
 
 		$time_check = (
-			ee()->localize->now - (
+			$this->EE->localize->now - (
 				60 * ( (int) $this->preference('spam_interval') )
 			)
 		);
 
-		ee()->db->delete(
+		$this->EE->db->delete(
 			'freeform_user_email',
 			array('entry_date <' => $time_check)
 		);
@@ -650,21 +689,21 @@ class Freeform_notifications extends Addon_builder_freeform
 		//	----------------------------------------
 
 		$time_check = (
-			ee()->localize->now - (
+			$this->EE->localize->now - (
 				60 * ( (int) $this->preference('spam_interval') )
 			)
 		);
 
 		$t1 = 'exp_freeform_user_email';
-		$t2 = ee()->freeform_form_model->table_name($form_id);
+		$t2 = $this->EE->freeform_form_model->table_name($form_id);
 
-		ee()->db->select_sum($t1 . '.email_count');
-		ee()->db->from($t1 . ',' . $t2);
-		ee()->db->where("{$t2}.entry_id = {$t1}.entry_id");
-		ee()->db->where($t2 . '.ip_address', ee()->input->ip_address());
-		ee()->db->where($t2 . '.entry_date >', $time_check);
+		$this->EE->db->select_sum($t1 . '.email_count');
+		$this->EE->db->from($t1 . ',' . $t2);
+		$this->EE->db->where("{$t2}.entry_id = {$t1}.entry_id");
+		$this->EE->db->where($t2 . '.ip_address', $this->EE->input->ip_address());
+		$this->EE->db->where($t2 . '.entry_date >', $time_check);
 
-		$query = ee()->db->get();
+		$query = $this->EE->db->get();
 
 		if ( $query->row('email_count') > $this->preference('spam_count') )
 		{
@@ -703,9 +742,9 @@ class Freeform_notifications extends Addon_builder_freeform
 				'notification_description' 	=> lang('default_notification'),
 				'wordwrap' 					=> 'y',
 				'allow_html' 				=> 'n',
-				'from_name' 				=> ee()->config->item('webmaster_name'),
-				'from_email' 				=> ee()->config->item('webmaster_email'),
-				'reply_to_email' 			=> ee()->config->item('webmaster_name'),
+				'from_name' 				=> $this->EE->config->item('webmaster_name'),
+				'from_email' 				=> $this->EE->config->item('webmaster_email'),
+				'reply_to_email' 			=> $this->EE->config->item('webmaster_name'),
 				'email_subject' 			=> lang('default_notification_subject'),
 				'template_data' 			=> lang('default_notification_template'),
 				'include_attachments'		=> 'y'

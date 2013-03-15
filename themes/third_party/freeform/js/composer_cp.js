@@ -97,6 +97,8 @@
 		}
 	};
 
+	var nonfieldReauireable = ['dynamic_recipients', 'user_recipients', 'captcha'];
+
 	// -------------------------------------
 	//	Private Functions
 	// -------------------------------------
@@ -217,7 +219,8 @@
 
 		insertOutputs[elementId] = fieldWrapper({
 			'elementId' : 'nonfield_' + elementId,
-			'element'	: element
+			'element'	: element,
+			'requireable': ($.inArray(elementId, nonfieldReauireable) > -1) ? 'yes' : 'no'
 		});
 
 		$buttonObj.click(function(){
@@ -687,6 +690,8 @@
 					var text		= '';
 					var html		= '';
 
+					item.required	= required;
+
 					//if this isn't a normal fields we need some special
 					//provisions to make them store properly
 					if (eid.match(/^nonfield_/))
@@ -713,8 +718,11 @@
 						}
 						else if (nonFieldType == 'user_recipients')
 						{
+							//get label with required * removed if present
 							text = $.trim(
-								$element.find('.editable_userrec .element_label:first').text()
+								$element.
+									find('.editable_userrec .element_label:first').
+									text().replace(/\*$/igm, '')
 							);
 
 							//if it's not just the placeholder text, then store
@@ -776,7 +784,8 @@
 
 							if ($labelHolder.length > 0 && $labelHolder.text())
 							{
-								label = $labelHolder.text();
+								//get label with required * removed if present
+								label = $labelHolder.text().replace(/\*$/igm, '');
 							}
 
 							item.data			= data;
@@ -808,7 +817,6 @@
 					{
 						item.type		= 'field';
 						item.fieldId	= Freeform.composerFieldData[eid].fieldId;
-						item.required	= required;
 
 						//fields is a field id holder
 						fields.push(item.fieldId);
@@ -1186,10 +1194,11 @@
 			{
 				var $that		= $(this);
 				var $pItem		= $that.find('.editable_userrec');
-				var data		= $pItem.find('.element_label').text();
+				//get label with required * removed if present
+				var data		= $pItem.find('.element_label').text().replace(/\*$/igm, '');
 				//if input data is the same as the instructions placeholder, don't show
 				var inputData	= (
-					Freeform.composerLang.submit == $.trim(data)
+					Freeform.composerLang.notfyFriends == $.trim(data)
 				) ? '' : $.trim(data);
 
 				//replace paragraph with editor
@@ -1282,7 +1291,8 @@
 
 				if ($labelHolder.length > 0 && $labelHolder.text())
 				{
-					label = $labelHolder.text();
+					//remove the requiered labels * output
+					label = $labelHolder.text().replace(/\*$/igm, '');
 				}
 
 				$.fancybox(_.extend(fieldFancyboxDefaults, {
@@ -1735,14 +1745,25 @@
 			return false;
 		}).css('cursor', 'pointer');
 
-		var ignoreSubmitError = false;
+		// -------------------------------------
+		//	save composer
+		// -------------------------------------
 
-		$('#save_composer').submit(function(e){
+		var ignoreSubmitError = false;
+		var $saveForm = $('#save_composer');
+
+		function saveComposer(e, redirect)
+		{
+			redirect = (redirect === false) ? false : true;
+
+			$.fancybox.showActivity();
+
 			var composerJSON = getComposerRows();
 
 			//if there isn't a submit button for every page
 			if ( ! ignoreSubmitError && missingSubmits)
 			{
+				$.fancybox.hideActivity();
 				Freeform.jQUIDialog({
 					'immediate'		: true,
 					'cancel'		: Freeform.composerLang.cancel,
@@ -1763,9 +1784,26 @@
 				return false;
 			}
 
-			$.fancybox.showActivity();
 			$('#composer_save_data').val(composerJSON);
 			$('#composer_template_id').val($('#composer_template_select').val());
+
+			if ( ! redirect)
+			{
+				$.post($saveForm.attr('action'), $saveForm.serialize(), function(e){
+					$.fancybox.hideActivity();
+				});
+
+				e.preventDefault();
+				return false;
+			}
+		}
+
+		$('#save_and_finish').click(saveComposer).css('cursor', 'pointer');
+
+		//quicksave shouldn't post
+		$('#quicksave').click(function(e){
+			saveComposer(e, false);
+			return false;
 		}).css('cursor', 'pointer');
 
 		// -------------------------------------
@@ -1824,10 +1862,12 @@
 
 					for (fk = 0, fl = fields.length; fk < fl; fk++)
 					{
+						//title
 						if (fields[fk].type == 'nonfield_title')
 						{
 							columnData += insertOutputs['title'];
 						}
+						//paragraph
 						else if (fields[fk].type == 'nonfield_paragraph')
 						{
 							if (fields[fk].html === '')
@@ -1842,6 +1882,7 @@
 								});
 							}
 						}
+						//user recipients
 						else if (fields[fk].type == 'nonfield_user_recipients')
 						{
 							if (fields[fk].html === '')
@@ -1852,10 +1893,16 @@
 							{
 								columnData += fieldWrapper({
 									'elementId' : 'nonfield_user_recipients',
-									'element'	: userrec({data:fields[fk].html})
+									'element'	: userrec({data:fields[fk].html}),
+									'requireable': 'yes',
+									'reqiured' : (
+										typeof fields[fk].required !== 'undefined' &&
+										fields[fk].required == 'yes'
+									) ? 'yes' : 'no'
 								});
 							}
 						}
+						//dynamic recipients
 						else if (fields[fk].type == 'nonfield_dynamic_recipients')
 						{
 							if (fields[fk].html === '')
@@ -1876,14 +1923,21 @@
 												fields[fk].notificationId :
 												0
 											)
-									})
+									}),
+									'requireable': 'yes',
+									'reqiured' : (
+										typeof fields[fk].required !== 'undefined' &&
+										fields[fk].required == 'yes'
+									) ? 'yes' : 'no'
 								});
 							}
 						}
+						//captcha
 						else if (fields[fk].type == 'nonfield_captcha')
 						{
 							columnData += insertOutputs['captcha'];
 						}
+						//submit
 						else if (fields[fk].type == 'nonfield_submit')
 						{
 							if (typeof fields[fk].html === 'undefined' ||
@@ -1899,6 +1953,7 @@
 								});
 							}
 						}
+						//field
 						else if (
 							fields[fk].type == 'field' &&
 							typeof fields[fk].fieldId !== 'undefined' &&

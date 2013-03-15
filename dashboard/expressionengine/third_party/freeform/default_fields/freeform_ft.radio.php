@@ -186,7 +186,7 @@ class Radio_freeform_ft extends Freeform_base_ft
 
 	public function replace_tag ($data, $params = array(), $tagdata = FALSE)
 	{
-		return $this->multi_item_replace_tag($data, $tagdata);
+		return $this->multi_item_replace_tag($data, $tagdata, FALSE, $params);
 	}
 	//END replace tag
 
@@ -206,8 +206,9 @@ class Radio_freeform_ft extends Freeform_base_ft
 
 	public function display_email_data ($data, $notification_obj)
 	{
+		$this->EE->load->helper('text');
 		return $this->EE->functions->encode_ee_tags(
-			str_replace('<br/>', "\n", $this->replace_tag($data)),
+			str_replace('<br/>', "\n", entities_to_ascii($this->replace_tag($data))),
 			TRUE
 		);
 	}

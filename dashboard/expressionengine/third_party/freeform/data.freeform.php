@@ -8,7 +8,7 @@
  * @copyright	Copyright (c) 2008-2013, Solspace, Inc.
  * @link		http://solspace.com/docs/freeform
  * @license		http://www.solspace.com/license_agreement
- * @version		4.0.10
+ * @version		4.0.11
  * @filesource	freeform/data.freeform.php
  */
 
@@ -19,7 +19,7 @@ if ( ! class_exists('Addon_builder_data_freeform'))
 
 if ( ! class_exists('Freeform_cacher'))
 {
-	require_once 'cacher.freeform.php';
+	require_once 'libraries/Freeform_cacher.php';
 }
 
 class Freeform_data extends Addon_builder_data_freeform
@@ -146,7 +146,7 @@ class Freeform_data extends Addon_builder_data_freeform
 	private $global_module_preferences;
 
 	public $doc_links					= array(
-		'custom_fields'				=> 'http://solspace.com/docs/detail/freeform_fieldtype_development/'
+		'custom_fields'				=> 'http://solspace.com/docs/freeform/fieldtype_development/'
 	);
 
 	// --------------------------------------------------------------------
@@ -163,7 +163,7 @@ class Freeform_data extends Addon_builder_data_freeform
 		parent::__construct();
 
 		$this->msm_enabled = $this->check_yes(
-			ee()->config->item('multiple_sites_enabled')
+			$this->EE->config->item('multiple_sites_enabled')
 		);
 	}
 	//END __construct()
@@ -255,9 +255,9 @@ class Freeform_data extends Addon_builder_data_freeform
 		$cache = new Freeform_cacher(func_get_args(), __FUNCTION__, __CLASS__);
 		if ($cache->is_set()){ return $cache->get(); }
 
-		ee()->load->model('freeform_fieldtyle_model');
+		$this->EE->load->model('freeform_fieldtyle_model');
 
-		$installed_fieldtypes = ee()->freeform_fieldtype_model->installed_fieldtypes();
+		$installed_fieldtypes = $this->EE->freeform_fieldtype_model->installed_fieldtypes();
 
 		//set cache and return
 		return $cache->set(array_key_exists(
@@ -282,18 +282,18 @@ class Freeform_data extends Addon_builder_data_freeform
 
 	public function get_form_submissions_count ($form_id)
 	{
-		ee()->load->model('freeform_entry_model');
+		$this->EE->load->model('freeform_entry_model');
 
 		if ( ! $this->show_all_sites())
 		{
-			ee()->freeform_entry_model->where(
+			$this->EE->freeform_entry_model->where(
 				'site_id',
-				ee()->config->item('site_id')
+				$this->EE->config->item('site_id')
 			);
 		}
 
 		//set cache and return
-		return ee()->freeform_entry_model->id($form_id)->count();
+		return $this->EE->freeform_entry_model->id($form_id)->count();
 	}
 	//END get_form_submissions_count
 
@@ -312,17 +312,17 @@ class Freeform_data extends Addon_builder_data_freeform
 
 	public function get_form_needs_moderation_count ($form_id)
 	{
-		ee()->load->model('freeform_entry_model');
+		$this->EE->load->model('freeform_entry_model');
 
 		if ( ! $this->show_all_sites())
 		{
-			ee()->freeform_entry_model->where(
+			$this->EE->freeform_entry_model->where(
 				'site_id',
-				ee()->config->item('site_id')
+				$this->EE->config->item('site_id')
 			);
 		}
 
-		return ee()->freeform_entry_model->id($form_id)->count(
+		return $this->EE->freeform_entry_model->id($form_id)->count(
 			array('status' => 'pending')
 		);
 	}
@@ -340,17 +340,17 @@ class Freeform_data extends Addon_builder_data_freeform
 
 	public function get_available_notification_templates ()
 	{
-		ee()->load->model('freeform_notification_model');
+		$this->EE->load->model('freeform_notification_model');
 
 		if ( ! $this->show_all_sites())
 		{
-			ee()->freeform_notification_model->where(
+			$this->EE->freeform_notification_model->where(
 				'site_id',
-				ee()->config->item('site_id')
+				$this->EE->config->item('site_id')
 			);
 		}
 
-		$notifications = ee()->freeform_notification_model
+		$notifications = $this->EE->freeform_notification_model
 							 ->key('notification_id', 'notification_label')
 							 ->get();
 
@@ -423,7 +423,7 @@ class Freeform_data extends Addon_builder_data_freeform
 			);
 		}
 
-		$site_id = $prefs_all_sites ? 1 : ee()->config->item('site_id');
+		$site_id = $prefs_all_sites ? 1 : $this->EE->config->item('site_id');
 
 		// -------------------------------------
 		//	get old prefs
@@ -431,9 +431,9 @@ class Freeform_data extends Addon_builder_data_freeform
 
 		$prefs   = array();
 
-		ee()->load->model('freeform_preference_model');
+		$this->EE->load->model('freeform_preference_model');
 
-		$p_query = ee()->freeform_preference_model->get();
+		$p_query = $this->EE->freeform_preference_model->get();
 
 		if ($p_query !== FALSE)
 		{
@@ -467,7 +467,7 @@ class Freeform_data extends Addon_builder_data_freeform
 		}
 
 		//kill all entries so we don't have to mix updates
-		ee()->freeform_preference_model->clear_table();
+		$this->EE->freeform_preference_model->clear_table();
 
 		//keep old prefs and only overwrite updated/ add new
 		//manual merge because we need the numeric keys intact
@@ -508,7 +508,7 @@ class Freeform_data extends Addon_builder_data_freeform
 					$value = json_encode($value);
 				}
 
-				ee()->freeform_preference_model->insert(array(
+				$this->EE->freeform_preference_model->insert(array(
 					'preference_name' 	=> $key,
 					'preference_value'	=> $value,
 					'site_id' 			=> $site_id
@@ -559,12 +559,12 @@ class Freeform_data extends Addon_builder_data_freeform
 			$site_id = (
 				! $this->check_no($this->global_preference('prefs_all_sites')) ?
 					1 :
-					ee()->config->item('site_id')
+					$this->EE->config->item('site_id')
 			);
 
-			ee()->load->model('freeform_preference_model');
+			$this->EE->load->model('freeform_preference_model');
 
-			$query =	ee()->freeform_preference_model
+			$query =	$this->EE->freeform_preference_model
 							->key('preference_name', 'preference_value')
 							->where('site_id', $site_id)
 							->get();
@@ -615,9 +615,9 @@ class Freeform_data extends Addon_builder_data_freeform
 		//installed?
 		if ($this->database_version())
 		{
-			ee()->load->model('freeform_preference_model');
+			$this->EE->load->model('freeform_preference_model');
 
-			$query =	ee()->freeform_preference_model
+			$query =	$this->EE->freeform_preference_model
 							->key('preference_name', 'preference_value')
 							->where('site_id', '0')
 							->get();
@@ -701,9 +701,9 @@ class Freeform_data extends Addon_builder_data_freeform
 
 	public function is_valid_form_id ( $form_id = 0)
 	{
-		ee()->load->model('freeform_form_model');
+		$this->EE->load->model('freeform_form_model');
 
-		return (ee()->freeform_form_model->count($form_id) > 0);
+		return ($this->EE->freeform_form_model->count($form_id) > 0);
 	}
 	// END is_valid_form_id()
 
@@ -728,9 +728,9 @@ class Freeform_data extends Addon_builder_data_freeform
 			return FALSE;
 		}
 
-		ee()->load->model('freeform_entry_model');
+		$this->EE->load->model('freeform_entry_model');
 
-		return (ee()->freeform_entry_model->id($form_id)->count($entry_id) > 0);
+		return ($this->EE->freeform_entry_model->id($form_id)->count($entry_id) > 0);
 	}
 	// END is_valid_entry_id()
 
@@ -750,9 +750,9 @@ class Freeform_data extends Addon_builder_data_freeform
 	{
 		if ( trim($form_name) == ''){ return FALSE;	}
 
-		ee()->load->model('freeform_form_model');
+		$this->EE->load->model('freeform_form_model');
 
-		$row = ee()->freeform_form_model->select('form_id')
+		$row = $this->EE->freeform_form_model->select('form_id')
 										->get_row(array('form_name' => $form_name));
 
 		return ($row ? $row['form_id'] : FALSE);
@@ -781,9 +781,9 @@ class Freeform_data extends Addon_builder_data_freeform
 			return FALSE;
 		}
 
-		ee()->load->model('freeform_entry_model');
+		$this->EE->load->model('freeform_entry_model');
 
-		return ee()->freeform_entry_model->id($form_id)->get_row($entry_id);
+		return $this->EE->freeform_entry_model->id($form_id)->get_row($entry_id);
 	}
 	// END get_entry_data_by_id
 
@@ -800,10 +800,10 @@ class Freeform_data extends Addon_builder_data_freeform
 
 	public function get_form_info ( $form_id = 0 )
 	{
-		ee()->load->model('freeform_form_model');
-		ee()->load->model('freeform_field_model');
+		$this->EE->load->model('freeform_form_model');
+		$this->EE->load->model('freeform_field_model');
 
-		$data = ee()->freeform_form_model->get_row($form_id);
+		$data = $this->EE->freeform_form_model->get_row($form_id);
 
 		if (empty($data))
 		{
@@ -813,7 +813,7 @@ class Freeform_data extends Addon_builder_data_freeform
 		//get all associated fields and add in
 		if ( ! empty($data['field_ids']) )
 		{
-			$field_data = ee()->freeform_field_model->get(array(
+			$field_data = $this->EE->freeform_field_model->get(array(
 				'field_id' => $data['field_ids']
 			));
 
@@ -840,8 +840,8 @@ class Freeform_data extends Addon_builder_data_freeform
 
 		if ( ! empty($data['composer_id']) )
 		{
-			ee()->load->model('freeform_composer_model');
-			$cdata = ee()->freeform_composer_model->get_row($data['composer_id']);
+			$this->EE->load->model('freeform_composer_model');
+			$cdata = $this->EE->freeform_composer_model->get_row($data['composer_id']);
 
 			if ( ! empty( $cdata['composer_data'] ) )
 			{
@@ -859,7 +859,7 @@ class Freeform_data extends Addon_builder_data_freeform
 
 					if ( ! empty($find))
 					{
-						$c_field_data = ee()->freeform_field_model->get(array(
+						$c_field_data = $this->EE->freeform_field_model->get(array(
 							'field_id' => $find
 						));
 
@@ -907,9 +907,9 @@ class Freeform_data extends Addon_builder_data_freeform
 
 	public function get_field_info_by_id ( $field_id = 0)
 	{
-		ee()->load->model('freeform_field_model');
+		$this->EE->load->model('freeform_field_model');
 
-		return ee()->freeform_field_model->get_row($field_id);
+		return $this->EE->freeform_field_model->get_row($field_id);
 	}
 	// END get_field_info_by_id()
 
@@ -926,9 +926,9 @@ class Freeform_data extends Addon_builder_data_freeform
 
 	public function get_notification_info_by_id ( $notification_id = 0)
 	{
-		ee()->load->model('freeform_notification_model');
+		$this->EE->load->model('freeform_notification_model');
 
-		return ee()->freeform_notification_model->get_row($notification_id);
+		return $this->EE->freeform_notification_model->get_row($notification_id);
 	}
 	// END get_notification_info_by_id()
 
@@ -946,9 +946,9 @@ class Freeform_data extends Addon_builder_data_freeform
 
 	public function get_form_info_by_field_id ( $field_id = 0, $use_cache = TRUE )
 	{
-		ee()->load->model('freeform_form_model');
+		$this->EE->load->model('freeform_form_model');
 
-		return ee()->freeform_form_model->forms_with_field_id($field_id, $use_cache);
+		return $this->EE->freeform_form_model->forms_with_field_id($field_id, $use_cache);
 	}
 	// END get_form_ids_by_field_id()
 
@@ -971,9 +971,9 @@ class Freeform_data extends Addon_builder_data_freeform
 		//  get form info
 		// -------------------------------------
 
-		ee()->load->model('freeform_form_model');
+		$this->EE->load->model('freeform_form_model');
 
-		$query =	ee()->freeform_form_model
+		$query =	$this->EE->freeform_form_model
 						->key('form_id')
 						->where('user_notification_id', $notification_id)
 						->or_where('admin_notification_id', $notification_id)

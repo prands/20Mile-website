@@ -7,6 +7,8 @@
 
 <!--[if !IE]><!--><script type="text/javascript">
 	//sigh, i hate you ie10
+	//this works because cc_on still works in ie10, but
+	//conditional comments are gone
 	if (/*@cc_on!@*/false && document.querySelectorAll)
 	{
 		var items = document.querySelectorAll('.solspace_ui_wrapper');
@@ -83,7 +85,7 @@
 		z-index: 		1;
 	}
 	#mainContent .tab_menu {
-		background:				#3A4850 url('<?=ee()->cp->cp_theme_url?>/images/backgrounds_sprite.png') repeat-x 0 -217px;
+		background:				#3A4850 url('<?=$this->EE->cp->cp_theme_url?>/images/backgrounds_sprite.png') repeat-x 0 -217px;
 	}
 </style>
 

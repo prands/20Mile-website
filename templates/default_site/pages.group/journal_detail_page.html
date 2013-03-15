@@ -55,11 +55,11 @@
                                         orderby="tag_name"
                                         sort="desc"
                                         limit="3"
-                                    }<a href="{path='articles/by_tag'}/tag/{websafe_tag}">{tag}</a> &bull; {/exp:tag:tags}
+                                    }<a href="{path='/journal/filter/tag'}/{websafe_tag}">{tag}</a> &bull; {/exp:tag:tags}
                                     </span>
                                     <span class="cat-group">
                                         {categories show_group="1"}
-                                            <a href="#" class="category {category_url_title}"></a>
+                                            <a href="{path='/journal/filter'}" class="category {category_url_title}"></a>
                                         {/categories}
                                     </span>
                                     facebook | twitter

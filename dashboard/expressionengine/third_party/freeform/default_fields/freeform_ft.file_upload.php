@@ -19,9 +19,9 @@ class File_upload_freeform_ft extends Freeform_base_ft
 	public $requires_multipart 	= TRUE;
 
 	public $info 				= array(
-		'name' 			=> 'File Upload',
-		'version' 		=> FREEFORM_VERSION,
-		'description' 	=> 'A field that allows a user to upload files.'
+		'name'						=> 'File Upload',
+		'version'					=> FREEFORM_VERSION,
+		'description'				=> 'A field that allows a user to upload files.'
 	);
 
 	public $default_settings 	= array(
@@ -177,11 +177,36 @@ class File_upload_freeform_ft extends Freeform_base_ft
 						array('jpg', 'jpeg', 'gif', 'png')
 					);
 
-					$files[$k]['link']		= (file_exists($file_path)) ?
-												rtrim($uprefs['url'], '/') .
-												'/' . $filename :
-												FALSE;
+					$files[$k]['link']				= FALSE;
+					$files[$k]['download_link']		= FALSE;
+					$files[$k]['front_end_link']	= FALSE;
+
+					if (file_exists($file_path))
+					{
+						$files[$k]['link']			= $this->field_method_link(array(
+							'field_method'	=> 'view_file',
+							'file_id'		=> $files[$k]['file_id'],
+							//just to assist fancybox, not used
+							'filename'		=> $filename
+						));
+
+						$files[$k]['download_link']	= $this->field_method_link(array(
+							'field_method'	=> 'download_file',
+							'file_id'		=> $files[$k]['file_id']
+						));
+
+						$files[$k]['front_end_link'] = rtrim($uprefs['url'], '/') .
+															'/' . $filename;
+					}
+
 					$files[$k]['filesize']	= $files[$k]['filesize'] . lang('kb');
+
+					$files[$k]['uprefs_link'] = BASE .
+												'&C=content_files' .
+												'&M=edit_upload_preferences' .
+												'&id=' . $uprefs['id'];
+
+					$files[$k]['uprefs_name'] = $uprefs['name'];
 				}
 
 				$data['files'] = $files;
@@ -191,6 +216,75 @@ class File_upload_freeform_ft extends Freeform_base_ft
 		return $this->EE->load->view('file_uploads.html', $data, TRUE);
 	}
 	//end file_uploads_view
+
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * View a file in the CP
+	 * Helps with files that are displayed below root
+	 *
+	 * @access	public
+	 * @param	boolean $download	should the file be downloaded instead?
+	 * @return	void
+	 */
+
+	public function view_file($download = FALSE)
+	{
+		$this->EE->load->model('freeform_file_upload_model');
+
+		$file_id	= $this->get_post_or_zero('file_id');
+
+		//these prefs are per field, and automatic from settings
+		$uprefs		= $this->upload_prefs();
+
+		$file_data	= $this->EE->freeform_file_upload_model
+							->where('file_id', $file_id)
+							->get_row();
+
+		//legit, yo
+		if ($file_data == FALSE)
+		{
+			$this->EE->output->show_user_error('general', array(lang('invalid_file')));
+		}
+
+		$filename	= $this->EE->security->sanitize_filename($file_data['filename']);
+
+		$file_path	= realpath(rtrim($uprefs['server_path'], '/') . '/' . $filename);
+
+		if ( ! file_exists($file_path))
+		{
+			$this->EE->output->show_user_error('general', array(lang('invalid_file')));
+		}
+
+		$mime = get_mime_by_extension($filename);
+
+		if ($download)
+		{
+			header('Content-disposition: attachment; filename=' . $filename);
+		}
+
+		header('Content-type: ' . $mime);
+		header('Content-Length: ' . filesize($file_path));
+		readfile($file_path);
+		exit();
+	}
+	//END view_file
+
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Uses view_file with a download header for forced downloading
+	 *
+	 * @access	public
+	 * @return	void
+	 */
+	public function download_file()
+	{
+		return $this->view_file(TRUE);
+	}
+	//END download_file
 
 
 	// --------------------------------------------------------------------
@@ -623,17 +717,32 @@ class File_upload_freeform_ft extends Freeform_base_ft
 
 			foreach ($db_data as $row)
 			{
-				$template_rows[] = array(
+				$arr = array(
 					//'server_path'	=> $row['server_path'],
-					'filename'		=> $row['filename'],
-					'extension'		=> $row['extension'],
+					'freeform:filename'		=> $row['filename'],
+					'freeform:extension'	=> $row['extension'],
 					//filesize in other langauges can have commas in floats
 					//and EE's current version of CI cannot handle it
 					//so we have to cast to string here
-					'filesize'		=> (string) $row['filesize'],
-					'fileurl'		=> rtrim($upload_prefs['url'], '/') .
-										'/' . $this->EE->security->sanitize_filename($row['filename'])
+					'freeform:filesize'		=> (string) $row['filesize'],
+					'freeform:fileurl'		=> rtrim($upload_prefs['url'], '/') .
+										'/' . $this->EE->security->sanitize_filename($row['filename']),
 				);
+
+				// -------------------------------------
+				//	legacy
+				// -------------------------------------
+
+				if ( empty($params['disable_legacy']) OR
+					$params['disable_legacy'] == 'no')
+				{
+					$arr['filename']	= $arr['freeform:filename'];
+					$arr['extension']	= $arr['freeform:extension'];
+					$arr['filesize']	= $arr['freeform:filesize'];
+					$arr['fileurl']		= $arr['freeform:fileurl'];
+				}
+
+				$template_rows[]	= $arr;
 			}
 
 			$output = $this->EE->TMPL->parse_variables($tagdata, $template_rows);
@@ -1577,28 +1686,28 @@ class File_upload_freeform_ft extends Freeform_base_ft
 			switch($error)
 			{
 				case 1:	// UPLOAD_ERR_INI_SIZE
-					$errors[] = $this->EE->lang->line('upload_file_exceeds_limit');
+					$errors[] = lang('upload_file_exceeds_limit');
 					break;
 				case 2: // UPLOAD_ERR_FORM_SIZE
-					$errors[] = $this->EE->lang->line('upload_file_exceeds_form_limit');
+					$errors[] = lang('upload_file_exceeds_form_limit');
 					break;
 				case 3: // UPLOAD_ERR_PARTIAL
-					$errors[] = $this->EE->lang->line('upload_file_partial');
+					$errors[] = lang('upload_file_partial');
 					break;
 				case 4: // UPLOAD_ERR_NO_FILE
-					$errors[] = $this->EE->lang->line('upload_no_file_selected');
+					$errors[] = lang('upload_no_file_selected');
 					break;
 				case 6: // UPLOAD_ERR_NO_TMP_DIR
-					$errors[] = $this->EE->lang->line('upload_no_temp_directory');
+					$errors[] = lang('upload_no_temp_directory');
 					break;
 				case 7: // UPLOAD_ERR_CANT_WRITE
-					$errors[] = $this->EE->lang->line('upload_unable_to_write_file');
+					$errors[] = lang('upload_unable_to_write_file');
 					break;
 				case 8: // UPLOAD_ERR_EXTENSION
-					$errors[] = $this->EE->lang->line('upload_stopped_by_extension');
+					$errors[] = lang('upload_stopped_by_extension');
 					break;
 				default :
-					$errors[] = $this->EE->lang->line('upload_no_file_selected');
+					$errors[] = lang('upload_no_file_selected');
 					break;
 			}
 
@@ -1618,7 +1727,7 @@ class File_upload_freeform_ft extends Freeform_base_ft
 		// Is the file type allowed to be uploaded?
 		if ( ! $this->EE->upload->is_allowed_filetype())
 		{
-			$errors[] = $this->EE->lang->line('upload_invalid_filetype');
+			$errors[] = lang('upload_invalid_filetype');
 		}
 
 		// Convert the file size to kilobytes
@@ -1630,7 +1739,7 @@ class File_upload_freeform_ft extends Freeform_base_ft
 		// Is the file size within the allowed maximum?
 		if ( ! $this->EE->upload->is_allowed_filesize())
 		{
-			$errors[] = $this->EE->lang->line('upload_invalid_filesize');
+			$errors[] = lang('upload_invalid_filesize');
 		}
 
 		//clean

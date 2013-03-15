@@ -10,7 +10,7 @@
  * @copyright	Copyright (c) 2008-2013, Solspace, Inc.
  * @link		http://solspace.com/docs/freeform
  * @license		http://www.solspace.com/license_agreement
- * @version		4.0.10
+ * @version		4.0.11
  * @filesource	freeform/mcp.freeform.php
  */
 
@@ -36,14 +36,14 @@ class Freeform_mcp extends Module_builder_freeform
 
 	public function __construct( $switch = TRUE )
 	{
-		parent::__construct('freeform');
+		parent::__construct();
 
 		// Install or Uninstall Request
 		if ((bool) $switch === FALSE) return;
 
 		if ( ! function_exists('lang'))
 		{
-			ee()->load->helper('language');
+			$this->EE->load->helper('language');
 		}
 
 		// --------------------------------------------
@@ -121,7 +121,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//	custom CP?
 		// -------------------------------------
 
-		$debug_normal = (ee()->input->get_post('debug_normal') !== FALSE);
+		$debug_normal = ($this->EE->input->get_post('debug_normal') !== FALSE);
 
 		$is_crappy_ie_version = FALSE;
 		$ua = strtolower($_SERVER['HTTP_USER_AGENT']);
@@ -212,9 +212,9 @@ class Freeform_mcp extends Module_builder_freeform
 
 	public function index ($message='')
 	{
-		if ($message == '' AND ee()->input->get('msg') !== FALSE)
+		if ($message == '' AND $this->EE->input->get('msg') !== FALSE)
 		{
-			$message = lang(ee()->input->get('msg'));
+			$message = lang($this->EE->input->get('msg'));
 		}
 
 		return $this->forms($message);
@@ -238,9 +238,9 @@ class Freeform_mcp extends Module_builder_freeform
 		//  Messages
 		// -------------------------------------
 
-		if ($message == '' AND ! in_array(ee()->input->get('msg'), array(FALSE, '')) )
+		if ($message == '' AND ! in_array($this->EE->input->get('msg'), array(FALSE, '')) )
 		{
-			$message = lang(ee()->input->get('msg'));
+			$message = lang($this->EE->input->get('msg'));
 		}
 
 		$this->cached_vars['message'] = $message;
@@ -273,17 +273,17 @@ class Freeform_mcp extends Module_builder_freeform
 		//	pagination?
 		// -------------------------------------
 
-		ee()->load->model('freeform_form_model');
+		$this->EE->load->model('freeform_form_model');
 
 		if ( ! $this->data->show_all_sites())
 		{
-			ee()->freeform_form_model->where(
+			$this->EE->freeform_form_model->where(
 				'site_id',
-				ee()->config->item('site_id')
+				$this->EE->config->item('site_id')
 			);
 		}
 
-		$total_results = ee()->freeform_form_model->count(array(), FALSE);
+		$total_results = $this->EE->freeform_form_model->count(array(), FALSE);
 
 		// do we need pagination?
 		if ( $total_results > $row_limit )
@@ -303,7 +303,7 @@ class Freeform_mcp extends Module_builder_freeform
 				'query_string_segment'	=> 'row'
 			));
 
-			ee()->freeform_form_model->limit(
+			$this->EE->freeform_form_model->limit(
 				$row_limit,
 				$pagination_data['pagination_page']
 			);
@@ -311,7 +311,7 @@ class Freeform_mcp extends Module_builder_freeform
 			$paginate 		= $pagination_data['pagination_links'];
 		}
 
-		ee()->freeform_form_model->order_by('form_label');
+		$this->EE->freeform_form_model->order_by('form_label');
 
 		$this->cached_vars['paginate'] = $paginate;
 
@@ -322,9 +322,9 @@ class Freeform_mcp extends Module_builder_freeform
 		$this->cached_vars['legacy']		= FALSE;
 		$this->cached_vars['migrate_link']	= '';
 
-		ee()->load->library('freeform_migration');
+		$this->EE->load->library('freeform_migration');
 
-		if ( ee()->freeform_migration->legacy() === TRUE )
+		if ( $this->EE->freeform_migration->legacy() === TRUE )
 		{
 			$this->cached_vars['legacy']		= TRUE;
 			$this->cached_vars['migrate_link']	= $this->mod_link(array('method' => 'utilities'));
@@ -334,7 +334,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//	data
 		// -------------------------------------
 
-		$rows = ee()->freeform_form_model->get();
+		$rows = $this->EE->freeform_form_model->get();
 		$form_data = array();
 
 		if ($rows !== FALSE)
@@ -361,8 +361,8 @@ class Freeform_mcp extends Module_builder_freeform
 
 			if ( ! empty($potential_composer_ids))
 			{
-				ee()->load->model('freeform_composer_model');
-				$composer_ids = ee()->freeform_composer_model
+				$this->EE->load->model('freeform_composer_model');
+				$composer_ids = $this->EE->freeform_composer_model
 									->key('composer_id', 'composer_id')
 									->where('preview !=', 'y')
 									->where_in(
@@ -454,7 +454,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//	JS
 		// -------------------------------------
 
-		ee()->cp->add_js_script(
+		$this->EE->cp->add_js_script(
 			array('plugin' => array('tooltip', 'dataTables'))
 		);
 
@@ -484,7 +484,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 	public function delete_confirm_form ()
 	{
-		$form_ids = ee()->input->get_post('form_id', TRUE);
+		$form_ids = $this->EE->input->get_post('form_id', TRUE);
 
 		if ( ! is_array($form_ids) AND
 			 ! $this->is_positive_intlike($form_ids) )
@@ -522,7 +522,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 		if ( empty($form_ids) )
 		{
-			$form_ids = ee()->input->get_post('form_ids');
+			$form_ids = $this->EE->input->get_post('form_ids');
 		}
 
 		if ( ! is_array($form_ids) AND
@@ -535,19 +535,19 @@ class Freeform_mcp extends Module_builder_freeform
 		//but one last check on each item to make sure its a number
 		if ( is_array($form_ids))
 		{
-			ee()->load->library('freeform_forms');
+			$this->EE->load->library('freeform_forms');
 
 			foreach ($form_ids as $form_id)
 			{
 				if ($this->is_positive_intlike($form_id))
 				{
-					ee()->freeform_forms->delete_form($form_id);
+					$this->EE->freeform_forms->delete_form($form_id);
 				}
 			}
 		}
 
 		//the voyage home
-		ee()->functions->redirect($this->mod_link(array(
+		$this->EE->functions->redirect($this->mod_link(array(
 			'method' 	=> 'index',
 			'msg'		=> $message
 		)));
@@ -588,7 +588,7 @@ class Freeform_mcp extends Module_builder_freeform
 			'user_email_field' 			=> '',
 			'user_notification_id'		=> '0',
 			'admin_notification_id'		=> '0',
-			'admin_notification_email'	=> ee()->config->item('webmaster_email'),
+			'admin_notification_email'	=> $this->EE->config->item('webmaster_email'),
 			'form_description'			=> '',
 			'template_id'				=> '0',
 			'composer_id'				=> '0',
@@ -718,9 +718,9 @@ class Freeform_mcp extends Module_builder_freeform
 
 		$this->cached_vars['statuses']			= $this->data->get_form_statuses();
 
-		ee()->load->model('freeform_field_model');
+		$this->EE->load->model('freeform_field_model');
 
-		$available_fields						= ee()->freeform_field_model->get();
+		$available_fields						= $this->EE->freeform_field_model->get();
 
 		$available_fields						= ($available_fields !== FALSE) ?
 													$available_fields :
@@ -738,7 +738,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 		$user_email_fields = array('' => lang('choose_user_email_field'));
 
-		$f_rows =	ee()->freeform_field_model
+		$f_rows =	$this->EE->freeform_field_model
 						->select('field_id, field_label, settings')
 						->get(array('field_type' => 'text'));
 
@@ -775,7 +775,7 @@ class Freeform_mcp extends Module_builder_freeform
 		$this->load_fancybox();
 		$this->cached_vars['cp_javascript'][] = 'jquery.smooth-scroll.min';
 
-		ee()->cp->add_js_script(array(
+		$this->EE->cp->add_js_script(array(
 			'ui'	=> array('draggable', 'droppable', 'sortable')
 		));
 
@@ -812,9 +812,9 @@ class Freeform_mcp extends Module_builder_freeform
 		//  Messages
 		// -------------------------------------
 
-		if ($message == '' AND ! in_array(ee()->input->get('msg'), array(FALSE, '')) )
+		if ($message == '' AND ! in_array($this->EE->input->get('msg'), array(FALSE, '')) )
 		{
-			$message = lang(ee()->input->get('msg'));
+			$message = lang($this->EE->input->get('msg'));
 		}
 
 		$this->cached_vars['message'] = $message;
@@ -823,7 +823,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//	form_id
 		// -------------------------------------
 
-		$form_id 	= ee()->input->get_post('form_id', TRUE);
+		$form_id 	= $this->EE->input->get_post('form_id', TRUE);
 		$form_data 	= $this->data->get_form_info($form_id);
 
 		if ( ! $form_data)
@@ -852,9 +852,9 @@ class Freeform_mcp extends Module_builder_freeform
 		//	fields for composer
 		// -------------------------------------
 
-		ee()->load->model('freeform_field_model');
+		$this->EE->load->model('freeform_field_model');
 
-		$available_fields = ee()->freeform_field_model
+		$available_fields = $this->EE->freeform_field_model
 								->where('composer_use', 'y')
 								->order_by('field_label')
 								->key('field_name')
@@ -868,9 +868,9 @@ class Freeform_mcp extends Module_builder_freeform
 		//	templates
 		// -------------------------------------
 
-		ee()->load->model('freeform_template_model');
+		$this->EE->load->model('freeform_template_model');
 
-		$available_templates =  ee()->freeform_template_model
+		$available_templates =  $this->EE->freeform_template_model
 									->where('enable_template', 'y')
 									->order_by('template_label')
 									->key('template_id', 'template_label')
@@ -884,7 +884,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//	get field output for composer
 		// -------------------------------------
 
-		ee()->load->library('freeform_fields');
+		$this->EE->load->library('freeform_fields');
 
 		$field_composer_output	= array();
 		$field_id_list			= array();
@@ -917,9 +917,9 @@ class Freeform_mcp extends Module_builder_freeform
 
 		if ($form_data['composer_id'] > 0)
 		{
-			ee()->load->model('freeform_composer_model');
+			$this->EE->load->model('freeform_composer_model');
 
-			$composer = ee()->freeform_composer_model
+			$composer = $this->EE->freeform_composer_model
 							->select('composer_data')
 							->where('composer_id', $form_data['composer_id'])
 							->get_row();
@@ -984,7 +984,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 		$this->load_fancybox();
 
-		ee()->cp->add_js_script(array(
+		$this->EE->cp->add_js_script(array(
 			'ui'		=> array('sortable', 'draggable', 'droppable'),
 			'file'		=> array('underscore', 'json2')
 		));
@@ -1023,7 +1023,7 @@ class Freeform_mcp extends Module_builder_freeform
 		$template_id	= $this->get_post_or_zero('template_id');
 		$composer_id	= $this->get_post_or_zero('composer_id');
 		$preview_id		= $this->get_post_or_zero('preview_id');
-		$subpreview		= (ee()->input->get_post('subpreview') !== FALSE);
+		$subpreview		= ($this->EE->input->get_post('subpreview') !== FALSE);
 		$composer_page	= $this->get_post_or_zero('composer_page');
 
 		if ( ! $this->data->is_valid_form_id($form_id))
@@ -1055,9 +1055,9 @@ class Freeform_mcp extends Module_builder_freeform
 
 			if ($composer_id > 0)
 			{
-				ee()->load->model('freeform_composer_model');
+				$this->EE->load->model('freeform_composer_model');
 
-				$composer = ee()->freeform_composer_model
+				$composer = $this->EE->freeform_composer_model
 								->select('composer_data')
 								->where('composer_id', $composer_id)
 								->get_row();
@@ -1101,7 +1101,7 @@ class Freeform_mcp extends Module_builder_freeform
 			$this->cached_vars['page_url']		= $page_url;
 			$this->cached_vars['default_preview_css'] = $this->sc->addon_theme_url .
 														'css/default_composer.css';
-			$this->cached_vars['jquery_src']	= rtrim(ee()->config->item('theme_folder_url'), '/') .
+			$this->cached_vars['jquery_src']	= rtrim($this->EE->config->item('theme_folder_url'), '/') .
 										'/javascript/compressed/jquery/jquery.js';
 
 			$html = $this->view('composer_preview.html', NULL, TRUE);
@@ -1152,9 +1152,9 @@ class Freeform_mcp extends Module_builder_freeform
 		// -------------------------------------
 
 		if ($message == '' AND
-			! in_array(ee()->input->get('msg'), array(FALSE, '')) )
+			! in_array($this->EE->input->get('msg'), array(FALSE, '')) )
 		{
-			$message = lang(ee()->input->get('msg', TRUE));
+			$message = lang($this->EE->input->get('msg', TRUE));
 		}
 
 		$this->cached_vars['message'] = $message;
@@ -1163,7 +1163,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//	moderate
 		// -------------------------------------
 
-		$search_status = ee()->input->get_post('search_status');
+		$search_status = $this->EE->input->get_post('search_status');
 
 		$moderate = (
 			$moderate AND
@@ -1187,10 +1187,10 @@ class Freeform_mcp extends Module_builder_freeform
 		//	form data? legit? GTFO?
 		// -------------------------------------
 
-		$form_id = ee()->input->get_post('form_id');
+		$form_id = $this->EE->input->get_post('form_id');
 
-		ee()->load->library('freeform_forms');
-		ee()->load->model('freeform_form_model');
+		$this->EE->load->library('freeform_forms');
+		$this->EE->load->model('freeform_form_model');
 
 		//form data does all of the proper id validity checks for us
 		$form_data = $this->data->get_form_info($form_id);
@@ -1240,9 +1240,9 @@ class Freeform_mcp extends Module_builder_freeform
 		//	rest of models
 		// -------------------------------------
 
-		ee()->load->model('freeform_entry_model');
+		$this->EE->load->model('freeform_entry_model');
 
-		ee()->freeform_entry_model->id($form_id);
+		$this->EE->freeform_entry_model->id($form_id);
 
 		// -------------------------------------
 		//	custom field labels
@@ -1258,7 +1258,7 @@ class Freeform_mcp extends Module_builder_freeform
 		$field_column_names = array();
 
 		//field prefix
-		$f_prefix 			= ee()->freeform_form_model->form_field_prefix;
+		$f_prefix 			= $this->EE->freeform_form_model->form_field_prefix;
 
 		//keyed labels for the front end
 		foreach ($standard_columns as $column_name)
@@ -1270,7 +1270,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//	check for fields with custom views for entry tables
 		// -------------------------------------
 
-		ee()->load->library('freeform_fields');
+		$this->EE->load->library('freeform_fields');
 
 		//fields in this form
 		foreach ($form_data['fields'] as $field_id => $field_data)
@@ -1286,7 +1286,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 			$possible_columns[] 						= $field_id;
 
-			$instance =& ee()->freeform_fields->get_field_instance(array(
+			$instance =& $this->EE->freeform_fields->get_field_instance(array(
 				'field_id'		=> $field_id,
 				'field_data'	=> $field_data
 			));
@@ -1372,7 +1372,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 		foreach ($search_vars as $search_var)
 		{
-			$$search_var = ee()->input->get_post($search_var, TRUE);
+			$$search_var = $this->EE->input->get_post($search_var, TRUE);
 
 			//set for output
 			$this->cached_vars[$search_var] = (
@@ -1389,7 +1389,7 @@ class Freeform_mcp extends Module_builder_freeform
 			$search_on_field AND
 			in_array($search_on_field, $visible_columns))
 		{
-			ee()->freeform_entry_model->like(
+			$this->EE->freeform_entry_model->like(
 				$search_on_field,
 				$search_keywords
 			);
@@ -1405,7 +1405,7 @@ class Freeform_mcp extends Module_builder_freeform
 		{
 			$first = TRUE;
 
-			ee()->freeform_entry_model->group_like(
+			$this->EE->freeform_entry_model->group_like(
 				$search_keywords,
 				array_values($visible_columns)
 			);
@@ -1418,11 +1418,11 @@ class Freeform_mcp extends Module_builder_freeform
 		//status search?
 		if ($moderate)
 		{
-			ee()->freeform_entry_model->where('status', 'pending');
+			$this->EE->freeform_entry_model->where('status', 'pending');
 		}
 		else if ($search_status AND in_array($search_status, array_flip( $form_statuses)))
 		{
-			ee()->freeform_entry_model->where('status', $search_status);
+			$this->EE->freeform_entry_model->where('status', $search_status);
 
 			//pagination
 			$pag_url['search_status'] = $search_status;
@@ -1437,6 +1437,12 @@ class Freeform_mcp extends Module_builder_freeform
 		//pagination
 		if ($search_date_range == 'date_range')
 		{
+			//if its the same date, lets set the time to the end of the day
+			if ($search_date_range_start == $search_date_range_end)
+			{
+				$search_date_range_end .= ' 23:59';
+			}
+
 			if ($search_date_range_start !== FALSE)
 			{
 				$pag_url['search_date_range_start'] = $search_date_range_start;
@@ -1460,7 +1466,7 @@ class Freeform_mcp extends Module_builder_freeform
 			$has_search = TRUE;
 		}
 
-		ee()->freeform_entry_model->date_where(
+		$this->EE->freeform_entry_model->date_where(
 			$search_date_range,
 			$search_date_range_start,
 			$search_date_range_end
@@ -1478,14 +1484,14 @@ class Freeform_mcp extends Module_builder_freeform
 
 		if ( ! $this->data->show_all_sites())
 		{
-			ee()->freeform_entry_model->where(
+			$this->EE->freeform_entry_model->where(
 				'site_id',
-				ee()->config->item('site_id')
+				$this->EE->config->item('site_id')
 			);
 		}
 
 		//we need the counts for exports and end results
-		$total_entries 		= ee()->freeform_entry_model->count(array(), FALSE);
+		$total_entries 		= $this->EE->freeform_entry_model->count(array(), FALSE);
 
 		// -------------------------------------
 		//	orderby
@@ -1493,7 +1499,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 		$order_by	= 'entry_date';
 
-		$p_order_by = ee()->input->get_post('order_by');
+		$p_order_by = $this->EE->input->get_post('order_by');
 
 		if ($p_order_by !== FALSE AND in_array($p_order_by, $all_columns))
 		{
@@ -1507,7 +1513,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 		$sort		= ($order_by == 'entry_date') ? 'desc' : 'asc';
 
-		$p_sort		= ee()->input->get_post('sort');
+		$p_sort		= $this->EE->input->get_post('sort');
 
 		if ($p_sort !== FALSE AND
 			in_array(strtolower($p_sort), array('asc', 'desc')))
@@ -1516,7 +1522,7 @@ class Freeform_mcp extends Module_builder_freeform
 			$pag_url['sort']		= $sort;
 		}
 
-		ee()->freeform_entry_model->order_by($order_by, $sort);
+		$this->EE->freeform_entry_model->order_by($order_by, $sort);
 
 		$this->cached_vars['order_by']	= $order_by;
 		$this->cached_vars['sort']		= $sort;
@@ -1549,7 +1555,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 		if ($export)
 		{
-			$export_fields = ee()->input->get_post('export_fields');
+			$export_fields = $this->EE->input->get_post('export_fields');
 			$export_labels = $column_labels;
 
 			// -------------------------------------
@@ -1609,20 +1615,20 @@ class Freeform_mcp extends Module_builder_freeform
 				}
 			}
 
-			ee()->freeform_entry_model->select(implode(', ', $select));
+			$this->EE->freeform_entry_model->select(implode(', ', $select));
 
 			// -------------------------------------
 			//	check for chunking, etc
 			// -------------------------------------
 
-			ee()->load->library('freeform_export');
+			$this->EE->load->library('freeform_export');
 
-			ee()->freeform_export->export(array(
-				'method' 			=> ee()->input->get_post('export_method'),
+			$this->EE->freeform_export->export(array(
+				'method' 			=> $this->EE->input->get_post('export_method'),
 				'form_id' 			=> $form_id,
 				'form_name' 		=> $form_data['form_name'],
 				'output' 			=> 'download',
-				'model' 			=> ee()->freeform_entry_model,
+				'model' 			=> $this->EE->freeform_entry_model,
 				'remove_entry_id' 	=> ($export_fields != 'all' AND ! in_array('entry_id', $visible_columns)),
 				'header_labels' 	=> $export_labels,
 				'total_entries' 	=> $total_entries
@@ -1636,7 +1642,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 		$needed_selects = array_unique(array_merge($must_haves, $find_columns));
 
-		ee()->freeform_entry_model->select(implode(', ', $needed_selects));
+		$this->EE->freeform_entry_model->select(implode(', ', $needed_selects));
 
 		//--------------------------------------
 		//  pagination start vars
@@ -1647,7 +1653,7 @@ class Freeform_mcp extends Module_builder_freeform
 		$paginate			= '';
 		$row_count			= 0;
 		//moved above exports
-		//$total_entries 		= ee()->freeform_entry_model->count(array(), FALSE);
+		//$total_entries 		= $this->EE->freeform_entry_model->count(array(), FALSE);
 		$current_page		= 0;
 
 		// -------------------------------------
@@ -1671,7 +1677,7 @@ class Freeform_mcp extends Module_builder_freeform
 			$paginate 			= $pagination_data['pagination_links'];
 			$current_page 		= $pagination_data['pagination_page'];
 
-			ee()->freeform_entry_model->limit($row_limit, $current_page);
+			$this->EE->freeform_entry_model->limit($row_limit, $current_page);
 		}
 
 		$this->cached_vars['paginate'] = $paginate;
@@ -1680,7 +1686,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//	get data
 		// -------------------------------------
 
-		$result_array 	= ee()->freeform_entry_model->get();
+		$result_array 	= $this->EE->freeform_entry_model->get();
 
 		$count 			= $row_count;
 
@@ -1702,7 +1708,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//	allow pre_process
 		// -------------------------------------
 
-		ee()->freeform_fields->apply_field_method(array(
+		$this->EE->freeform_fields->apply_field_method(array(
 			'method' 		=> 'pre_process_entries',
 			'form_id' 		=> $form_id,
 			'entry_id'		=> $entry_ids,
@@ -1713,7 +1719,7 @@ class Freeform_mcp extends Module_builder_freeform
 		foreach ( $result_array as $row)
 		{
 			//apply display_entry_cp to our field data
-			$field_parse = ee()->freeform_fields->apply_field_method(array(
+			$field_parse = $this->EE->freeform_fields->apply_field_method(array(
 				'method' 			=> 'display_entry_cp',
 				'form_id' 			=> $form_id,
 				'entry_id' 			=> $row['entry_id'],
@@ -1765,7 +1771,7 @@ class Freeform_mcp extends Module_builder_freeform
 			{
 				$row['entry_date'] = gmdate(
 					$this->preference('cp_date_formatting'),
-					ee()->localize->set_localized_time($row['entry_date'])
+					$this->EE->localize->set_localized_time($row['entry_date'])
 				);
 			}
 
@@ -1775,7 +1781,7 @@ class Freeform_mcp extends Module_builder_freeform
 					($row['edit_date'] > 0) ?
 						gmdate(
 							$this->preference('cp_date_formatting'),
-							ee()->localize->set_localized_time($row['edit_date'])
+							$this->EE->localize->set_localized_time($row['edit_date'])
 						) :
 						lang('n_a')
 				);
@@ -1837,7 +1843,7 @@ class Freeform_mcp extends Module_builder_freeform
 		// -------------------------------------
 
 		$this->cached_vars['is_admin'] = $is_admin = (
-			ee()->session->userdata('group_id') == 1
+			$this->EE->session->userdata('group_id') == 1
 		);
 
 		// -------------------------------------
@@ -1865,10 +1871,10 @@ class Freeform_mcp extends Module_builder_freeform
 
 		if ($is_admin)
 		{
-			ee()->db->select('group_id, group_title');
+			$this->EE->db->select('group_id, group_title');
 
 			$member_groups = $this->prepare_keyed_result(
-				ee()->db->get('member_groups'),
+				$this->EE->db->get('member_groups'),
 				'group_id',
 				'group_title'
 			);
@@ -1924,7 +1930,7 @@ class Freeform_mcp extends Module_builder_freeform
 		$this->load_fancybox();
 		//$this->load_datatables();
 
-		ee()->cp->add_js_script(array(
+		$this->EE->cp->add_js_script(array(
 			'ui'	=> array('datepicker', 'sortable'),
 			'file'	=> 'underscore'
 		));
@@ -1943,9 +1949,16 @@ class Freeform_mcp extends Module_builder_freeform
 	}
 	//END entries
 
+
 	// --------------------------------------------------------------------
 
-
+	/**
+	 * Fire a field method as a page view
+	 *
+	 * @access	public
+	 * @param	string $message		lang line to load for a message
+	 * @return	string				html output
+	 */
 	public function field_method ($message = '')
 	{
 		// -------------------------------------
@@ -1953,9 +1966,9 @@ class Freeform_mcp extends Module_builder_freeform
 		// -------------------------------------
 
 		if ($message == '' AND
-			! in_array(ee()->input->get('msg'), array(FALSE, '')) )
+			! in_array($this->EE->input->get('msg'), array(FALSE, '')) )
 		{
-			$message = lang(ee()->input->get('msg', TRUE));
+			$message = lang($this->EE->input->get('msg', TRUE));
 		}
 
 		$this->cached_vars['message'] = $message;
@@ -1966,19 +1979,19 @@ class Freeform_mcp extends Module_builder_freeform
 
 		$form_id		= $this->get_post_or_zero('form_id');
 		$field_id		= $this->get_post_or_zero('field_id');
-		$field_method	= ee()->input->get_post('field_method');
+		$field_method	= $this->EE->input->get_post('field_method');
 		$instance		= FALSE;
 
 		if ( $field_method == FALSE OR
 			! $this->data->is_valid_form_id($form_id) OR
 			$field_id == 0)
 		{
-			ee()->functions->redirect($this->mod_link(array('method' => 'forms')));
+			$this->EE->functions->redirect($this->mod_link(array('method' => 'forms')));
 		}
 
-		ee()->load->library('freeform_fields');
+		$this->EE->load->library('freeform_fields');
 
-		$instance =& ee()->freeform_fields->get_field_instance(array(
+		$instance =& $this->EE->freeform_fields->get_field_instance(array(
 			'form_id'	=> $form_id,
 			'field_id'	=> $field_id
 		));
@@ -1990,7 +2003,7 @@ class Freeform_mcp extends Module_builder_freeform
 			 //! in_array($field_method, $instance->entry_views) OR
 			 ! is_callable(array($instance, $field_method)))
 		{
-			ee()->functions->redirect($this->mod_link(array('method' => 'forms')));
+			$this->EE->functions->redirect($this->mod_link(array('method' => 'forms')));
 		}
 
 		$method_lang = lang('field_entry_view');
@@ -2036,6 +2049,7 @@ class Freeform_mcp extends Module_builder_freeform
 	}
 	//END field_method
 
+
 	// --------------------------------------------------------------------
 
 	/**
@@ -2047,9 +2061,9 @@ class Freeform_mcp extends Module_builder_freeform
 
 	public function migrate_collections ( $message = '' )
 	{
-		if ($message == '' AND ee()->input->get('msg') !== FALSE)
+		if ($message == '' AND $this->EE->input->get('msg') !== FALSE)
 		{
-			$message = lang(ee()->input->get('msg'));
+			$message = lang($this->EE->input->get('msg'));
 		}
 
 		$this->cached_vars['message'] = $message;
@@ -2066,7 +2080,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//  Library
 		//--------------------------------------
 
-		ee()->load->library('freeform_migration');
+		$this->EE->load->library('freeform_migration');
 
 		//--------------------------------------
 		//  Variables
@@ -2078,23 +2092,23 @@ class Freeform_mcp extends Module_builder_freeform
 		$this->cached_vars['total']			= 0;
 		$this->cached_vars['collections']	= '';
 
-		$collections = ee()->input->post('collections');
+		$collections = $this->EE->input->post('collections');
 
 		if ( $collections !== FALSE  )
 		{
-			$this->cached_vars['total']			= ee()->freeform_migration
+			$this->cached_vars['total']			= $this->EE->freeform_migration
 														->get_migration_count(
 															$collections
 														);
 
 			$this->cached_vars['collections']	= implode('|', $collections);
 
-			if ($this->check_yes( ee()->input->post('migrate_empty_fields') ) )
+			if ($this->check_yes( $this->EE->input->post('migrate_empty_fields') ) )
 			{
 				$migrate_empty_fields	= 'y';
 			}
 
-			if ($this->check_yes( ee()->input->post('migrate_attachments') ) )
+			if ($this->check_yes( $this->EE->input->post('migrate_attachments') ) )
 			{
 				$migrate_attachments	= 'y';
 			}
@@ -2130,7 +2144,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 		$this->cached_vars['cp_javascript'][] = 'migrate';
 
-		ee()->cp->add_js_script(
+		$this->EE->cp->add_js_script(
 			array('ui' => array('core', 'progressbar'))
 		);
 
@@ -2168,23 +2182,23 @@ class Freeform_mcp extends Module_builder_freeform
 
 		$out	= array(
 			'done'	=> FALSE,
-			'batch'	=> ee()->input->get('batch'),
-			'total'	=> ee()->input->get('total')
+			'batch'	=> $this->EE->input->get('batch'),
+			'total'	=> $this->EE->input->get('total')
 		);
 
 		//--------------------------------------
 		//  Libraries
 		//--------------------------------------
 
-		ee()->load->library('freeform_migration');
+		$this->EE->load->library('freeform_migration');
 
 		//--------------------------------------
 		//  Validate
 		//--------------------------------------
-		$collections = ee()->input->get('collections');
+		$collections = $this->EE->input->get('collections');
 
 		if ( empty( $collections ) OR
-			 ee()->input->get('batch') === FALSE )
+			 $this->EE->input->get('batch') === FALSE )
 		{
 			$out['error']	= TRUE;
 			$out['errors']	= array( 'no_collections' => lang('no_collections') );
@@ -2196,9 +2210,9 @@ class Freeform_mcp extends Module_builder_freeform
 		//  Done?
 		//--------------------------------------
 
-		if ( ee()->input->get('batch') !== FALSE AND
-			 ee()->input->get('total') !== FALSE AND
-			 ee()->input->get('batch') >= ee()->input->get('total') )
+		if ( $this->EE->input->get('batch') !== FALSE AND
+			 $this->EE->input->get('total') !== FALSE AND
+			 $this->EE->input->get('batch') >= $this->EE->input->get('total') )
 		{
 			$out['done']	= TRUE;
 			$this->send_ajax_response($out);
@@ -2211,11 +2225,11 @@ class Freeform_mcp extends Module_builder_freeform
 
 		$collections	= $this->actions()->pipe_split(
 			urldecode(
-				ee()->input->get('collections')
+				$this->EE->input->get('collections')
 			)
 		);
 
-		$counts			= ee()->freeform_migration->get_collection_counts($collections);
+		$counts			= $this->EE->freeform_migration->get_collection_counts($collections);
 
 		if (empty($counts))
 		{
@@ -2263,7 +2277,7 @@ class Freeform_mcp extends Module_builder_freeform
 			//  For each collection, create a form
 			//--------------------------------------
 
-			$form_data = ee()->freeform_migration->create_form($form_name);
+			$form_data = $this->EE->freeform_migration->create_form($form_name);
 
 			if ( $form_data !== FALSE )
 			{
@@ -2272,7 +2286,7 @@ class Freeform_mcp extends Module_builder_freeform
 			}
 			else
 			{
-				$errors = ee()->freeform_migration->get_errors();
+				$errors = $this->EE->freeform_migration->get_errors();
 
 				if ( $errors !== FALSE )
 				{
@@ -2288,10 +2302,10 @@ class Freeform_mcp extends Module_builder_freeform
 			//--------------------------------------
 
 			$migrate_empty_fields	= (
-				$this->check_yes(ee()->input->get('migrate_empty_fields'))
+				$this->check_yes($this->EE->input->get('migrate_empty_fields'))
 			) ? 'y': 'n';
 
-			$fields = ee()->freeform_migration->get_fields_for_collection(
+			$fields = $this->EE->freeform_migration->get_fields_for_collection(
 				$form_name,
 				$migrate_empty_fields
 			);
@@ -2302,7 +2316,7 @@ class Freeform_mcp extends Module_builder_freeform
 			}
 			else
 			{
-				$errors = ee()->freeform_migration->get_errors();
+				$errors = $this->EE->freeform_migration->get_errors();
 
 				if ($errors !== FALSE)
 				{
@@ -2323,7 +2337,7 @@ class Freeform_mcp extends Module_builder_freeform
 			{
 				foreach ( $form_fields[$form_name]['fields'] as $name => $attr )
 				{
-					$field_id = ee()->freeform_migration->create_field(
+					$field_id = $this->EE->freeform_migration->create_field(
 						$forms[$form_name]['form_id'],
 						$name,
 						$attr
@@ -2335,7 +2349,7 @@ class Freeform_mcp extends Module_builder_freeform
 					}
 					else
 					{
-						$errors = ee()->freeform_migration->get_errors();
+						$errors = $this->EE->freeform_migration->get_errors();
 
 						if ( $errors !== FALSE )
 						{
@@ -2352,14 +2366,14 @@ class Freeform_mcp extends Module_builder_freeform
 			//  For each collection, create upload fields if needed.
 			//--------------------------------------
 
-			$attachment_profiles = ee()->freeform_migration->get_attachment_profiles( $form_name );
+			$attachment_profiles = $this->EE->freeform_migration->get_attachment_profiles( $form_name );
 
-			if ($this->check_yes( ee()->input->get('migrate_attachments') ) AND
+			if ($this->check_yes( $this->EE->input->get('migrate_attachments') ) AND
 				$attachment_profiles !== FALSE )
 			{
 				foreach ( $attachment_profiles as $row )
 				{
-					$field_id = ee()->freeform_migration->create_upload_field(
+					$field_id = $this->EE->freeform_migration->create_upload_field(
 						$forms[ $form_name ]['form_id'],
 						$row['name'],
 						$row
@@ -2375,7 +2389,7 @@ class Freeform_mcp extends Module_builder_freeform
 					}
 					else
 					{
-						$errors = ee()->freeform_migration->get_errors();
+						$errors = $this->EE->freeform_migration->get_errors();
 
 						if ( $errors !== FALSE )
 						{
@@ -2389,7 +2403,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 				if ( ! empty( $upload_pref_id_map ) )
 				{
-					ee()->freeform_migration->set_property(
+					$this->EE->freeform_migration->set_property(
 						'upload_pref_id_map',
 						$upload_pref_id_map
 					);
@@ -2400,7 +2414,7 @@ class Freeform_mcp extends Module_builder_freeform
 			//  Assign the fields to our form.
 			//--------------------------------------
 
-			ee()->freeform_migration->assign_fields_to_form(
+			$this->EE->freeform_migration->assign_fields_to_form(
 				$forms[ $form_data['form_name'] ]['form_id'],
 				$created_field_ids
 			);
@@ -2409,7 +2423,7 @@ class Freeform_mcp extends Module_builder_freeform
 			//	Safeguard?
 			//--------------------------------------
 
-			if ( ee()->input->get('batch') == $upper_limit )
+			if ( $this->EE->input->get('batch') == $upper_limit )
 			{
 				$this->send_ajax_response(array('done' => TRUE ));
 				exit();
@@ -2419,21 +2433,21 @@ class Freeform_mcp extends Module_builder_freeform
 			//  Pass attachments pref
 			//--------------------------------------
 
-			if ($this->check_yes( ee()->input->get('migrate_attachments') ) )
+			if ($this->check_yes( $this->EE->input->get('migrate_attachments') ) )
 			{
-				ee()->freeform_migration->set_property('migrate_attachments', TRUE);
+				$this->EE->freeform_migration->set_property('migrate_attachments', TRUE);
 			}
 
 			//--------------------------------------
 			//  Grab entries
 			//--------------------------------------
 
-			ee()->freeform_migration->set_property(
+			$this->EE->freeform_migration->set_property(
 				'batch_limit',
 				$this->migration_batch_limit
 			);
 
-			$entries = ee()->freeform_migration->get_legacy_entries($form_name);
+			$entries = $this->EE->freeform_migration->get_legacy_entries($form_name);
 
 			if ( $entries !== FALSE )
 			{
@@ -2443,14 +2457,14 @@ class Freeform_mcp extends Module_builder_freeform
 					//  Insert
 					//--------------------------------------
 
-					$entry_id = ee()->freeform_migration->set_legacy_entry(
+					$entry_id = $this->EE->freeform_migration->set_legacy_entry(
 						$forms[ $form_name ]['form_id'],
 						$entry
 					);
 
 					if ( $entry_id === FALSE )
 					{
-						$errors = ee()->freeform_migration->get_errors();
+						$errors = $this->EE->freeform_migration->get_errors();
 
 						if ( $errors !== FALSE )
 						{
@@ -2508,7 +2522,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 	public function entries_action ()
 	{
-		$action = ee()->input->get_post('submit_action');
+		$action = $this->EE->input->get_post('submit_action');
 
 		if ($action == 'approve')
 		{
@@ -2543,9 +2557,9 @@ class Freeform_mcp extends Module_builder_freeform
 		//  Messages
 		// -------------------------------------
 
-		if ($message == '' AND ! in_array(ee()->input->get('msg'), array(FALSE, '')) )
+		if ($message == '' AND ! in_array($this->EE->input->get('msg'), array(FALSE, '')) )
 		{
-			$message = lang(ee()->input->get('msg'));
+			$message = lang($this->EE->input->get('msg'));
 		}
 
 		$this->cached_vars['message'] = $message;
@@ -2557,8 +2571,8 @@ class Freeform_mcp extends Module_builder_freeform
 		$form_id	= $this->get_post_or_zero('form_id');
 		$entry_id	= $this->get_post_or_zero('entry_id');
 
-		ee()->load->model('freeform_form_model');
-		ee()->load->model('freeform_entry_model');
+		$this->EE->load->model('freeform_form_model');
+		$this->EE->load->model('freeform_entry_model');
 
 		$form_data = $this->data->get_form_info($form_id);
 
@@ -2572,7 +2586,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 		if ($entry_id > 0)
 		{
-			$entry_data = ee()->freeform_entry_model
+			$entry_data = $this->EE->freeform_entry_model
 							  ->id($form_id)
 							  ->where('entry_id', $entry_id)
 							  ->get_row();
@@ -2616,7 +2630,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//	get fields
 		// -------------------------------------
 
-		ee()->load->library('freeform_fields');
+		$this->EE->load->library('freeform_fields');
 
 		$field_output_data = array();
 
@@ -2646,7 +2660,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 			$f_data = $form_data['fields'][$field_id];
 
-			$instance =& ee()->freeform_fields->get_field_instance(array(
+			$instance =& $this->EE->freeform_fields->get_field_instance(array(
 				'field_id'		=> $field_id,
 				'field_data'	=> $f_data,
 				'form_id'		=> $form_id,
@@ -2657,7 +2671,7 @@ class Freeform_mcp extends Module_builder_freeform
 				)
 			));
 
-			$column_name = ee()->freeform_entry_model->form_field_prefix . $field_id;
+			$column_name = $this->EE->freeform_entry_model->form_field_prefix . $field_id;
 
 			$display_field_data = '';
 
@@ -2685,7 +2699,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 		if (!empty($entry_data['author_id']))
 		{
-			$member_data =  ee()->db
+			$member_data =  $this->EE->db
 								->select('group_title, screen_name')
 								->from('members')
 								->join('member_groups', 'members.group_id = member_groups.group_id', 'left')
@@ -2705,7 +2719,7 @@ class Freeform_mcp extends Module_builder_freeform
 			$entry_data['screen_name'] = lang('guest');
 			$entry_data['group_title'] = lang('guest');
 
-			$guest_data =	ee()->db
+			$guest_data =	$this->EE->db
 								->select('group_title')
 								->from('member_groups')
 								->where('group_id', 3)
@@ -2720,15 +2734,15 @@ class Freeform_mcp extends Module_builder_freeform
 
 		$entry_data['entry_date']	= ( ! empty( $entry_data['entry_date'] ) ) ?
 										$entry_data['entry_date'] :
-										ee()->localize->now;
+										$this->EE->localize->now;
 		$entry_data['entry_date']	= gmdate(
 										$this->preference('cp_date_formatting'),
-										ee()->localize->set_localized_time($entry_data['entry_date'])
+										$this->EE->localize->set_localized_time($entry_data['entry_date'])
 									);
 		$entry_data['edit_date']	= (!empty($entry_data['edit_date'])) ?
 										gmdate(
 											$this->preference('cp_date_formatting'),
-											ee()->localize->set_localized_time($entry_data['edit_date'])
+											$this->EE->localize->set_localized_time($entry_data['edit_date'])
 										) :
 										lang('n_a');
 
@@ -2774,9 +2788,9 @@ class Freeform_mcp extends Module_builder_freeform
 		//  Messages
 		// -------------------------------------
 
-		if ($message == '' AND ! in_array(ee()->input->get('msg'), array(FALSE, '')) )
+		if ($message == '' AND ! in_array($this->EE->input->get('msg'), array(FALSE, '')) )
 		{
-			$message = lang(ee()->input->get('msg'));
+			$message = lang($this->EE->input->get('msg'));
 		}
 
 		$this->cached_vars['message'] = $message;
@@ -2807,9 +2821,9 @@ class Freeform_mcp extends Module_builder_freeform
 
 		$paginate_url		= array('method' => 'fields');
 
-		ee()->load->model('freeform_field_model');
+		$this->EE->load->model('freeform_field_model');
 
-		ee()->freeform_field_model->select(
+		$this->EE->freeform_field_model->select(
 			'field_label,
 			 field_name,
 			 field_type,
@@ -2823,32 +2837,32 @@ class Freeform_mcp extends Module_builder_freeform
 
 		$field_search		= '';
 		$field_search_on	= '';
-		$search				= ee()->input->get_post('field_search', TRUE);
+		$search				= $this->EE->input->get_post('field_search', TRUE);
 
 		if ($search)
 		{
-			$f_search_on = ee()->input->get_post('field_search_on');
+			$f_search_on = $this->EE->input->get_post('field_search_on');
 
 			if ($f_search_on == 'field_name')
 			{
-				ee()->freeform_field_model->like('field_name', $search);
+				$this->EE->freeform_field_model->like('field_name', $search);
 				$field_search_on = 'field_name';
 			}
 			else if ($f_search_on == 'field_label')
 			{
-				ee()->freeform_field_model->like('field_label', $search);
+				$this->EE->freeform_field_model->like('field_label', $search);
 				$field_search_on = 'field_label';
 			}
 			else if ($f_search_on == 'field_description')
 			{
-				ee()->freeform_field_model->like('field_description', $search);
+				$this->EE->freeform_field_model->like('field_description', $search);
 				$field_search_on = 'field_description';
 			}
 			else //if ($f_search_on == 'all')
 			{
-				ee()->freeform_field_model->like('field_name', $search);
-				ee()->freeform_field_model->or_like('field_label', $search);
-				ee()->freeform_field_model->or_like('field_description', $search);
+				$this->EE->freeform_field_model->like('field_name', $search);
+				$this->EE->freeform_field_model->or_like('field_label', $search);
+				$this->EE->freeform_field_model->or_like('field_description', $search);
 
 				$field_search_on = 'all';
 			}
@@ -2868,15 +2882,15 @@ class Freeform_mcp extends Module_builder_freeform
 
 		if ( ! $this->data->show_all_sites())
 		{
-			ee()->freeform_field_model->where(
+			$this->EE->freeform_field_model->where(
 				'site_id',
-				ee()->config->item('site_id')
+				$this->EE->config->item('site_id')
 			);
 		}
 
-		ee()->freeform_field_model->order_by('field_name', 'asc');
+		$this->EE->freeform_field_model->order_by('field_name', 'asc');
 
-		$total_results = ee()->freeform_field_model->count(array(), FALSE);
+		$total_results = $this->EE->freeform_field_model->count(array(), FALSE);
 
 		$row_count = 0;
 
@@ -2896,13 +2910,13 @@ class Freeform_mcp extends Module_builder_freeform
 
 			$paginate 		= $pagination_data['pagination_links'];
 
-			ee()->freeform_field_model->limit(
+			$this->EE->freeform_field_model->limit(
 				$row_limit,
 				$pagination_data['pagination_page']
 			);
 		}
 
-		$query = ee()->freeform_field_model->get();
+		$query = $this->EE->freeform_field_model->get();
 
 		$count = $row_count;
 
@@ -2958,7 +2972,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//	js
 		// -------------------------------------
 
-		ee()->cp->add_js_script(array(
+		$this->EE->cp->add_js_script(array(
 			'file'		=> array('underscore', 'json2')
 		));
 
@@ -2997,7 +3011,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 		$update 		= ($field_id != 0);
 
-		$modal 			= ( ! $modal AND $this->check_yes(ee()->input->get_post('modal'))) ? TRUE : $modal;
+		$modal 			= ( ! $modal AND $this->check_yes($this->EE->input->get_post('modal'))) ? TRUE : $modal;
 
 		$this->cached_vars['modal'] 			= $modal;
 
@@ -3122,9 +3136,9 @@ class Freeform_mcp extends Module_builder_freeform
 		//	get available field types
 		// -------------------------------------
 
-		ee()->load->library('freeform_fields');
+		$this->EE->load->library('freeform_fields');
 
-		$this->cached_vars['fieldtypes'] = ee()->freeform_fields->get_available_fieldtypes();
+		$this->cached_vars['fieldtypes'] = $this->EE->freeform_fields->get_available_fieldtypes();
 
 		// -------------------------------------
 		//	get available forms to add this to
@@ -3132,11 +3146,11 @@ class Freeform_mcp extends Module_builder_freeform
 
 		if ( ! $this->data->show_all_sites())
 		{
-			ee()->db->where('site_id', ee()->config->item('site_id'));
+			$this->EE->db->where('site_id', $this->EE->config->item('site_id'));
 		}
 
 		$this->cached_vars['available_forms'] = $this->prepare_keyed_result(
-			ee()->db->get('freeform_forms'),
+			$this->EE->db->get('freeform_forms'),
 			'form_id'
 		);
 
@@ -3159,7 +3173,7 @@ class Freeform_mcp extends Module_builder_freeform
 			//individual settings JS over and over again when it should
 			//only be run on display.
 			$this->cached_vars['fieldtypes'][$fieldtype]['settings_output'] = base64_encode(
-				ee()->freeform_fields->fieldtype_display_settings_output(
+				$this->EE->freeform_fields->fieldtype_display_settings_output(
 					$fieldtype,
 					$settings
 				)
@@ -3240,9 +3254,9 @@ class Freeform_mcp extends Module_builder_freeform
 		//  Messages
 		// -------------------------------------
 
-		if ($message == '' AND ! in_array(ee()->input->get('msg'), array(FALSE, '')) )
+		if ($message == '' AND ! in_array($this->EE->input->get('msg'), array(FALSE, '')) )
 		{
-			$message = lang(ee()->input->get('msg'));
+			$message = lang($this->EE->input->get('msg'));
 		}
 
 		$this->cached_vars['message'] = $message;
@@ -3261,16 +3275,16 @@ class Freeform_mcp extends Module_builder_freeform
 
 		$fieldtypes = array();
 
-		ee()->load->library('freeform_fields');
-		ee()->load->model('freeform_field_model');
-		ee()->load->model('freeform_fieldtype_model');
+		$this->EE->load->library('freeform_fields');
+		$this->EE->load->model('freeform_field_model');
+		$this->EE->load->model('freeform_fieldtype_model');
 
-		if ( ( $installed_fieldtypes = ee()->freeform_fieldtype_model->installed_fieldtypes() ) === FALSE )
+		if ( ( $installed_fieldtypes = $this->EE->freeform_fieldtype_model->installed_fieldtypes() ) === FALSE )
 		{
 			$installed_fieldtypes	= array();
 		}
 
-		$fieldtypes 			= ee()->freeform_fields->get_installable_fieldtypes();
+		$fieldtypes 			= $this->EE->freeform_fields->get_installable_fieldtypes();
 
 		// -------------------------------------
 		//	missing fieldtype folders?
@@ -3344,9 +3358,9 @@ class Freeform_mcp extends Module_builder_freeform
 		// -------------------------------------
 
 		if ($message == '' AND
-			! in_array(ee()->input->get('msg'), array(FALSE, '')) )
+			! in_array($this->EE->input->get('msg'), array(FALSE, '')) )
 		{
-			$message = lang(ee()->input->get('msg'));
+			$message = lang($this->EE->input->get('msg'));
 		}
 
 		$this->cached_vars['message'] = $message;
@@ -3377,20 +3391,20 @@ class Freeform_mcp extends Module_builder_freeform
 		$row_count			= 0;
 		$notification_data  = array();
 
-		ee()->db->start_cache();
+		$this->EE->db->start_cache();
 
-		ee()->db->order_by('notification_name', 'asc');
+		$this->EE->db->order_by('notification_name', 'asc');
 
 		if ( ! $this->data->show_all_sites())
 		{
-			ee()->db->where('site_id', ee()->config->item('site_id'));
+			$this->EE->db->where('site_id', $this->EE->config->item('site_id'));
 		}
 
-		ee()->db->from('freeform_notification_templates');
+		$this->EE->db->from('freeform_notification_templates');
 
-		ee()->db->stop_cache();
+		$this->EE->db->stop_cache();
 
-		$total_results = ee()->db->count_all_results();
+		$total_results = $this->EE->db->count_all_results();
 
 		// do we need pagination?
 		if ( $total_results > $row_limit )
@@ -3412,12 +3426,12 @@ class Freeform_mcp extends Module_builder_freeform
 
 			$paginate 			= $pagination_data['pagination_links'];
 
-			ee()->db->limit($row_limit, $pagination_data['pagination_page']);
+			$this->EE->db->limit($row_limit, $pagination_data['pagination_page']);
 		}
 
-		$query = ee()->db->get();
+		$query = $this->EE->db->get();
 
-		ee()->db->flush_cache();
+		$this->EE->db->flush_cache();
 
 		if ($query->num_rows() > 0)
 		{
@@ -3513,9 +3527,9 @@ class Freeform_mcp extends Module_builder_freeform
 			'notification_description'	=> '',
 			'wordwrap'					=> $this->data->defaults['wordwrap'],
 			'allow_html'				=> $this->data->defaults['allow_html'],
-			'from_name'					=> form_prep(ee()->config->item('webmaster_name')),
-			'from_email'				=> ee()->config->item('webmaster_email'),
-			'reply_to_email' 			=> ee()->config->item('webmaster_email'),
+			'from_name'					=> form_prep($this->EE->config->item('webmaster_name')),
+			'from_email'				=> $this->EE->config->item('webmaster_email'),
+			'reply_to_email' 			=> $this->EE->config->item('webmaster_email'),
 			'email_subject'				=> '',
 			'template_data'				=> '',
 			'include_attachments' 		=> 'n'
@@ -3601,11 +3615,11 @@ class Freeform_mcp extends Module_builder_freeform
 		//	get available fields
 		// -------------------------------------
 
-		ee()->load->model('freeform_field_model');
+		$this->EE->load->model('freeform_field_model');
 
 		$this->cached_vars['available_fields']	= array();
 
-		if ( ( $fields = ee()->freeform_field_model->get() ) !== FALSE )
+		if ( ( $fields = $this->EE->freeform_field_model->get() ) !== FALSE )
 		{
 			$this->cached_vars['available_fields']	= $fields;
 		}
@@ -3668,9 +3682,9 @@ class Freeform_mcp extends Module_builder_freeform
 		// -------------------------------------
 
 		if ($message == '' AND
-			! in_array(ee()->input->get('msg'), array(FALSE, '')) )
+			! in_array($this->EE->input->get('msg'), array(FALSE, '')) )
 		{
-			$message = lang(ee()->input->get('msg'));
+			$message = lang($this->EE->input->get('msg'));
 		}
 
 		$this->cached_vars['message'] = $message;
@@ -3701,16 +3715,16 @@ class Freeform_mcp extends Module_builder_freeform
 		$row_count			= 0;
 		$template_data		= array();
 
-		ee()->load->model('freeform_template_model');
+		$this->EE->load->model('freeform_template_model');
 
-		ee()->freeform_template_model->order_by('template_name', 'asc');
+		$this->EE->freeform_template_model->order_by('template_name', 'asc');
 
 		if ( ! $this->data->show_all_sites())
 		{
-			ee()->freeform_template_model->where('site_id', ee()->config->item('site_id'));
+			$this->EE->freeform_template_model->where('site_id', $this->EE->config->item('site_id'));
 		}
 
-		$total_results = ee()->freeform_template_model->count(array(), FALSE);
+		$total_results = $this->EE->freeform_template_model->count(array(), FALSE);
 
 		// do we need pagination?
 		if ( $total_results > $row_limit )
@@ -3732,10 +3746,10 @@ class Freeform_mcp extends Module_builder_freeform
 
 			$paginate 			= $pagination_data['pagination_links'];
 
-			ee()->freeform_template_model->limit($row_limit, $pagination_data['pagination_page']);
+			$this->EE->freeform_template_model->limit($row_limit, $pagination_data['pagination_page']);
 		}
 
-		$query = ee()->freeform_template_model->get();
+		$query = $this->EE->freeform_template_model->get();
 
 		if ($query !== FALSE)
 		{
@@ -3826,7 +3840,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 		$inputs = array(
 			'template_id'			=> '0',
-			'site_id'				=> ee()->config->item('site_id'),
+			'site_id'				=> $this->EE->config->item('site_id'),
 			'template_name'			=> '',
 			'template_label'		=> '',
 			'template_description'	=> '',
@@ -3841,11 +3855,11 @@ class Freeform_mcp extends Module_builder_freeform
 
 		$this->cached_vars['edit_warning'] = FALSE;
 
-		ee()->load->model('freeform_template_model');
+		$this->EE->load->model('freeform_template_model');
 
 		if ($update)
 		{
-			$template_data = ee()->freeform_template_model->get_row(array(
+			$template_data = $this->EE->freeform_template_model->get_row(array(
 				'template_id'	=> $template_id
 			));
 
@@ -3861,9 +3875,9 @@ class Freeform_mcp extends Module_builder_freeform
 				//	forms that use this field?
 				// -------------------------------------
 
-				ee()->load->model('freeform_form_model');
+				$this->EE->load->model('freeform_form_model');
 
-				$form_info = ee()->freeform_form_model->get(array(
+				$form_info = $this->EE->freeform_form_model->get(array(
 					'template_id' => $template_id
 				));
 
@@ -3897,7 +3911,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 		if ( ! $update AND $duplicate_id > 0)
 		{
-			$template_data = ee()->freeform_template_model->get_row(array(
+			$template_data = $this->EE->freeform_template_model->get_row(array(
 				'template_id'	=> $duplicate_id
 			));
 
@@ -4005,9 +4019,9 @@ class Freeform_mcp extends Module_builder_freeform
 
 	public function permissions ( $message = '' )
 	{
-		if ($message == '' AND ee()->input->get('msg') !== FALSE)
+		if ($message == '' AND $this->EE->input->get('msg') !== FALSE)
 		{
-			$message = lang(ee()->input->get('msg'));
+			$message = lang($this->EE->input->get('msg'));
 		}
 
 		$this->cached_vars['message'] = $message;
@@ -4036,7 +4050,7 @@ class Freeform_mcp extends Module_builder_freeform
 			$permissions['global_permissions'] == TRUE
 		);
 
-		$site_id = ($global_permissions) ? 0 : ee()->config->item('site_id');
+		$site_id = ($global_permissions) ? 0 : $this->EE->config->item('site_id');
 
 		$this->cached_vars['global_permissions'] = $global_permissions;
 
@@ -4064,7 +4078,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//	member groups
 		// -------------------------------------
 
-		$m_groups =	ee()->db
+		$m_groups =	$this->EE->db
 						->from('member_groups')
 						->select('group_id, group_title')
 						->where_not_in('group_id', array(1, 2, 3, 4))
@@ -4118,9 +4132,9 @@ class Freeform_mcp extends Module_builder_freeform
 
 	public function preferences ( $message = '' )
 	{
-		if ($message == '' AND ee()->input->get('msg') !== FALSE)
+		if ($message == '' AND $this->EE->input->get('msg') !== FALSE)
 		{
-			$message = lang(ee()->input->get('msg'));
+			$message = lang($this->EE->input->get('msg'));
 		}
 
 		$this->cached_vars['message'] = $message;
@@ -4139,7 +4153,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 		$this->cached_vars['msm_enabled'] = $msm_enabled = $this->data->msm_enabled;
 
-		$is_admin = (ee()->session->userdata('group_id') == 1);
+		$is_admin = ($this->EE->session->userdata('group_id') == 1);
 
 		$this->cached_vars['show_global_prefs'] = ($is_admin AND $msm_enabled);
 
@@ -4187,7 +4201,7 @@ class Freeform_mcp extends Module_builder_freeform
 			lang('site_prefs_for') . ' ' . (
 				($prefs_all_sites) ?
 					lang('all_sites') :
-					ee()->config->item('site_label')
+					$this->EE->config->item('site_label')
 			)
 		);
 
@@ -4214,7 +4228,7 @@ class Freeform_mcp extends Module_builder_freeform
 			//admin only pref?
 			//MSM pref and no MSM?
 			if (
-				(ee()->session->userdata('group_id') != 1 AND
+				($this->EE->session->userdata('group_id') != 1 AND
 				in_array($key, $this->data->admin_only_prefs)) OR
 				( ! $msm_enabled AND
 				  in_array($key, $this->data->msm_only_prefs))
@@ -4315,7 +4329,7 @@ class Freeform_mcp extends Module_builder_freeform
 	{
 		if ( ! $string OR trim($string == ''))
 		{
-			$string = ee()->input->get_post('clean_string');
+			$string = $this->EE->input->get_post('clean_string');
 
 			if ( $string === FALSE OR trim($string) === '')
 			{
@@ -4327,7 +4341,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 		$string			= strip_tags($string, $allowed_tags);
 
-		$string			= ee()->security->xss_clean($string);
+		$string			= $this->EE->security->xss_clean($string);
 
 		return $string;
 	}
@@ -4349,16 +4363,16 @@ class Freeform_mcp extends Module_builder_freeform
 	public function freeform_fieldtype_action ()
 	{
 		$return_url = array('method' => 'fieldtypes');
-		$name 		= ee()->input->get_post('name', TRUE);
-		$action 	= ee()->input->get_post('action');
+		$name 		= $this->EE->input->get_post('name', TRUE);
+		$action 	= $this->EE->input->get_post('action');
 
 		if ($name AND $action)
 		{
-			ee()->load->library('freeform_fields');
+			$this->EE->load->library('freeform_fields');
 
 			if ($action === 'install')
 			{
-				if (ee()->freeform_fields->install_fieldtype($name))
+				if ($this->EE->freeform_fields->install_fieldtype($name))
 				{
 					$return_url['msg'] = 'fieldtype_installed';
 				}
@@ -4392,7 +4406,7 @@ class Freeform_mcp extends Module_builder_freeform
 		}
 		else
 		{
-			ee()->functions->redirect($this->mod_link($return_url));
+			$this->EE->functions->redirect($this->mod_link($return_url));
 		}
 	}
 	//END freeform_fieldtype_action
@@ -4411,11 +4425,11 @@ class Freeform_mcp extends Module_builder_freeform
 
 	public function save_field_layout ()
 	{
-		ee()->load->library('freeform_forms');
-		ee()->load->model('freeform_form_model');
+		$this->EE->load->library('freeform_forms');
+		$this->EE->load->model('freeform_form_model');
 
-		$save_for		= ee()->input->get_post('save_for', TRUE);
-		$shown_fields	= ee()->input->get_post('shown_fields', TRUE);
+		$save_for		= $this->EE->input->get_post('save_for', TRUE);
+		$shown_fields	= $this->EE->input->get_post('shown_fields', TRUE);
 		$form_id		= $this->get_post_or_zero('form_id');
 		$form_data		= $this->data->get_form_info($form_id);
 
@@ -4440,7 +4454,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//	permissions?
 		// -------------------------------------
 
-		//if (ee()->session->userdata('group_id') != 1 AND
+		//if ($this->EE->session->userdata('group_id') != 1 AND
 		//	! $this->check_yes($this->preference('allow_user_field_layout'))
 		//)
 		//{
@@ -4499,7 +4513,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 		$data 			 = array();
 
-		$prefix 		 = ee()->freeform_form_model->form_field_prefix;
+		$prefix 		 = $this->EE->freeform_form_model->form_field_prefix;
 
 		//check for field validity, no funny business
 		foreach ($shown_fields as $field_name)
@@ -4548,7 +4562,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 		if ($for == 'just_me')
 		{
-			$id = ee()->session->userdata('member_id');
+			$id = $this->EE->session->userdata('member_id');
 
 			$original_prefs['entry_layout_prefs']['member'][$id] = $settings;
 		}
@@ -4614,7 +4628,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//	default status
 		// -------------------------------------
 
-		$default_status	= ee()->input->get_post('default_status', TRUE);
+		$default_status	= $this->EE->input->get_post('default_status', TRUE);
 
 		$default_status	= ($default_status AND trim($default_status) != '') ?
 							$default_status :
@@ -4624,9 +4638,9 @@ class Freeform_mcp extends Module_builder_freeform
 		//	composer return?
 		// -------------------------------------
 
-		$do_composer			= (FREEFORM_PRO AND ee()->input->get_post('ret') == 'composer');
+		$do_composer			= (FREEFORM_PRO AND $this->EE->input->get_post('ret') == 'composer');
 
-		$composer_save_finish	= (FREEFORM_PRO AND ee()->input->get_post('ret') == 'composer_save_finish');
+		$composer_save_finish	= (FREEFORM_PRO AND $this->EE->input->get_post('ret') == 'composer_save_finish');
 
 		if ($composer_save_finish)
 		{
@@ -4644,7 +4658,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//	field name
 		// -------------------------------------
 
-		$form_name		= ee()->input->get_post('form_name', TRUE);
+		$form_name		= $this->EE->input->get_post('form_name', TRUE);
 
 		//if the field label is blank, make one for them
 		//we really dont want to do this, but here we are
@@ -4673,10 +4687,10 @@ class Freeform_mcp extends Module_builder_freeform
 				$errors['form_name'] = lang('form_name_can_only_contain');
 			}
 
-			ee()->load->model('freeform_form_model');
+			$this->EE->load->model('freeform_form_model');
 
 			//get dupe from field names
-			$dupe_data = ee()->freeform_form_model->get_row(array(
+			$dupe_data = $this->EE->freeform_form_model->get_row(array(
 				'form_name' => $form_name
 			));
 
@@ -4696,7 +4710,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//	form label
 		// -------------------------------------
 
-		$form_label = ee()->input->get_post('form_label', TRUE);
+		$form_label = $this->EE->input->get_post('form_label', TRUE);
 
 		if ( ! $form_label OR ! trim($form_label) )
 		{
@@ -4707,12 +4721,12 @@ class Freeform_mcp extends Module_builder_freeform
 		//	admin notification email
 		// -------------------------------------
 
-		$admin_notification_email = ee()->input->get_post('admin_notification_email', TRUE);
+		$admin_notification_email = $this->EE->input->get_post('admin_notification_email', TRUE);
 
 		if ($admin_notification_email AND
 			trim($admin_notification_email) != '')
 		{
-			ee()->load->helper('email');
+			$this->EE->load->helper('email');
 
 			$emails = preg_split(
 				'/(\s+)?\,(\s+)?/',
@@ -4749,11 +4763,11 @@ class Freeform_mcp extends Module_builder_freeform
 		//	user email field
 		// -------------------------------------
 
-		$user_email_field = ee()->input->get_post('user_email_field');
+		$user_email_field = $this->EE->input->get_post('user_email_field');
 
-		ee()->load->model('freeform_field_model');
+		$this->EE->load->model('freeform_field_model');
 
-		$field_ids = ee()->freeform_field_model->key('field_id', 'field_id')->get();
+		$field_ids = $this->EE->freeform_field_model->key('field_id', 'field_id')->get();
 
 		if ($user_email_field AND
 			$user_email_field !== '--' AND
@@ -4775,7 +4789,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//send ajax response exists
 		//but this is in case someone is using a replacer
 		//that uses
-		if ($this->check_yes(ee()->input->get_post('validate_only')))
+		if ($this->check_yes($this->EE->input->get_post('validate_only')))
 		{
 			if ($this->is_ajax_request())
 			{
@@ -4794,7 +4808,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 		$field_ids = array_filter(
 			$this->actions()->pipe_split(
-				ee()->input->get_post('field_ids', TRUE)
+				$this->EE->input->get_post('field_ids', TRUE)
 			),
 			array($this, 'is_positive_intlike')
 		);
@@ -4814,21 +4828,21 @@ class Freeform_mcp extends Module_builder_freeform
 			'user_notification_id'		=> $this->get_post_or_zero('user_notification_id'),
 			'admin_notification_id'		=> $this->get_post_or_zero('admin_notification_id'),
 			'admin_notification_email'	=> $admin_notification_email,
-			'form_description'			=> strip_tags(ee()->input->get_post('form_description', TRUE)),
-			'author_id' 				=> ee()->session->userdata('member_id'),
+			'form_description'			=> strip_tags($this->EE->input->get_post('form_description', TRUE)),
+			'author_id' 				=> $this->EE->session->userdata('member_id'),
 			'field_ids'					=> implode('|', $sorted_field_ids),
 			'field_order'				=> implode('|', $field_ids),
 			'notify_admin'				=> (
-				(ee()->input->get_post('notify_admin') == 'y') ? 'y' : 'n'
+				($this->EE->input->get_post('notify_admin') == 'y') ? 'y' : 'n'
 			),
 			'notify_user'				=> (
-				(ee()->input->get_post('notify_user') == 'y') ? 'y' : 'n'
+				($this->EE->input->get_post('notify_user') == 'y') ? 'y' : 'n'
 			),
 			'user_email_field' 			=> $user_email_field,
 		);
 
 		//load the forms model if its not been already
-		ee()->load->library('freeform_forms');
+		$this->EE->load->library('freeform_forms');
 
 		if ($do_composer)
 		{
@@ -4845,7 +4859,7 @@ class Freeform_mcp extends Module_builder_freeform
 				$data['composer_id'] = 0;
 			}
 
-			ee()->freeform_forms->update_form($form_id, $data);
+			$this->EE->freeform_forms->update_form($form_id, $data);
 		}
 		else
 		{
@@ -4855,25 +4869,25 @@ class Freeform_mcp extends Module_builder_freeform
 			//this is a dupe and they want composer to dupe too?
 			if ($do_composer AND $composer_id > 0)
 			{
-				ee()->load->model('freeform_composer_model');
+				$this->EE->load->model('freeform_composer_model');
 
-				$composer_data = ee()->freeform_composer_model
+				$composer_data = $this->EE->freeform_composer_model
 									 ->select('composer_data')
 									 ->where('composer_id', $composer_id)
 									 ->get_row();
 
 				if ($composer_data !== FALSE)
 				{
-					$data['composer_id'] = ee()->freeform_composer_model->insert(
+					$data['composer_id'] = $this->EE->freeform_composer_model->insert(
 						array(
 							'composer_data' => $composer_data['composer_data'],
-							'site_id'		=> ee()->config->item('site_id')
+							'site_id'		=> $this->EE->config->item('site_id')
 						)
 					);
 				}
 			}
 
-			$form_id = ee()->freeform_forms->create_form($data);
+			$form_id = $this->EE->freeform_forms->create_form($data);
 		}
 
 		// -------------------------------------
@@ -4882,7 +4896,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 		if ( ! $composer_save_finish AND $do_composer)
 		{
-			ee()->functions->redirect($this->mod_link(array(
+			$this->EE->functions->redirect($this->mod_link(array(
 				'method' 	=> 'form_composer',
 				'form_id' 	=> $form_id,
 				'msg' 		=> 'edit_form_success'
@@ -4891,7 +4905,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//'save and finish, default'
 		else
 		{
-			ee()->functions->redirect($this->mod_link(array(
+			$this->EE->functions->redirect($this->mod_link(array(
 				'method' 	=> 'forms',
 				'msg' 		=> 'edit_form_success'
 			)));
@@ -4918,10 +4932,10 @@ class Freeform_mcp extends Module_builder_freeform
 		$form_id	= $this->get_post_or_zero('form_id');
 		$entry_id	= $this->get_post_or_zero('entry_id');
 
-		ee()->load->model('freeform_form_model');
-		ee()->load->model('freeform_entry_model');
-		ee()->load->library('freeform_forms');
-		ee()->load->library('freeform_fields');
+		$this->EE->load->model('freeform_form_model');
+		$this->EE->load->model('freeform_entry_model');
+		$this->EE->load->library('freeform_forms');
+		$this->EE->load->library('freeform_fields');
 
 		$form_data = $this->data->get_form_info($form_id);
 
@@ -4938,7 +4952,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 		if ( $entry_id > 0)
 		{
-			$entry_data = ee()->freeform_entry_model
+			$entry_data = $this->EE->freeform_entry_model
 							  ->id($form_id)
 							  ->where('entry_id', $entry_id)
 							  ->get_row();
@@ -4986,15 +5000,15 @@ class Freeform_mcp extends Module_builder_freeform
 		//to assist backward compat
 		$this->field_errors	= array();
 
-		if (ee()->extensions->active_hook('freeform_module_validate_begin') === TRUE)
+		if ($this->EE->extensions->active_hook('freeform_module_validate_begin') === TRUE)
 		{
-			$errors = ee()->extensions->universal_call(
+			$errors = $this->EE->extensions->universal_call(
 				'freeform_module_validate_begin',
 				$errors,
 				$this
 			);
 
-			if (ee()->extensions->end_script === TRUE) return;
+			if ($this->EE->extensions->end_script === TRUE) return;
 		}
 
 		// -------------------------------------
@@ -5011,7 +5025,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 		$available_statuses	= $this->data->get_form_statuses();
 
-		$status = ee()->input->get_post('status');
+		$status = $this->EE->input->get_post('status');
 
 		if ( ! array_key_exists($status, $available_statuses))
 		{
@@ -5026,7 +5040,7 @@ class Freeform_mcp extends Module_builder_freeform
 		{
 			$field_list[$field_data['field_name']] = $field_data['field_label'];
 
-			$field_post = ee()->input->get_post($field_data['field_name']);
+			$field_post = $this->EE->input->get_post($field_data['field_name']);
 
 			//if it's not even in $_POST or $_GET, lets skip input
 			//unless its an uploaded file, then we'll send false anyway
@@ -5042,7 +5056,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//so lets just get results! (sexy results?)
 		$this->field_errors = array_merge(
 			$this->field_errors,
-			ee()->freeform_fields->validate(
+			$this->EE->freeform_fields->validate(
 				$form_id,
 				$field_input_data
 			)
@@ -5052,15 +5066,15 @@ class Freeform_mcp extends Module_builder_freeform
 		//	post validate hook
 		// -------------------------------------
 
-		if (ee()->extensions->active_hook('freeform_module_validate_end') === TRUE)
+		if ($this->EE->extensions->active_hook('freeform_module_validate_end') === TRUE)
 		{
-			$errors = ee()->extensions->universal_call(
+			$errors = $this->EE->extensions->universal_call(
 				'freeform_module_validate_end',
 				$errors,
 				$this
 			);
 
-			if (ee()->extensions->end_script === TRUE) return;
+			if ($this->EE->extensions->end_script === TRUE) return;
 		}
 
 		$errors = array_merge($errors, $this->field_errors);
@@ -5077,7 +5091,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//send ajax response exists
 		//but this is in case someone is using a replacer
 		//that uses
-		if ($this->check_yes(ee()->input->get_post('validate_only')))
+		if ($this->check_yes($this->EE->input->get_post('validate_only')))
 		{
 			if ($this->is_ajax_request())
 			{
@@ -5094,9 +5108,9 @@ class Freeform_mcp extends Module_builder_freeform
 		//	entry insert begin hook
 		// -------------------------------------
 
-		if (ee()->extensions->active_hook('freeform_module_insert_begin') === TRUE)
+		if ($this->EE->extensions->active_hook('freeform_module_insert_begin') === TRUE)
 		{
-			$field_input_data = ee()->extensions->universal_call(
+			$field_input_data = $this->EE->extensions->universal_call(
 				'freeform_module_insert_begin',
 				$field_input_data,
 				$entry_id,
@@ -5104,7 +5118,7 @@ class Freeform_mcp extends Module_builder_freeform
 				$this
 			);
 
-			if (ee()->extensions->end_script === TRUE) return;
+			if ($this->EE->extensions->end_script === TRUE) return;
 		}
 
 		// -------------------------------------
@@ -5113,7 +5127,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 		if ($edit)
 		{
-			ee()->freeform_forms->update_entry(
+			$this->EE->freeform_forms->update_entry(
 				$form_id,
 				$entry_id,
 				$field_input_data
@@ -5121,7 +5135,7 @@ class Freeform_mcp extends Module_builder_freeform
 		}
 		else
 		{
-			$entry_id = ee()->freeform_forms->insert_new_entry(
+			$entry_id = $this->EE->freeform_forms->insert_new_entry(
 				$form_id,
 				$field_input_data
 			);
@@ -5131,9 +5145,9 @@ class Freeform_mcp extends Module_builder_freeform
 		//	entry insert begin hook
 		// -------------------------------------
 
-		if (ee()->extensions->active_hook('freeform_module_insert_end') === TRUE)
+		if ($this->EE->extensions->active_hook('freeform_module_insert_end') === TRUE)
 		{
-			$edata = ee()->extensions->universal_call(
+			$edata = $this->EE->extensions->universal_call(
 				'freeform_module_insert_end',
 				$field_input_data,
 				$entry_id,
@@ -5141,7 +5155,7 @@ class Freeform_mcp extends Module_builder_freeform
 				$this
 			);
 
-			if (ee()->extensions->end_script === TRUE) return;
+			if ($this->EE->extensions->end_script === TRUE) return;
 		}
 
 		// -------------------------------------
@@ -5162,7 +5176,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//'save and finish, default'
 		else
 		{
-			ee()->functions->redirect($this->mod_link(array(
+			$this->EE->functions->redirect($this->mod_link(array(
 				'method' 	=> 'entries',
 				'form_id'	=> $form_id,
 				'msg' 		=> $success_line
@@ -5186,8 +5200,8 @@ class Freeform_mcp extends Module_builder_freeform
 	{
 		$form_id		= $this->get_post_or_zero('form_id');
 		$template_id	= $this->get_post_or_zero('template_id');
-		$composer_data	= ee()->input->get_post('composer_data');
-		$preview		= $this->check_yes(ee()->input->get_post('preview')) ? 'y' : 'n';
+		$composer_data	= $this->EE->input->get_post('composer_data');
+		$preview		= $this->check_yes($this->EE->input->get_post('preview')) ? 'y' : 'n';
 
 		if ( ! $this->data->is_valid_form_id($form_id))
 		{
@@ -5257,17 +5271,17 @@ class Freeform_mcp extends Module_builder_freeform
 		//	start data
 		// -------------------------------------
 
-		ee()->load->model('freeform_composer_model');
+		$this->EE->load->model('freeform_composer_model');
 
 		//update?
 		if ($preview == 'n' AND $form_data['composer_id'] != 0 AND
-			ee()->freeform_composer_model->count(array(
+			$this->EE->freeform_composer_model->count(array(
 				'composer_id' => $form_data['composer_id']
 			)) != 0)
 		{
 			$composer_id = $form_data['composer_id'];
 
-			ee()->freeform_composer_model->update(
+			$this->EE->freeform_composer_model->update(
 				array(
 					'composer_data'	=> $composer_data,
 					'preview'		=> $preview
@@ -5278,12 +5292,12 @@ class Freeform_mcp extends Module_builder_freeform
 		//insert
 		else
 		{
-			$composer_id = ee()->freeform_composer_model->insert(array(
+			$composer_id = $this->EE->freeform_composer_model->insert(array(
 				'composer_data'	=> $composer_data,
 				'preview'		=> $preview
 			));
 
-			ee()->freeform_composer_model->clean();
+			$this->EE->freeform_composer_model->clean();
 		}
 
 		// -------------------------------------
@@ -5304,9 +5318,9 @@ class Freeform_mcp extends Module_builder_freeform
 
 		if ( ! empty($form_update_data))
 		{
-			ee()->load->model('freeform_form_model');
+			$this->EE->load->model('freeform_form_model');
 
-			ee()->freeform_form_model->update(
+			$this->EE->freeform_form_model->update(
 				$form_update_data,
 				array('form_id' => $form_id)
 			);
@@ -5318,9 +5332,9 @@ class Freeform_mcp extends Module_builder_freeform
 
 		if ($preview == 'n' )
 		{
-			ee()->load->library('freeform_forms');
+			$this->EE->load->library('freeform_forms');
 
-			ee()->freeform_forms->add_field_to_form($form_id, $composer_fields);
+			$this->EE->freeform_forms->add_field_to_form($form_id, $composer_fields);
 		}
 
 		// -------------------------------------
@@ -5337,7 +5351,7 @@ class Freeform_mcp extends Module_builder_freeform
 		}
 		else
 		{
-			ee()->functions->redirect($this->mod_link(array(
+			$this->EE->functions->redirect($this->mod_link(array(
 				'method'	=> 'index',
 				'msg'		=> 'composer_data_saved'
 			)));
@@ -5406,10 +5420,10 @@ class Freeform_mcp extends Module_builder_freeform
 			);
 		}
 
-		ee()->load->model('freeform_form_model');
+		$this->EE->load->model('freeform_form_model');
 
-		ee()->db->update_batch(
-			ee()->freeform_form_model->table_name($form_id),
+		$this->EE->db->update_batch(
+			$this->EE->freeform_form_model->table_name($form_id),
 			$updates,
 			'entry_id'
 		);
@@ -5427,13 +5441,13 @@ class Freeform_mcp extends Module_builder_freeform
 		}
 		else
 		{
-			$method = ee()->input->get_post('return_method');
+			$method = $this->EE->input->get_post('return_method');
 
 			$method = ($method AND is_callable(array($this, $method))) ?
 							$method :
 							'moderate_entries';
 
-			ee()->functions->redirect($this->mod_link(array(
+			$this->EE->functions->redirect($this->mod_link(array(
 				'method' 	=> $method,
 				'form_id'	=> $form_id,
 				'msg' 		=> 'entries_approved'
@@ -5485,7 +5499,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 	private function get_post_entry_ids ()
 	{
-		$entry_ids = ee()->input->get_post('entry_ids');
+		$entry_ids = $this->EE->input->get_post('entry_ids');
 
 		if ( ! is_array($entry_ids) AND
 			 ! $this->is_positive_intlike($entry_ids))
@@ -5549,7 +5563,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 		if ( ! $form_id)
 		{
-			ee()->output->show_user_error(
+			$this->EE->output->show_user_error(
 				'submission',
 				array(lang('invalid_form_id'))
 			);
@@ -5567,7 +5581,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//check
 		if ( ! $entry_ids)
 		{
-			ee()->output->show_user_error(
+			$this->EE->output->show_user_error(
 				'submission',
 				array(lang('invalid_entry_id'))
 			);
@@ -5577,7 +5591,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//	return method?
 		// -------------------------------------
 
-		$return_method = ee()->input->get_post('return_method');
+		$return_method = $this->EE->input->get_post('return_method');
 
 		$return_method = ($return_method AND
 						  is_callable(array($this, $return_method))) ?
@@ -5646,8 +5660,8 @@ class Freeform_mcp extends Module_builder_freeform
 			$this->actions()->full_stop(lang('invalid_entry_id'));
 		}
 
-		ee()->load->library('freeform_forms');
-		$success = ee()->freeform_forms->delete_entries($form_id, $entry_ids);
+		$this->EE->load->library('freeform_forms');
+		$success = $this->EE->freeform_forms->delete_entries($form_id, $entry_ids);
 
 		// -------------------------------------
 		//	success
@@ -5661,12 +5675,12 @@ class Freeform_mcp extends Module_builder_freeform
 		}
 		else
 		{
-			$method = ee()->input->get_post('return_method');
+			$method = $this->EE->input->get_post('return_method');
 
 			$method = ($method AND is_callable(array($this, $method))) ?
 							$method : 'entries';
 
-			ee()->functions->redirect($this->mod_link(array(
+			$this->EE->functions->redirect($this->mod_link(array(
 				'method' 	=> $method,
 				'form_id'	=> $form_id,
 				'msg' 		=> 'entries_deleted'
@@ -5691,7 +5705,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//the following forms will be affected
 		//they contain the forms..
 
-		$field_ids = ee()->input->get_post('field_id', TRUE);
+		$field_ids = $this->EE->input->get_post('field_id', TRUE);
 
 		if ( ! is_array($field_ids) AND
 			 ! $this->is_positive_intlike($field_ids) )
@@ -5726,9 +5740,9 @@ class Freeform_mcp extends Module_builder_freeform
 		//	build a list of forms affected by fields
 		// -------------------------------------
 
-		ee()->db->where_in('field_id', $clean_field_ids);
+		$this->EE->db->where_in('field_id', $clean_field_ids);
 
-		$all_field_data 			= ee()->db->get('freeform_fields');
+		$all_field_data 			= $this->EE->db->get('freeform_fields');
 
 		$delete_field_confirmation 	= lang('delete_field_confirmation');
 
@@ -5792,9 +5806,9 @@ class Freeform_mcp extends Module_builder_freeform
 
 	public function utilities ( $message = '' )
 	{
-		if ($message == '' AND ee()->input->get('msg') !== FALSE)
+		if ($message == '' AND $this->EE->input->get('msg') !== FALSE)
 		{
-			$message = lang(ee()->input->get('msg'));
+			$message = lang($this->EE->input->get('msg'));
 		}
 
 		$this->cached_vars['message'] = $message;
@@ -5811,21 +5825,21 @@ class Freeform_mcp extends Module_builder_freeform
 		//  Counts
 		//--------------------------------------
 
-		ee()->load->library('freeform_migration');
+		$this->EE->load->library('freeform_migration');
 
-		$this->cached_vars['counts']	= ee()->freeform_migration->get_collection_counts();
+		$this->cached_vars['counts']	= $this->EE->freeform_migration->get_collection_counts();
 
-		// $test	= ee()->freeform_migration->create_upload_field( 1, 'goff', array( 'file_upload_location' => '1' ) );
+		// $test	= $this->EE->freeform_migration->create_upload_field( 1, 'goff', array( 'file_upload_location' => '1' ) );
 
-		// print_r( $test ); print_r( ee()->freeform_migration->get_errors() );
+		// print_r( $test ); print_r( $this->EE->freeform_migration->get_errors() );
 
 		//--------------------------------------
 		//  File upload field installed?
 		//--------------------------------------
 
-		$this->cached_vars['file_upload_installed']	= ee()->freeform_migration->get_field_type_installed('file_upload');
+		$this->cached_vars['file_upload_installed']	= $this->EE->freeform_migration->get_field_type_installed('file_upload');
 
-		$query	= ee()->db->query( "SELECT * FROM exp_freeform_fields WHERE field_type = 'file_upload'" );
+		$query	= $this->EE->db->query( "SELECT * FROM exp_freeform_fields WHERE field_type = 'file_upload'" );
 
 		//--------------------------------------
 		//	Load vars
@@ -5865,12 +5879,12 @@ class Freeform_mcp extends Module_builder_freeform
 
 		if ($name == '')
 		{
-			ee()->functions->redirect($this->base);
+			$this->EE->functions->redirect($this->base);
 		}
 
-		ee()->load->model('freeform_field_model');
+		$this->EE->load->model('freeform_field_model');
 
-		$items = ee()->freeform_field_model
+		$items = $this->EE->freeform_field_model
 						->key('field_label', 'field_label')
 						->get(array('field_type' => $name));
 
@@ -5910,7 +5924,7 @@ class Freeform_mcp extends Module_builder_freeform
 	{
 		if ($name == '')
 		{
-			$name = ee()->input->get_post('fieldtype', TRUE);
+			$name = $this->EE->input->get_post('fieldtype', TRUE);
 		}
 
 		if ( ! $name)
@@ -5918,8 +5932,8 @@ class Freeform_mcp extends Module_builder_freeform
 			$this->actions()->full_stop(lang('no_fieldtypes_submitted'));
 		}
 
-		ee()->load->library('freeform_fields');
-		$success = ee()->freeform_fields->uninstall_fieldtype($name);
+		$this->EE->load->library('freeform_fields');
+		$success = $this->EE->freeform_fields->uninstall_fieldtype($name);
 
 		if ( ! $redirect)
 		{
@@ -5935,7 +5949,7 @@ class Freeform_mcp extends Module_builder_freeform
 		}
 		else
 		{
-			ee()->functions->redirect($this->mod_link(array(
+			$this->EE->functions->redirect($this->mod_link(array(
 				'method' 	=> 'fieldtypes',
 				'msg' 		=> 'fieldtype_uninstalled'
 			)));
@@ -5959,7 +5973,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//	safety goggles
 		// -------------------------------------
 		//
-		$field_ids = ee()->input->get_post('field_id', TRUE);
+		$field_ids = $this->EE->input->get_post('field_id', TRUE);
 
 		if ( ! is_array($field_ids) AND
 			 ! $this->is_positive_intlike($field_ids) )
@@ -5977,9 +5991,9 @@ class Freeform_mcp extends Module_builder_freeform
 		//	delete fields
 		// -------------------------------------
 
-		ee()->load->library('freeform_fields');
+		$this->EE->load->library('freeform_fields');
 
-		ee()->freeform_fields->delete_field($field_ids);
+		$this->EE->freeform_fields->delete_field($field_ids);
 
 		// -------------------------------------
 		//	success
@@ -5993,7 +6007,7 @@ class Freeform_mcp extends Module_builder_freeform
 		}
 		else
 		{
-			ee()->functions->redirect($this->mod_link(array(
+			$this->EE->functions->redirect($this->mod_link(array(
 				'method' 	=> 'fields',
 				'msg' 		=> 'fields_deleted'
 			)));
@@ -6035,7 +6049,7 @@ class Freeform_mcp extends Module_builder_freeform
 		if ( ! is_array($notification_id) AND
 			 ! $this->is_positive_intlike($notification_id))
 		{
-			$notification_id = ee()->input->get_post('notification_id');
+			$notification_id = $this->EE->input->get_post('notification_id');
 		}
 
 		if ( ! is_array($notification_id) AND
@@ -6091,7 +6105,7 @@ class Freeform_mcp extends Module_builder_freeform
 		if ( ! is_array($notification_id) AND
 			 ! $this->is_positive_intlike($notification_id))
 		{
-			$notification_id = ee()->input->get_post('notification_id');
+			$notification_id = $this->EE->input->get_post('notification_id');
 		}
 
 		if ( ! is_array($notification_id) AND
@@ -6112,9 +6126,9 @@ class Freeform_mcp extends Module_builder_freeform
 			$notification_id = array($notification_id);
 		}
 
-		ee()->load->model('freeform_notification_model');
+		$this->EE->load->model('freeform_notification_model');
 
-		$success = ee()->freeform_notification_model
+		$success = $this->EE->freeform_notification_model
 						->where_in('notification_id', $notification_id)
 						->delete();
 
@@ -6130,12 +6144,12 @@ class Freeform_mcp extends Module_builder_freeform
 		}
 		else
 		{
-			$method = ee()->input->get_post('return_method');
+			$method = $this->EE->input->get_post('return_method');
 
 			$method = ($method AND is_callable(array($this, $method))) ?
 							$method : 'notifications';
 
-			ee()->functions->redirect($this->mod_link(array(
+			$this->EE->functions->redirect($this->mod_link(array(
 				'method'	=> $method,
 				'msg'		=> 'delete_notification_success'
 			)));
@@ -6179,7 +6193,7 @@ class Freeform_mcp extends Module_builder_freeform
 		if ( ! is_array($template_id) AND
 			 ! $this->is_positive_intlike($template_id))
 		{
-			$template_id = ee()->input->get_post('template_id');
+			$template_id = $this->EE->input->get_post('template_id');
 		}
 
 		if ( ! is_array($template_id) AND
@@ -6235,7 +6249,7 @@ class Freeform_mcp extends Module_builder_freeform
 		if ( ! is_array($template_id) AND
 			 ! $this->is_positive_intlike($template_id))
 		{
-			$template_id = ee()->input->get_post('template_id');
+			$template_id = $this->EE->input->get_post('template_id');
 		}
 
 		if ( ! is_array($template_id) AND
@@ -6256,9 +6270,9 @@ class Freeform_mcp extends Module_builder_freeform
 			$template_id = array($template_id);
 		}
 
-		ee()->load->model('freeform_template_model');
+		$this->EE->load->model('freeform_template_model');
 
-		$success = ee()->freeform_template_model
+		$success = $this->EE->freeform_template_model
 						->where_in('template_id', $template_id)
 						->delete();
 
@@ -6274,12 +6288,12 @@ class Freeform_mcp extends Module_builder_freeform
 		}
 		else
 		{
-			$method = ee()->input->get_post('return_method');
+			$method = $this->EE->input->get_post('return_method');
 
 			$method = ($method AND is_callable(array($this, $method))) ?
 							$method : 'templates';
 
-			ee()->functions->redirect($this->mod_link(array(
+			$this->EE->functions->redirect($this->mod_link(array(
 				'method'	=> $method,
 				'msg'		=> 'delete_template_success'
 			)));
@@ -6318,24 +6332,24 @@ class Freeform_mcp extends Module_builder_freeform
 		foreach ($y_or_n as $item)
 		{
 			//set as local var
-			$$item = $this->check_no(ee()->input->get_post($item)) ? 'n' : 'y';
+			$$item = $this->check_no($this->EE->input->get_post($item)) ? 'n' : 'y';
 		}
 
 		// -------------------------------------
 		//	field instance
 		// -------------------------------------
 
-		$field_type = ee()->input->get_post('field_type', TRUE);
+		$field_type = $this->EE->input->get_post('field_type', TRUE);
 
-		ee()->load->library('freeform_fields');
-		ee()->load->model('freeform_field_model');
+		$this->EE->load->library('freeform_fields');
+		$this->EE->load->model('freeform_field_model');
 
-		$available_fieldtypes = ee()->freeform_fields->get_available_fieldtypes();
+		$available_fieldtypes = $this->EE->freeform_fields->get_available_fieldtypes();
 
 		//get the update with previous settings if this is an edit
 		if ($update)
 		{
-			$field = ee()->freeform_field_model
+			$field = $this->EE->freeform_field_model
 					->where('field_id', $field_id)
 					->where('field_type', $field_type)
 					->count();
@@ -6344,16 +6358,16 @@ class Freeform_mcp extends Module_builder_freeform
 			//are changing type like hooligans
 			if ($field)
 			{
-				$field_instance =& ee()->freeform_fields->get_field_instance($field_id);
+				$field_instance =& $this->EE->freeform_fields->get_field_instance($field_id);
 			}
 			else
 			{
-				$field_instance =& ee()->freeform_fields->get_fieldtype_instance($field_type);
+				$field_instance =& $this->EE->freeform_fields->get_fieldtype_instance($field_type);
 			}
 		}
 		else
 		{
-			$field_instance =& ee()->freeform_fields->get_fieldtype_instance($field_type);
+			$field_instance =& $this->EE->freeform_fields->get_fieldtype_instance($field_type);
 		}
 
 		// -------------------------------------
@@ -6367,7 +6381,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//	field name
 		// -------------------------------------
 
-		$field_name = ee()->input->get_post('field_name', TRUE);
+		$field_name = $this->EE->input->get_post('field_name', TRUE);
 
 		//if the field label is blank, make one for them
 		//we really dont want to do this, but here we are
@@ -6397,7 +6411,7 @@ class Freeform_mcp extends Module_builder_freeform
 			}
 
 			//get dupe from field names
-			$f_query = ee()->db->select('field_name, field_id')->get_where(
+			$f_query = $this->EE->db->select('field_name, field_id')->get_where(
 				'freeform_fields',
 				 array('field_name' => $field_name)
 			);
@@ -6418,7 +6432,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//	field label
 		// -------------------------------------
 
-		$field_label = ee()->input->get_post('field_label', TRUE);
+		$field_label = $this->EE->input->get_post('field_label', TRUE);
 
 		if ( ! $field_label OR ! trim($field_label) )
 		{
@@ -6465,7 +6479,7 @@ class Freeform_mcp extends Module_builder_freeform
 			return $this->actions()->full_stop($errors);
 		}
 
-		if ($this->check_yes(ee()->input->get_post('validate_only')) AND
+		if ($this->check_yes($this->EE->input->get_post('validate_only')) AND
 			$this->is_ajax_request())
 		{
 			$this->send_ajax_response(array(
@@ -6482,7 +6496,7 @@ class Freeform_mcp extends Module_builder_freeform
 			'field_label' 		=> strip_tags($field_label),
 			'field_type' 		=> $field_type,
 			'edit_date' 		=> '0', //overridden if update
-			'field_description' => strip_tags(ee()->input->get_post('field_description', TRUE)),
+			'field_description' => strip_tags($this->EE->input->get_post('field_description', TRUE)),
 			'submissions_page' 	=> $submissions_page,
 			'moderation_page' 	=> $moderation_page,
 			'composer_use' 		=> $composer_use,
@@ -6491,11 +6505,11 @@ class Freeform_mcp extends Module_builder_freeform
 
 		if ($update)
 		{
-			ee()->freeform_field_model->update(
+			$this->EE->freeform_field_model->update(
 				array_merge(
 					$data,
 					array(
-						'edit_date' => ee()->localize->now
+						'edit_date' => $this->EE->localize->now
 					)
 				),
 				array('field_id' => $field_id)
@@ -6503,13 +6517,13 @@ class Freeform_mcp extends Module_builder_freeform
 		}
 		else
 		{
-			$field_id = ee()->freeform_field_model->insert(
+			$field_id = $this->EE->freeform_field_model->insert(
 				array_merge(
 					$data,
 					array(
-						'author_id'		=> ee()->session->userdata('member_id'),
-						'entry_date'	=> ee()->localize->now,
-						'site_id' 		=> ee()->config->item('site_id')
+						'author_id'		=> $this->EE->session->userdata('member_id'),
+						'entry_date'	=> $this->EE->localize->now,
+						'site_id' 		=> $this->EE->config->item('site_id')
 					)
 				)
 			);
@@ -6535,7 +6549,7 @@ class Freeform_mcp extends Module_builder_freeform
 			}
 		}
 
-		$form_ids = ee()->input->get_post('form_ids');
+		$form_ids = $this->EE->input->get_post('form_ids');
 
 		if ($form_ids !== FALSE)
 		{
@@ -6556,16 +6570,16 @@ class Freeform_mcp extends Module_builder_freeform
 			$remove = array_unique(array_diff($field_in_forms, $form_ids));
 			$add 	= array_unique(array_diff($form_ids, $field_in_forms));
 
-			ee()->load->library('freeform_forms');
+			$this->EE->load->library('freeform_forms');
 
 			foreach ($add as $add_id)
 			{
-				ee()->freeform_forms->add_field_to_form($add_id, $field_id);
+				$this->EE->freeform_forms->add_field_to_form($add_id, $field_id);
 			}
 
 			foreach ($remove as $remove_id)
 			{
-				ee()->freeform_forms->remove_field_from_form($remove_id, $field_id);
+				$this->EE->freeform_forms->remove_field_from_form($remove_id, $field_id);
 			}
 		}
 
@@ -6580,7 +6594,7 @@ class Freeform_mcp extends Module_builder_freeform
 				'field_id'	=> $field_id,
 			);
 
-			if ($this->check_yes(ee()->input->get_post('include_field_data')))
+			if ($this->check_yes($this->EE->input->get_post('include_field_data')))
 			{
 				$return['composerFieldData'] = $this->composer_field_data($field_id, NULL, TRUE);
 			}
@@ -6590,7 +6604,7 @@ class Freeform_mcp extends Module_builder_freeform
 		else
 		{
 			//redirect back to fields on success
-			ee()->functions->redirect($this->mod_link(array(
+			$this->EE->functions->redirect($this->mod_link(array(
 				'method'	=> 'fields',
 				'msg'		=> 'edit_field_success'
 			)));
@@ -6619,14 +6633,14 @@ class Freeform_mcp extends Module_builder_freeform
 		if ( ! $return AND ! $this->is_ajax_request())
 		{
 			//redirect back to fields on non-ajax
-			ee()->functions->redirect($this->mod_link(array(
+			$this->EE->functions->redirect($this->mod_link(array(
 				'method'	=> 'fields'
 			)));
 		}
 
 		$field_id = ($this->is_positive_intlike($field_id)) ?
 						$field_id :
-						ee()->input->get_post('field_id');
+						$this->EE->input->get_post('field_id');
 
 		// -------------------------------------
 		//	valid field?
@@ -6646,9 +6660,9 @@ class Freeform_mcp extends Module_builder_freeform
 		//	field instance
 		// -------------------------------------
 
-		ee()->load->library('freeform_fields');
+		$this->EE->load->library('freeform_fields');
 
-		$instance =& ee()->freeform_fields->get_field_instance(array(
+		$instance =& $this->EE->freeform_fields->get_field_instance(array(
 			'field_id'		=> $field_id,
 			'field_data'	=> $field_data
 		));
@@ -6711,7 +6725,7 @@ class Freeform_mcp extends Module_builder_freeform
 		foreach ($y_or_n as $item)
 		{
 			//set as local var
-			$$item = $this->check_no(ee()->input->get_post($item)) ? 'n' : 'y';
+			$$item = $this->check_no($this->EE->input->get_post($item)) ? 'n' : 'y';
 		}
 
 		// -------------------------------------
@@ -6723,7 +6737,7 @@ class Freeform_mcp extends Module_builder_freeform
 		foreach ($n_or_y as $item)
 		{
 			//set as local var
-			$$item = $this->check_yes(ee()->input->get_post($item)) ? 'y' : 'n';
+			$$item = $this->check_yes($this->EE->input->get_post($item)) ? 'y' : 'n';
 		}
 
 		// -------------------------------------
@@ -6737,7 +6751,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//	notification name
 		// -------------------------------------
 
-		$notification_name = ee()->input->get_post('notification_name', TRUE);
+		$notification_name = $this->EE->input->get_post('notification_name', TRUE);
 
 		//if the field label is blank, make one for them
 		//we really dont want to do this, but here we are
@@ -6767,9 +6781,9 @@ class Freeform_mcp extends Module_builder_freeform
 			}
 
 			//get dupe from field names
-			ee()->db->select('notification_name, notification_id');
+			$this->EE->db->select('notification_name, notification_id');
 
-			$f_query = ee()->db->get_where(
+			$f_query = $this->EE->db->get_where(
 				'freeform_notification_templates',
 				array(
 					'notification_name' => $notification_name
@@ -6792,20 +6806,20 @@ class Freeform_mcp extends Module_builder_freeform
 		//	notification label
 		// -------------------------------------
 
-		$notification_label = ee()->input->get_post('notification_label', TRUE);
+		$notification_label = $this->EE->input->get_post('notification_label', TRUE);
 
 		if ( ! $notification_label OR ! trim($notification_label) )
 		{
 			$errors['notification_label'] = lang('notification_label_required');
 		}
 
-		ee()->load->helper('email');
+		$this->EE->load->helper('email');
 
 		// -------------------------------------
 		//	notification email
 		// -------------------------------------
 
-		$from_email = ee()->input->get_post('from_email', TRUE);
+		$from_email = $this->EE->input->get_post('from_email', TRUE);
 
 		if ($from_email AND trim($from_email) != '')
 		{
@@ -6829,7 +6843,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//	from name
 		// -------------------------------------
 
-		$from_name = ee()->input->get_post('from_name', TRUE);
+		$from_name = $this->EE->input->get_post('from_name', TRUE);
 
 		if ( ! $from_name OR ! trim($from_name) )
 		{
@@ -6840,7 +6854,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//	reply to email
 		// -------------------------------------
 
-		$reply_to_email = ee()->input->get_post('reply_to_email', TRUE);
+		$reply_to_email = $this->EE->input->get_post('reply_to_email', TRUE);
 
 		if ($reply_to_email AND trim($reply_to_email) != '')
 		{
@@ -6868,7 +6882,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//	email subject
 		// -------------------------------------
 
-		$email_subject = ee()->input->get_post('email_subject', TRUE);
+		$email_subject = $this->EE->input->get_post('email_subject', TRUE);
 
 		if ( ! $email_subject OR ! trim($email_subject) )
 		{
@@ -6884,7 +6898,7 @@ class Freeform_mcp extends Module_builder_freeform
 			return $this->actions()->full_stop($errors);
 		}
 		//ajax checking?
-		else if ($this->check_yes(ee()->input->get_post('validate_only')))
+		else if ($this->check_yes($this->EE->input->get_post('validate_only')))
 		{
 			return $this->send_ajax_response(array(
 				'success' 				=> TRUE
@@ -6898,33 +6912,33 @@ class Freeform_mcp extends Module_builder_freeform
 		$data 		= array(
 			'notification_name'			=> strip_tags($notification_name),
 			'notification_label'		=> strip_tags($notification_label),
-			'notification_description'	=> strip_tags(ee()->input->get_post('notification_description', TRUE)),
+			'notification_description'	=> strip_tags($this->EE->input->get_post('notification_description', TRUE)),
 			'wordwrap'					=> $wordwrap,
 			'allow_html'				=> $allow_html,
 			'from_name'					=> $from_name,
 			'from_email'				=> $from_email,
 			'reply_to_email'			=> $reply_to_email,
 			'email_subject'				=> strip_tags($email_subject),
-			'template_data'				=> ee()->input->get_post('template_data'),
+			'template_data'				=> $this->EE->input->get_post('template_data'),
 			'include_attachments'		=> $include_attachments
 		);
 
-		ee()->load->model('freeform_notification_model');
+		$this->EE->load->model('freeform_notification_model');
 
 		if ($update)
 		{
-			ee()->freeform_notification_model->update(
+			$this->EE->freeform_notification_model->update(
 				$data,
 				array('notification_id' => $notification_id)
 			);
 		}
 		else
 		{
-			$notification_id = ee()->freeform_notification_model->insert(
+			$notification_id = $this->EE->freeform_notification_model->insert(
 				array_merge(
 					$data,
 					array(
-						'site_id' => ee()->config->item('site_id')
+						'site_id' => $this->EE->config->item('site_id')
 					)
 				)
 			);
@@ -6944,7 +6958,7 @@ class Freeform_mcp extends Module_builder_freeform
 		else
 		{
 			//redirect back to fields on success
-			ee()->functions->redirect($this->mod_link(array(
+			$this->EE->functions->redirect($this->mod_link(array(
 				'method' 	=> 'notifications',
 				'msg' 		=> 'edit_notification_success'
 			)));
@@ -6973,7 +6987,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 		$update 			= ($template_id != 0);
 
-		ee()->load->model('freeform_template_model');
+		$this->EE->load->model('freeform_template_model');
 
 		// -------------------------------------
 		//	yes or no items (default yes)
@@ -6984,7 +6998,7 @@ class Freeform_mcp extends Module_builder_freeform
 		foreach ($y_or_n as $item)
 		{
 			//set as local var
-			$$item = $this->check_no(ee()->input->get_post($item)) ? 'n' : 'y';
+			$$item = $this->check_no($this->EE->input->get_post($item)) ? 'n' : 'y';
 		}
 
 		// -------------------------------------
@@ -6996,7 +7010,7 @@ class Freeform_mcp extends Module_builder_freeform
 		foreach ($n_or_y as $item)
 		{
 			//set as local var
-			$$item = $this->check_yes(ee()->input->get_post($item)) ? 'y' : 'n';
+			$$item = $this->check_yes($this->EE->input->get_post($item)) ? 'y' : 'n';
 		}
 
 		// -------------------------------------
@@ -7010,7 +7024,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//	template name
 		// -------------------------------------
 
-		$template_name = ee()->input->get_post('template_name', TRUE);
+		$template_name = $this->EE->input->get_post('template_name', TRUE);
 
 		//if the field label is blank, make one for them
 		//we really dont want to do this, but here we are
@@ -7041,7 +7055,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 			//get dupe from field names
 
-			$f_query = ee()->freeform_template_model
+			$f_query = $this->EE->freeform_template_model
 							->select('template_name, template_id')
 							->get_row(array('template_name' => $template_name));
 
@@ -7061,7 +7075,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//	template label
 		// -------------------------------------
 
-		$template_label = ee()->input->get_post('template_label', TRUE);
+		$template_label = $this->EE->input->get_post('template_label', TRUE);
 
 		if ( ! $template_label OR ! trim($template_label) )
 		{
@@ -7074,9 +7088,9 @@ class Freeform_mcp extends Module_builder_freeform
 
 		$param_options = array();
 
-		$params	= ee()->input->post('list_param_holder_input');
+		$params	= $this->EE->input->post('list_param_holder_input');
 
-		$values	= ee()->input->post('list_value_holder_input');
+		$values	= $this->EE->input->post('list_value_holder_input');
 
 		if ($params AND $values)
 		{
@@ -7099,7 +7113,7 @@ class Freeform_mcp extends Module_builder_freeform
 			return $this->actions()->full_stop($errors);
 		}
 		//ajax checking?
-		else if ($this->check_yes(ee()->input->get_post('validate_only')))
+		else if ($this->check_yes($this->EE->input->get_post('validate_only')))
 		{
 			return $this->send_ajax_response(array(
 				'success' => TRUE
@@ -7110,31 +7124,31 @@ class Freeform_mcp extends Module_builder_freeform
 		//	insert data
 		// -------------------------------------
 
-		ee()->load->helper('text');
+		$this->EE->load->helper('text');
 
 		$data = array(
 			'template_name'			=> strip_tags($template_name),
 			'template_label'		=> strip_tags($template_label),
-			'template_description'	=> word_limiter( strip_tags( ee()->input->get_post('template_description', TRUE) ), 200 ),
-			'template_data'			=> ee()->input->get_post('template_data'),
+			'template_description'	=> word_limiter( strip_tags( $this->EE->input->get_post('template_description', TRUE) ), 200 ),
+			'template_data'			=> $this->EE->input->get_post('template_data'),
 			'enable_template'		=> $enable_template,
 			'param_data'			=> json_encode($param_options)
 		);
 
 		if ($update)
 		{
-			ee()->freeform_template_model->update(
+			$this->EE->freeform_template_model->update(
 				$data,
 				array('template_id' => $template_id)
 			);
 		}
 		else
 		{
-			$template_id = ee()->freeform_template_model->insert(
+			$template_id = $this->EE->freeform_template_model->insert(
 				array_merge(
 					$data,
 					array(
-						'site_id' => ee()->config->item('site_id')
+						'site_id' => $this->EE->config->item('site_id')
 					)
 				)
 			);
@@ -7154,7 +7168,7 @@ class Freeform_mcp extends Module_builder_freeform
 		else
 		{
 			//redirect back to fields on success
-			ee()->functions->redirect($this->mod_link(array(
+			$this->EE->functions->redirect($this->mod_link(array(
 				'method'	=> 'templates',
 				'msg'		=> 'edit_template_success'
 			)));
@@ -7195,7 +7209,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//	member groups
 		// -------------------------------------
 
-		$m_groups =	ee()->db
+		$m_groups =	$this->EE->db
 						->from('member_groups')
 						->select('group_id')
 						->where_not_in('group_id', array(1, 2, 3, 4))
@@ -7215,10 +7229,10 @@ class Freeform_mcp extends Module_builder_freeform
 		//	permissions
 		// -------------------------------------
 
-		$global_permissions		= (ee()->input->get_post('global_permissions') == 'y');
+		$global_permissions		= ($this->EE->input->get_post('global_permissions') == 'y');
 
 		$default_permission_ng	= (
-			ee()->input->get_post('default_permission_new_group') == 'deny'
+			$this->EE->input->get_post('default_permission_new_group') == 'deny'
 		) ? 'deny' : 'allow';
 
 		$permissions = $this->data->global_preference('permissions');
@@ -7230,14 +7244,14 @@ class Freeform_mcp extends Module_builder_freeform
 
 		$permissions['global_permissions'] = $global_permissions;
 
-		$site_id = ($global_permissions) ? 0 : ee()->config->item('site_id');
+		$site_id = ($global_permissions) ? 0 : $this->EE->config->item('site_id');
 
 		$permissions[$site_id]['default_permission_new_group'] = $default_permission_ng;
 
 		foreach ($menu_items as $menu_item)
 		{
 			//validate
-			$allow_type = ee()->input->get_post($menu_item . '_allow_type');
+			$allow_type = $this->EE->input->get_post($menu_item . '_allow_type');
 			$allow_type = in_array(
 				$allow_type,
 				array('allow_all', 'deny_all', 'by_group')
@@ -7251,7 +7265,7 @@ class Freeform_mcp extends Module_builder_freeform
 				foreach ($member_groups as $group_id)
 				{
 					$permissions[$site_id][$menu_item]['groups'][$group_id] = (
-						ee()->input->get_post($menu_item . '_' . $group_id) == 'y'
+						$this->EE->input->get_post($menu_item . '_' . $group_id) == 'y'
 					) ? 'y' : 'n';
 				}
 			}
@@ -7262,9 +7276,9 @@ class Freeform_mcp extends Module_builder_freeform
 		//	save
 		// -------------------------------------
 
-		ee()->load->model('freeform_preference_model');
+		$this->EE->load->model('freeform_preference_model');
 
-		$update =	ee()->freeform_preference_model
+		$update =	$this->EE->freeform_preference_model
 						->where('site_id', 0)
 						->where('preference_name', 'permissions')
 						->count();
@@ -7273,7 +7287,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 		if ($update > 0)
 		{
-			ee()->freeform_preference_model->update(
+			$this->EE->freeform_preference_model->update(
 				array(
 					'preference_value'		=> $permissions
 				),
@@ -7285,7 +7299,7 @@ class Freeform_mcp extends Module_builder_freeform
 		}
 		else
 		{
-			ee()->freeform_preference_model->insert(
+			$this->EE->freeform_preference_model->insert(
 				array(
 					'preference_value'		=> $permissions,
 					'site_id'				=> 0,
@@ -7298,7 +7312,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//  Redirect to Homepage with Message
 		// ----------------------------------
 
-		ee()->functions->redirect($this->mod_link(array(
+		$this->EE->functions->redirect($this->mod_link(array(
 			'method'	=> 'permissions',
 			'msg'		=> 'permissions_updated'
 		)));
@@ -7319,7 +7333,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 	public function check_permissions ($menu_item = '', $redirect = TRUE)
 	{
-		$group_id	= ee()->session->userdata('group_id');
+		$group_id	= $this->EE->session->userdata('group_id');
 
 		if ($group_id == 1)
 		{
@@ -7340,7 +7354,7 @@ class Freeform_mcp extends Module_builder_freeform
 			$permissions['global_permissions'] == TRUE
 		);
 
-		$site_id	= ($global_permissions) ? 0 : ee()->config->item('site_id');
+		$site_id	= ($global_permissions) ? 0 : $this->EE->config->item('site_id');
 
 		$no_home	= BASE;
 
@@ -7410,11 +7424,11 @@ class Freeform_mcp extends Module_builder_freeform
 
 		if ($menu_item == 'index' OR $menu_item == 'forms')
 		{
-			ee()->functions->redirect($no_home);
+			$this->EE->functions->redirect($no_home);
 		}
 		else
 		{
-			ee()->functions->redirect($this->mod_link());
+			$this->EE->functions->redirect($this->mod_link());
 		}
 	}
 	//END check_permissions
@@ -7463,7 +7477,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//check post input for all existing prefs and default if not present
 		foreach($all_prefs as $pref_name => $data)
 		{
-			$input 					= ee()->input->get_post($pref_name, TRUE);
+			$input 					= $this->EE->input->get_post($pref_name, TRUE);
 			//default
 			$output					= $data['value'];
 
@@ -7522,7 +7536,7 @@ class Freeform_mcp extends Module_builder_freeform
 		//  Redirect to Homepage with Message
 		// ----------------------------------
 
-		ee()->functions->redirect(
+		$this->EE->functions->redirect(
 			$this->base .
 				AMP . 'method=preferences' .
 				AMP . 'msg=preferences_updated'
@@ -7544,7 +7558,7 @@ class Freeform_mcp extends Module_builder_freeform
 
 	public function export_entries ()
 	{
-		$moderate = (ee()->input->get_post('moderate') == 'true');
+		$moderate = ($this->EE->input->get_post('moderate') == 'true');
 
 		return $this->entries(NULL, $moderate, TRUE);
 	}
@@ -7565,7 +7579,7 @@ class Freeform_mcp extends Module_builder_freeform
 	private function get_standard_column_names()
 	{
 		$standard_columns 	= array_keys(
-			ee()->freeform_form_model->default_form_table_columns
+			$this->EE->freeform_form_model->default_form_table_columns
 		);
 
 		array_splice(
@@ -7630,8 +7644,8 @@ class Freeform_mcp extends Module_builder_freeform
 		$css_link = $this->sc->addon_theme_url . 'fancybox/jquery.fancybox-1.3.4.css';
 		$js_link = $this->sc->addon_theme_url . 'fancybox/jquery.fancybox-1.3.4.pack.js';
 
-		ee()->cp->add_to_head('<link href="' . $css_link . '" type="text/css" rel="stylesheet" media="screen" />');
-		ee()->cp->add_to_head('<script src="' . $js_link . '" type="text/javascript"></script>');
+		$this->EE->cp->add_to_head('<link href="' . $css_link . '" type="text/css" rel="stylesheet" media="screen" />');
+		$this->EE->cp->add_to_head('<script src="' . $js_link . '" type="text/javascript"></script>');
 	}
 	//END load_fancybox
 
@@ -7750,14 +7764,14 @@ class Freeform_mcp extends Module_builder_freeform
 
 		if ($U->update() !== TRUE)
 		{
-			return ee()->functions->redirect($this->mod_link(array(
+			return $this->EE->functions->redirect($this->mod_link(array(
 				'method'	=> 'index',
 				'msg'		=> lang('update_failure')
 			)));
 		}
 		else
 		{
-			return ee()->functions->redirect($this->mod_link(array(
+			return $this->EE->functions->redirect($this->mod_link(array(
 				'method'	=> 'index',
 				'msg'		=> lang('update_successful')
 			)));
@@ -7785,12 +7799,12 @@ class Freeform_mcp extends Module_builder_freeform
 
 		$column_settings 	= array();
 
-		ee()->load->model('freeform_form_model');
+		$this->EE->load->model('freeform_form_model');
 
 		$field_layout_prefs = $this->preference('field_layout_prefs');
-		$member_id 			= ee()->session->userdata('member_id');
-		$group_id 			= ee()->session->userdata('group_id');
-		$f_prefix 			= ee()->freeform_form_model->form_field_prefix;
+		$member_id 			= $this->EE->session->userdata('member_id');
+		$group_id 			= $this->EE->session->userdata('group_id');
+		$f_prefix 			= $this->EE->freeform_form_model->form_field_prefix;
 
 		//¿existe? Member? Group? all?
 		if ($field_layout_prefs)

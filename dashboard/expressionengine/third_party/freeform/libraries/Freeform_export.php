@@ -11,8 +11,6 @@
  * @filesource	freeform/libraries/Freeform_export.php
  */
 
-if ( ! defined('APP_VER')) define('APP_VER', '2.0'); // EE 2.0's Wizard doesn't like CONSTANTs
-
 $__parent_folder = rtrim(realpath(rtrim(dirname(__FILE__), "/") . '/../'), '/') . '/';
 
 if ( ! class_exists('Addon_builder_freeform'))
@@ -133,9 +131,9 @@ class Freeform_export extends Addon_builder_freeform
 		{
 			$form_name = rtrim(trim($form_name), '_') . '_';
 
-			$filename = ee()->security->sanitize_filename(
+			$filename = $this->EE->security->sanitize_filename(
 				'freeform_' . $form_name . 'export_' .
-				gmdate('Ymd_Hi_s', ee()->localize->set_localized_time()) . '.' .
+				gmdate('Ymd_Hi_s', $this->EE->localize->set_localized_time()) . '.' .
 				$method
 			);
 
@@ -152,7 +150,7 @@ class Freeform_export extends Addon_builder_freeform
 				//	get file path and check writability
 				// -------------------------------------
 
-				ee()->load->helper('file');
+				$this->EE->load->helper('file');
 
 				$filepath = $this->cache_file_path($filename);
 
@@ -209,7 +207,7 @@ class Freeform_export extends Addon_builder_freeform
 
 				if ($data)
 				{
-					ee()->load->helper('download');
+					$this->EE->load->helper('download');
 					force_download($filename, $data);
 
 					exit();
@@ -237,7 +235,7 @@ class Freeform_export extends Addon_builder_freeform
 	{
 		if ( ! isset($this->cache_path))
 		{
-			$cache_path = ee()->config->item('cache_path');
+			$cache_path = $this->EE->config->item('cache_path');
 
 			if (empty($cache_path))
 			{
@@ -269,7 +267,7 @@ class Freeform_export extends Addon_builder_freeform
 
 	public function clean_file_cache ()
 	{
-		ee()->load->helper('directory');
+		$this->EE->load->helper('directory');
 
 		$cache_path = $this->cache_file_path();
 
@@ -368,7 +366,7 @@ class Freeform_export extends Addon_builder_freeform
 
 		foreach ($rows as $row)
 		{
-			$output_parse = ee()->freeform_fields->apply_field_method(array(
+			$output_parse = $this->EE->freeform_fields->apply_field_method(array(
 				'method' 			=> 'export',
 				'form_id' 			=> $form_id,
 				'field_input_data'	=> $row,
@@ -476,7 +474,7 @@ class Freeform_export extends Addon_builder_freeform
 		$tab 			= "\t";
 		$xml 			= "";
 
-		ee()->load->helper('xml');
+		$this->EE->load->helper('xml');
 
 		// -------------------------------------
 		//	if this is the first in the chunk
@@ -525,7 +523,7 @@ class Freeform_export extends Addon_builder_freeform
 		{
 			$xml .= $tab . $tab . "<{$tag_element}>" . $newline;
 
-			$output_parse = ee()->freeform_fields->apply_field_method(array(
+			$output_parse = $this->EE->freeform_fields->apply_field_method(array(
 				'method' 			=> 'export',
 				'form_id' 			=> $form_id,
 				'field_input_data'	=> $row,
@@ -629,7 +627,7 @@ class Freeform_export extends Addon_builder_freeform
 
 		foreach ($rows as $row)
 		{
-			$output_parse = ee()->freeform_fields->apply_field_method(array(
+			$output_parse = $this->EE->freeform_fields->apply_field_method(array(
 				'method' 			=> 'export',
 				'form_id' 			=> $form_id,
 				'field_input_data'	=> $row,

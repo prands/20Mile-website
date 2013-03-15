@@ -113,7 +113,7 @@ class Textarea_freeform_ft extends Freeform_base_ft
 		return form_textarea(array_merge(array(
 			'name'	=> $this->field_name,
 			'id'	=> 'freeform_' . $this->field_name,
-			'value'	=> $this->form_prep_encode_ee($data),
+			'value'	=> $this->EE->functions->encode_ee_tags($data, TRUE),
 			'rows'	=> isset($this->settings['field_ta_rows']) ?
 						$this->settings['field_ta_rows'] :
 						$this->default_rows,
@@ -188,7 +188,7 @@ class Textarea_freeform_ft extends Freeform_base_ft
 
 	public function save_settings($data = array())
 	{
-		$field_rows 	= ee()->input->get_post('field_ta_rows');
+		$field_rows 	= $this->EE->input->get_post('field_ta_rows');
 
 		$field_rows 	= (
 			is_numeric($field_rows) AND
@@ -198,7 +198,7 @@ class Textarea_freeform_ft extends Freeform_base_ft
 		return array(
 			'field_ta_rows'				=> $field_rows,
 			'disallow_html_rendering'	=> (
-				ee()->input->get_post('disallow_html_rendering') == 'n' ? 'n' : 'y'
+				$this->EE->input->get_post('disallow_html_rendering') == 'n' ? 'n' : 'y'
 			)
 		);
 	}
