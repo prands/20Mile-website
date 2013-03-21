@@ -5527,6 +5527,9 @@ footer[role=masterfooter] {
       font-size: 5em;
       padding-top: 30px;
       padding-bottom: 30px; }
+      @media (max-width: 480px) {
+        .page-title header h1 {
+          font-size: 3em; } }
       .page-title header h1.expertise {
         background-image: url(layout/ico-expertise-h1.png);
         background-size: 61px 62px;
@@ -5577,6 +5580,12 @@ footer[role=masterfooter] {
       color: #fff;
       font-size: 3em;
       text-align: center; }
+      @media (max-width: 480px) {
+        .page-body .intro-text h3 {
+          font-size: 1.6em;
+          line-height: 1.2em;
+          margin-left: 10px;
+          margin-right: 10px; } }
       .page-body .intro-text h3 em {
         color: #66615B;
         display: block; }
@@ -5615,6 +5624,10 @@ footer[role=masterfooter] {
     background-repeat: no-repeat;
     background-position: left center;
     background-size: 18px 22px; }
+  @media (max-width: 480px) {
+    .expertise-widget-journal {
+      padding-top: 30px;
+      padding-right: 10px; } }
 
 .expertise-widget-detail {
   height: 207px;
@@ -5628,6 +5641,13 @@ footer[role=masterfooter] {
     padding-right: 30px;
     height: 207px;
     float: left; }
+    @media (max-width: 480px) {
+      .expertise-widget-detail .expertise-widget-icon {
+        padding-left: 0px;
+        padding-right: 0px;
+        display: block;
+        width: 100%;
+        height: 30px; } }
     .even .expertise-widget-detail .expertise-widget-icon {
       float: right; }
   .expertise-widget-detail .expertise-widget-description {
@@ -5639,11 +5659,27 @@ footer[role=masterfooter] {
     .even .expertise-widget-detail .expertise-widget-description {
       padding-right: 0px;
       padding-left: 20px; }
+    @media (max-width: 480px) {
+      .expertise-widget-detail .expertise-widget-description {
+        width: 100%;
+        padding-right: 0px;
+        padding-left: 0px; }
+        .expertise-widget-detail .expertise-widget-description h2 {
+          text-align: center; }
+        .expertise-widget-detail .expertise-widget-description p {
+          margin-right: 10px;
+          margin-left: 10px; }
+        .even .expertise-widget-detail .expertise-widget-description {
+          padding-right: 0px;
+          padding-left: 0px; } }
   .expertise-widget-detail .expertise-widget-blockquote {
     width: 240px;
     height: 207px;
     float: right;
     background-color: #00748B; }
+    @media (max-width: 480px) {
+      .expertise-widget-detail .expertise-widget-blockquote {
+        display: none; } }
     .expertise-widget-detail .expertise-widget-blockquote ul {
       list-style: none;
       margin: 20px 0px 0px 20px;
@@ -5662,27 +5698,39 @@ div.expertise-widget-image {
   display: block;
   background-repeat: no-repeat;
   background-position: left bottom;
-  margin-top: -44px; }
+  margin-top: -44px;
+  width: 290px;
+  height: 215px; }
+  @media (max-width: 480px) {
+    div.expertise-widget-image {
+      margin-left: auto;
+      margin-right: auto;
+      width: 100px;
+      height: 74px; } }
   div.expertise-widget-image.identity-design-img {
-    width: 290px;
-    height: 215px;
     background-size: 290px 215px;
     background-image: url(layout/iddesign-med.png); }
+    @media (max-width: 480px) {
+      div.expertise-widget-image.identity-design-img {
+        background-size: 100px 74px; } }
   div.expertise-widget-image.web-design-img {
-    width: 290px;
-    height: 215px;
     background-size: 290px 193px;
     background-image: url(layout/webdesign-med.png); }
+    @media (max-width: 480px) {
+      div.expertise-widget-image.web-design-img {
+        background-size: 100px 67px; } }
   div.expertise-widget-image.web-development-img {
-    width: 290px;
-    height: 215px;
     background-size: 290px 165px;
     background-image: url(layout/webdev-med.png); }
+    @media (max-width: 480px) {
+      div.expertise-widget-image.web-development-img {
+        background-size: 100px 57px; } }
   div.expertise-widget-image.online-marketing-img {
-    width: 290px;
-    height: 215px;
     background-size: 290px 167px;
     background-image: url(layout/onlinemarketing-med.png); }
+    @media (max-width: 480px) {
+      div.expertise-widget-image.online-marketing-img {
+        background-size: 100px 58px; } }
 
 .result-item {
   *zoom: 1;

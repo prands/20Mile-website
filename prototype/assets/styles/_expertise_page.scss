@@ -14,6 +14,11 @@
 		background-position: left center;
 		background-size: 18px 22px;
 	}
+
+	@include mobile-only {
+		padding-top: 30px;
+		padding-right: 10px;
+	}
 }
 
 .expertise-widget-detail {
@@ -33,6 +38,14 @@
 		height: 207px;
 		float: left;
 
+		@include mobile-only {
+			padding-left: 0px;
+			padding-right: 0px;
+			display: block;
+			width: 100%;
+			height: 30px;
+		}
+
 		.even & {
 			float: right;
 		}
@@ -49,6 +62,26 @@
 			padding-right: 0px;
 			padding-left: 20px;
 		}
+
+		@include mobile-only {
+			width: 100%;
+			padding-right: 0px;
+			padding-left: 0px;
+
+			h2 {
+				text-align: center;
+			}
+
+			p {
+				margin-right: 10px;
+				margin-left: 10px;
+			}
+
+			.even & {
+				padding-right: 0px;
+				padding-left: 0px;
+			}
+		}
 	}
 
 	.expertise-widget-blockquote {
@@ -56,6 +89,11 @@
 		height: 207px;
 		float: right;
 		background-color: #00748B;
+
+		@include mobile-only {
+			display: none;
+		}
+
 
 		ul {
 			list-style: none;
@@ -86,31 +124,50 @@ div.expertise-widget-image {
 	background-position: left bottom;
 	margin-top: -44px;
 
+	width: 290px;
+	height: 215px;
+
+	@include mobile-only {
+		margin-left: auto;
+		margin-right: auto;
+		width: 100px;
+		height: 74px;
+	}
+
+
 	&.identity-design-img {
-		width: 290px;
-		height: 215px;
 		background-size: 290px 215px;
 		background-image: url(layout/iddesign-med.png);
+
+		@include mobile-only {
+			background-size: 100px 74px;
+		}
 	}
 
 	&.web-design-img {
-		width: 290px;
-		height: 215px;
 		background-size: 290px 193px;
 		background-image: url(layout/webdesign-med.png);
+
+		@include mobile-only {
+			background-size: 100px 67px;
+		}
 	}
 
 	&.web-development-img {
-		width: 290px;
-		height: 215px;
 		background-size: 290px 165px;
 		background-image: url(layout/webdev-med.png);
+
+		@include mobile-only {
+			background-size: 100px 57px;
+		}
 	}
 
 	&.online-marketing-img {
-		width: 290px;
-		height: 215px;
 		background-size: 290px 167px;
 		background-image: url(layout/onlinemarketing-med.png);
+
+		@include mobile-only {
+			background-size: 100px 58px;
+		}
 	}
 }
