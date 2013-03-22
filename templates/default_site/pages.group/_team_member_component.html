@@ -26,11 +26,10 @@
         <clipPath id="bubble_mask">
             <use xlink:href="#buuble_path"  overflow="visible"/>
         </clipPath>
-        <g clip-path="url(#bubble_mask)">
+        <g clip-path="url(#bubble_mask)" data-toggle="modal" data-target="#{embed:url_title}">
             <image overflow="visible" width="160" height="160" 
                 xlink:href="{embed:headshot}" 
                 transform="matrix(1 0 0 1 -5 58)"
-                data-toggle="modal" data-target="#{embed:url_title}"
                 >
             </image>
         </g>

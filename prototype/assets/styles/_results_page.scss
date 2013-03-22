@@ -6,6 +6,10 @@
 	margin-bottom: 80px;
 
 	.result-screens {
+
+		@include mobile-only {
+			display: none;
+		}
 		
 		width: 379px;
 		float: left;
@@ -107,11 +111,25 @@
 		width: 470px;
 		background-color: #fff;
 
-		header {
-			h1 {
+		@include mobile-only {
+			margin-left: 0px;
+			padding: 0px;
+			width: 100%;
 
+			header {
+				h1 {
+					font-size: 23px;
+					text-align: center;
+				}
+			}
+
+			p {
+				margin-left: 10px;
+				margin-right: 10px;
 			}
 		}
+
+		
 
 		footer {
 			@include clearfix();

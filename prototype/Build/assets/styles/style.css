@@ -5744,6 +5744,9 @@ div.expertise-widget-image {
   .result-item .result-screens {
     width: 379px;
     float: left; }
+    @media (max-width: 480px) {
+      .result-item .result-screens {
+        display: none; } }
     .result-item .result-screens .top {
       *zoom: 1;
       display: block;
@@ -5818,6 +5821,17 @@ div.expertise-widget-image {
     padding: 20px 25px 40px 65px;
     width: 470px;
     background-color: #fff; }
+    @media (max-width: 480px) {
+      .result-item .result-description {
+        margin-left: 0px;
+        padding: 0px;
+        width: 100%; }
+        .result-item .result-description header h1 {
+          font-size: 23px;
+          text-align: center; }
+        .result-item .result-description p {
+          margin-left: 10px;
+          margin-right: 10px; } }
     .result-item .result-description footer {
       *zoom: 1; }
       .result-item .result-description footer:before, .result-item .result-description footer:after {
@@ -6133,7 +6147,8 @@ svg.team_balloon {
     svg.team_balloon .strip .color-ring.orange {
       fill: orange; }
   svg.team_balloon .bubble-pin {
-    cursor: pointer; }
+    cursor: pointer;
+    fill: #000; }
   svg.team_balloon text .team-member-name {
     fill: #EDECE8;
     color: #EDECE8;
