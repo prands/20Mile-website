@@ -17,23 +17,12 @@
                C1.028,136.814,3.251,145.89,7.414,154.534z"/>
     </g>
 
-    <g class="bubble-pin">
-        <defs>
-            <path id="buuble_path" d="M43.728,183.027c-18.438-14.734-30.918-36.399-30.918-58.987c0-33.138,26.862-60,60-60
-                c33.136,0,60,26.862,60,60c0,22.588-12.478,44.253-30.916,58.987c-8.617,6.887-29.083,31.417-29.083,31.417
-                S52.342,189.914,43.728,183.027z"/>
-        </defs>
-        <clipPath id="bubble_mask">
-            <use xlink:href="#buuble_path"  overflow="visible"/>
-        </clipPath>
-        <g clip-path="url(#bubble_mask)" data-toggle="modal" data-target="#{embed:url_title}">
-            <image overflow="visible" width="160" height="160" 
-                xlink:href="{embed:headshot}" 
-                transform="matrix(1 0 0 1 -5 58)"
-                >
-            </image>
-        </g>
-    </g>
+    <image overflow="visible" width="152" height="152" 
+        xlink:href="{embed:headshot}" 
+        transform="matrix(1 0 0 1 -5 62)"
+        data-toggle="modal" data-target="#{embed:url_title}"
+        >
+    </image>
     <text transform="matrix(0.901 -0.4338 0.4338 0.901 141.7178 85.3325)">
         <tspan class="team-member-name" x="0" y="0">{embed:name}</tspan>
         <tspan class="team-member-title" x="0.001" y="21">{embed:position}</tspan>

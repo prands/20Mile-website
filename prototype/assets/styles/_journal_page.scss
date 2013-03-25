@@ -11,6 +11,10 @@
 			background-color: #06374c;
 			float: left;
 			padding: 16px 32px;
+
+			@include mobile-only {
+				display: none;
+			}
 		}
 
 		.filter-bar {
