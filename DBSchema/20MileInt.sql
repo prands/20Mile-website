@@ -2471,7 +2471,7 @@ CREATE TABLE `exp_online_users` (
   PRIMARY KEY (`online_id`),
   KEY `date` (`date`),
   KEY `site_id` (`site_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2480,7 +2480,7 @@ CREATE TABLE `exp_online_users` (
 
 LOCK TABLES `exp_online_users` WRITE;
 /*!40000 ALTER TABLE `exp_online_users` DISABLE KEYS */;
-INSERT INTO `exp_online_users` VALUES (65,1,0,'n','','127.0.0.1',1364222093,''),(66,1,0,'n','','127.0.0.1',1364222093,''),(67,1,0,'n','','127.0.0.1',1364222093,''),(68,1,0,'n','','127.0.0.1',1364222093,''),(69,1,0,'n','','127.0.0.1',1364222093,''),(70,1,0,'n','','127.0.0.1',1364222093,''),(71,1,0,'n','','127.0.0.1',1364222093,'');
+INSERT INTO `exp_online_users` VALUES (65,1,0,'n','','127.0.0.1',1364225613,''),(66,1,0,'n','','127.0.0.1',1364225613,''),(67,1,0,'n','','127.0.0.1',1364225613,''),(68,1,0,'n','','127.0.0.1',1364225613,''),(69,1,0,'n','','127.0.0.1',1364225613,''),(70,1,0,'n','','127.0.0.1',1364225613,''),(71,1,0,'n','','127.0.0.1',1364225613,''),(72,1,0,'n','','127.0.0.1',1364225613,'');
 /*!40000 ALTER TABLE `exp_online_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3151,7 +3151,7 @@ CREATE TABLE `exp_stats` (
 
 LOCK TABLES `exp_stats` WRITE;
 /*!40000 ALTER TABLE `exp_stats` DISABLE KEYS */;
-INSERT INTO `exp_stats` VALUES (1,1,9,9,'Emily OBrien',19,0,0,0,1363285769,0,0,1364222093,28,1363278390,1364492841);
+INSERT INTO `exp_stats` VALUES (1,1,9,9,'Emily OBrien',19,0,0,0,1363285769,0,0,1364225613,28,1363278390,1364492841);
 /*!40000 ALTER TABLE `exp_stats` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3887,7 +3887,7 @@ CREATE TABLE `exp_templates` (
 
 LOCK TABLES `exp_templates` WRITE;
 /*!40000 ALTER TABLE `exp_templates` DISABLE KEYS */;
-INSERT INTO `exp_templates` VALUES (3,1,3,'index','n','webpage','',NULL,1363018638,0,'n',0,'','n','n','o',2403),(4,1,3,'home_page','y','webpage','','',1363018670,1,'n',0,'','n','n','o',41),(5,1,3,'_top','y','webpage','','',1363018684,1,'n',0,'','n','n','o',0),(6,1,3,'_bottom','y','webpage','','',1363018693,1,'n',0,'','n','n','o',0),(7,1,3,'_header','y','webpage','','',1363018810,1,'n',0,'','n','n','o',0),(8,1,3,'_footer','y','webpage','','',1363018820,1,'n',0,'','n','n','o',0),(9,1,3,'interior_page','y','webpage','','',1363018850,1,'n',0,'','n','n','o',1),(10,1,3,'expertise_page','y','webpage','','',1363105881,1,'n',0,'','n','n','o',62),(11,1,3,'contact_page','y','webpage','','',1363105895,1,'n',0,'','n','n','o',51),(12,1,3,'case_study_page','y','webpage','','',1363105911,1,'n',0,'','n','n','o',0),(13,1,3,'journal_listing_page','y','webpage','','',1363105928,1,'n',0,'','n','n','o',151),(14,1,3,'journal_detail_page','y','webpage','','',1363105947,1,'n',0,'','n','n','o',104),(15,1,3,'results_page','y','webpage','','',1363106596,1,'n',0,'','n','n','o',50),(16,1,3,'team_page','y','webpage','','',1363106616,1,'n',0,'','n','n','o',117),(17,1,3,'_page_header','y','webpage','','',1363116544,1,'n',0,'','n','n','o',0),(18,1,3,'_team_member_component','y','webpage','','',1363116809,1,'n',0,'','n','n','o',0),(19,1,3,'redirect_to_team_page','y','webpage','','',1363118099,1,'n',0,'','n','n','o',7),(20,1,3,'_journal_detail_footer','y','webpage','','',1363195320,1,'n',0,'','n','n','o',0);
+INSERT INTO `exp_templates` VALUES (3,1,3,'index','n','webpage','',NULL,1363018638,0,'n',0,'','n','n','o',2403),(4,1,3,'home_page','y','webpage','','',1363018670,1,'n',0,'','n','n','o',41),(5,1,3,'_top','y','webpage','','',1363018684,1,'n',0,'','n','n','o',0),(6,1,3,'_bottom','y','webpage','','',1363018693,1,'n',0,'','n','n','o',0),(7,1,3,'_header','y','webpage','','',1363018810,1,'n',0,'','n','n','o',0),(8,1,3,'_footer','y','webpage','','',1363018820,1,'n',0,'','n','n','o',0),(9,1,3,'interior_page','y','webpage','','',1363018850,1,'n',0,'','n','n','o',1),(10,1,3,'expertise_page','y','webpage','','',1363105881,1,'n',0,'','n','n','o',62),(11,1,3,'contact_page','y','webpage','','',1363105895,1,'n',0,'','n','n','o',51),(12,1,3,'case_study_page','y','webpage','','',1363105911,1,'n',0,'','n','n','o',0),(13,1,3,'journal_listing_page','y','webpage','','',1363105928,1,'n',0,'','n','n','o',160),(14,1,3,'journal_detail_page','y','webpage','','',1363105947,1,'n',0,'','n','n','o',105),(15,1,3,'results_page','y','webpage','','',1363106596,1,'n',0,'','n','n','o',50),(16,1,3,'team_page','y','webpage','','',1363106616,1,'n',0,'','n','n','o',117),(17,1,3,'_page_header','y','webpage','','',1363116544,1,'n',0,'','n','n','o',0),(18,1,3,'_team_member_component','y','webpage','','',1363116809,1,'n',0,'','n','n','o',0),(19,1,3,'redirect_to_team_page','y','webpage','','',1363118099,1,'n',0,'','n','n','o',7),(20,1,3,'_journal_detail_footer','y','webpage','','',1363195320,1,'n',0,'','n','n','o',0);
 /*!40000 ALTER TABLE `exp_templates` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -4017,4 +4017,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-03-25 10:38:03
+-- Dump completed on 2013-03-25 11:33:57

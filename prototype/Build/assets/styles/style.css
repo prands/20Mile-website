@@ -6223,12 +6223,12 @@ svg.team_balloon {
   @media (max-width: 480px) {
     .journal article {
       width: 100%;
-      padding: 80px 0px 0px 0px;
+      padding: 80px 0px 20px 0px;
       margin-bottom: 100px;
       position: relative; }
       .journal article.even, .journal article.odd, .journal article.featured {
         float: none;
-        margin: 0px 0px 0px 0px; } }
+        margin: 0px 0px 50px 0px; } }
   .journal article header {
     margin-bottom: 20px; }
     .journal article header h1 {
@@ -6277,8 +6277,9 @@ svg.team_balloon {
       @media (max-width: 480px) {
         .journal article footer time {
           float: left;
-          margin-left: auto;
-          margin-right: auto; } }
+          margin-left: 10px;
+          margin-top: 10px;
+          margin-right: 10px; } }
       .journal article footer time .month {
         display: block;
         font-size: 1.4em;
@@ -6298,6 +6299,7 @@ svg.team_balloon {
           margin-left: auto;
           margin-right: auto;
           padding-top: 0px;
+          margin-top: 20px;
           *zoom: 1; }
           .journal article footer .tags-categories:before, .journal article footer .tags-categories:after {
             display: table;
@@ -6315,11 +6317,20 @@ svg.team_balloon {
         text-transform: capitalize; }
         .journal article footer .tags-categories .tags a {
           color: #fff; }
+        @media (max-width: 480px) {
+          .journal article footer .tags-categories .tags {
+            float: left; } }
       .journal article footer .tags-categories .categories {
         display: inline-block;
         float: right; }
         .journal article footer .tags-categories .categories a {
           float: right; }
+        @media (max-width: 480px) {
+          .journal article footer .tags-categories .categories {
+            float: left; }
+            .journal article footer .tags-categories .categories a {
+              float: left;
+              margin-right: 10px; } }
   .journal article blockquote {
     position: absolute;
     width: 412px;

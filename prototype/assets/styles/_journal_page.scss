@@ -82,10 +82,10 @@
 
 			&.even, &.odd, &.featured {
 				float: none;
-				margin: 0px 0px 0px 0px;
+				margin: 0px 0px 50px 0px;
 			}
 
-			padding: 80px 0px 0px 0px;
+			padding: 80px 0px 20px 0px;
 
 			margin-bottom: 100px;
 
@@ -146,8 +146,9 @@
 
 				@include mobile-only {
 					float: left;
-					margin-left: auto;
-					margin-right: auto;
+					margin-left: 10px;
+					margin-top: 10px;
+					margin-right: 10px;
 				}
 
 				.month {
@@ -174,6 +175,7 @@
 					margin-left: auto;
 					margin-right: auto;
 					padding-top: 0px;
+					margin-top: 20px;
 
 					@include clearfix();
 				}
@@ -189,6 +191,10 @@
 					a {
 						color: #fff;
 					}
+
+					@include mobile-only {
+						float: left;
+					}
 				}
 
 				.categories {
@@ -197,6 +203,15 @@
 
 					a {
 						float: right;
+					}
+
+					@include mobile-only {
+						float: left;
+
+						a {
+							float: left;
+							margin-right: 10px;
+						}
 					}
 				}
 			}
