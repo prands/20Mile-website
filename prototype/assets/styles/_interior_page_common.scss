@@ -135,6 +135,10 @@
 			background-repeat: repeat-y;
 			background-position: 70px top;
 			padding-bottom: 100px;
+
+			@include mobile-only {
+				background-position: 10px top;
+			}
 		}
 	}
 }

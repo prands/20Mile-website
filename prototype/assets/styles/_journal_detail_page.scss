@@ -3,6 +3,10 @@
 	article {
 		padding: 30px 90px 30px 150px;
 
+		@include mobile-only {
+			padding: 30px 0px 30px 22px;
+		}
+
 		h1, h2, h3, h4, h5, h6 {
 			color: #fff;
 		}
@@ -11,6 +15,10 @@
 			h1 {
 				font-size: 2.1em;
 				line-height: 1.4em;
+
+				@include mobile-only {
+					margin-left: 46px;
+				}
 			}
 
 			time {
@@ -21,6 +29,11 @@
 				padding: 1px 10px 5px 10px;
 				text-align: center;
 				margin-left: -104px;
+
+				@include mobile-only {
+					margin-left: -20px;
+				}
+
 				.month {
 					display: block;
 					font-size: 1.4em;
@@ -53,6 +66,10 @@
 				font-weight: bold;
 				line-height: 1.6em;
 			}
+
+			@include mobile-only {
+				display: none;
+			}
 		}
 
 		footer {
@@ -67,16 +84,28 @@
 				.colored-ring {
 					fill: #A5CE39;
 				}
+
+				@include mobile-only {
+					margin-left: -27px;
+				}
 			}
 
 			.post-label {
 				margin-left: -14px;
+
+				@include mobile-only {
+					margin-left: 88px;
+				}
 			}
 
 			.bar {
 				@include clearfix();
 				margin-left: -44px;
 				margin-top: 1px;
+
+				@include mobile-only {
+					margin-left: -22px;
+				}
 
 				.author-info {
 					display: inline-block;
@@ -85,15 +114,31 @@
 
 					padding: 9px 30px 10px 30px;
 
+					@include mobile-only {
+						margin-left: 40px;
+						padding: 9px 0px 10px 0px;
+						display: block;
+						float: none;
+					}
+
+
 					.name {
 						color: #fff;
 						line-height: 1.2em;
+
+						@include mobile-only {
+							margin-left: 70px;
+						}
 					}
 
 					.position{
 						color: #ccc;
 						font-size: 0.9em;
 						line-height: 1.1em;
+
+						@include mobile-only {
+							margin-left: 70px;
+						}
 					}
 				}
 
@@ -102,6 +147,12 @@
 					background-color: #aaa9a5;
 					padding: 0px 30px 0px 30px;
 					height: 44px;
+
+					@include mobile-only {
+						display: block;
+						margin-top: 41px;
+						padding: 0px 10px 0px 10px;
+					}
 
 					.tags {
 						color: #fff;
