@@ -34,7 +34,7 @@
       hash = window.location.hash.substring(1);
       $('#' + hash).modal('show');
     }
-    emailRegEx = new RegExp(/^((?!\.)[a-z0-9._%+-]+(?!\.)\w)@[a-z0-9-]+\.[a-z.]{2,5}(?!\.)\w$/i);
+    emailRegEx = new RegExp(/^((?!\.)[a-z0-9._%+-]+(?!\.)\w)@[a-z0-9-]+\.[a-z.]{1,5}(?!\.)\w$/i);
     emptyRegEx = new RegExp(/[-_.a-zA-Z0-9]{3,}/);
     $form = $("#contact-form");
     handlePostSubmission = function(data) {

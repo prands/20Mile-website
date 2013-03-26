@@ -1,7 +1,7 @@
 // Media Queries in Sass 3.2
 //
 // These mixins make media queries a breeze with Sass.
-// The media queries from mobile up until desktop all 
+// The media queries from mobile up until desktop all
 // trigger at different points along the way
 //
 // And important point to remember is that and width
@@ -123,7 +123,7 @@ $mq-desktop				: 1382px !default;
 	}
 }
 
-// Everything below and including the desktop 
+// Everything below and including the desktop
 @mixin desktop-and-below {
 	@media only screen and (max-width : $mq-desktop) {
 		@content;
@@ -139,7 +139,13 @@ $mq-desktop				: 1382px !default;
 
 // Retina screens have a 1.5 pixel ratio, not 2
 @mixin retina {
-	@media only screen and (-webkit-min-device-pixel-ratio : 1.5), only screen and (min-device-pixel-ratio : 1.5) {
+	@media only screen and (-webkit-min-device-pixel-ratio: 2),
+		   only screen and (   min--moz-device-pixel-ratio: 2),
+		   only screen and (     -o-min-device-pixel-ratio: 2/1),
+		   only screen and (        min-device-pixel-ratio: 2),
+		   only screen and (                min-resolution: 192dpi),
+		   only screen and (                min-resolution: 2dppx)
+	{
 		@content;
 	}
 }

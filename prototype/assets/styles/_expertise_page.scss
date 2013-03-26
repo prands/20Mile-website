@@ -22,7 +22,7 @@
 }
 
 .expertise-widget-detail {
-		
+
 	height: 207px;
 	margin-bottom: 10px;
 
@@ -32,6 +32,7 @@
 
 	.expertise-widget-icon {
 		background-color: #EDECE8;
+		background-color: rgba(237,236,232, 0.9);
 		width: 290px;
 		padding-left: 30px;
 		padding-right: 30px;
@@ -53,6 +54,7 @@
 
 	.expertise-widget-description {
 		background-color: #EDECE8;
+		background-color: rgba(237,236,232, 0.9);
 		width: 330px;
 		height: 207px;
 		padding-right: 20px;
@@ -92,6 +94,22 @@
 
 		@include mobile-only {
 			display: none;
+		}
+
+		&.bg-color-identity-design {
+			background-color: #00758C;
+		}
+
+		&.bg-color-online-marketing {
+			background-color: #75BEE9;
+		}
+
+		&.bg-color-web-design {
+			background-color: #A6CE39;
+		}
+
+		&.bg-color-web-development {
+			background-color: #F15A22;
 		}
 
 

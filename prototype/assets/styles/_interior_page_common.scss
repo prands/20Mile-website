@@ -19,57 +19,57 @@
 			}
 
 			&.expertise  {
-				background-image: url(layout/ico-expertise-h1.png); 
+				background-image: url(layout/ico-expertise-h1.png);
 				background-size: 61px 62px;
 				background-position: left 13px;
 				padding-left: 75px;
 
 				@include retina {
-					background-image: url(layout/ico-expertise-h1@2x.png); 
+					background-image: url(layout/ico-expertise-h1@2x.png);
 				}
 			}
 
 			&.results  {
-				background-image: url(layout/ico-results-h1.png); 
+				background-image: url(layout/ico-results-h1.png);
 				background-size: 46px 49px;
 				background-position: left 29px;
 				padding-left: 55px;
 
 				@include retina {
-					background-image: url(layout/ico-results-h1@2x.png); 
+					background-image: url(layout/ico-results-h1@2x.png);
 				}
 			}
 
 			&.team  {
-				background-image: url(layout/ico-team-h1.png); 
+				background-image: url(layout/ico-team-h1.png);
 				background-size: 80px 51px;
 				background-position: left 29px;
 				padding-left: 100px;
 
 				@include retina {
-					background-image: url(layout/ico-team-h1@2x.png); 
+					background-image: url(layout/ico-team-h1@2x.png);
 				}
 			}
 
 			&.journal  {
-				background-image: url(layout/ico-journal-h1.png); 
+				background-image: url(layout/ico-journal-h1.png);
 				background-size: 41px 49px;
 				background-position: left 29px;
 				padding-left: 64px;
 
 				@include retina {
-					background-image: url(layout/ico-journal-h1@2x.png); 
+					background-image: url(layout/ico-journal-h1@2x.png);
 				}
 			}
 
 			&.contact  {
-				background-image: url(layout/ico-contact-h1.png); 
+				background-image: url(layout/ico-contact-h1.png);
 				background-size: 38px 55px;
 				background-position: left 22px;
 				padding-left: 50px;
 
 				@include retina {
-					background-image: url(layout/ico-contact-h1@2x.png); 
+					background-image: url(layout/ico-contact-h1@2x.png);
 				}
 			}
 		}
@@ -86,7 +86,7 @@
 
 		h3 {
 			color: #fff;
-			font-size: 3em;
+			font-size: 2.5em;
 			text-align: center;
 
 			@include mobile-only {

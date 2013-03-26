@@ -1,6 +1,6 @@
 /*
  * 20Mile Interactive Stylesheet
- * 
+ *
  * Author: Rodrigo Passos;
  * Notes: I am using Twitter Bootstrap and Bourbon (bourbon.io)
  */
@@ -212,11 +212,11 @@ body {
   background-color: white; }
 
 a {
-  color: #0088cc;
+  color: #f05921;
   text-decoration: none; }
 
 a:hover {
-  color: #005580;
+  color: #d0430e;
   text-decoration: underline; }
 
 .img-rounded {
@@ -2269,28 +2269,28 @@ table th[class*="span"],
 .dropdown-submenu:hover > a {
   text-decoration: none;
   color: white;
-  background-color: #0081c2;
-  background-image: -moz-linear-gradient(top, #0088cc, #0077b3);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0077b3));
-  background-image: -webkit-linear-gradient(top, #0088cc, #0077b3);
-  background-image: -o-linear-gradient(top, #0088cc, #0077b3);
-  background-image: linear, to bottom, #0088cc, #0077b3;
+  background-color: #ec531a;
+  background-image: -moz-linear-gradient(top, #f05921, #e84a10);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f05921), to(#e84a10));
+  background-image: -webkit-linear-gradient(top, #f05921, #e84a10);
+  background-image: -o-linear-gradient(top, #f05921, #e84a10);
+  background-image: linear, to bottom, #f05921, #e84a10;
   background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF0088CC', endColorstr='#FF0077B3', GradientType=0); }
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFF05921', endColorstr='#FFE84A10', GradientType=0); }
 
 .dropdown-menu .active > a,
 .dropdown-menu .active > a:hover {
   color: #333333;
   text-decoration: none;
   outline: 0;
-  background-color: #0081c2;
-  background-image: -moz-linear-gradient(top, #0088cc, #0077b3);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0077b3));
-  background-image: -webkit-linear-gradient(top, #0088cc, #0077b3);
-  background-image: -o-linear-gradient(top, #0088cc, #0077b3);
-  background-image: linear, to bottom, #0088cc, #0077b3;
+  background-color: #ec531a;
+  background-image: -moz-linear-gradient(top, #f05921, #e84a10);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f05921), to(#e84a10));
+  background-image: -webkit-linear-gradient(top, #f05921, #e84a10);
+  background-image: -o-linear-gradient(top, #f05921, #e84a10);
+  background-image: linear, to bottom, #f05921, #e84a10;
   background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF0088CC', endColorstr='#FF0077B3', GradientType=0); }
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFF05921', endColorstr='#FFE84A10', GradientType=0); }
 
 .dropdown-menu .disabled > a,
 .dropdown-menu .disabled > a:hover {
@@ -2591,25 +2591,25 @@ input[type="button"].btn-block {
 .btn-primary {
   color: white;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  background-color: #006ccc;
-  background-image: -moz-linear-gradient(top, #0088cc, #0044cc);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0044cc));
-  background-image: -webkit-linear-gradient(top, #0088cc, #0044cc);
-  background-image: -o-linear-gradient(top, #0088cc, #0044cc);
-  background-image: linear, to bottom, #0088cc, #0044cc;
+  background-color: #f07421;
+  background-image: -moz-linear-gradient(top, #f05921, #f09e21);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f05921), to(#f09e21));
+  background-image: -webkit-linear-gradient(top, #f05921, #f09e21);
+  background-image: -o-linear-gradient(top, #f05921, #f09e21);
+  background-image: linear, to bottom, #f05921, #f09e21;
   background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF0088CC', endColorstr='#FF0044CC', GradientType=0);
-  border-color: #0044cc #0044cc #002a80;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFF05921', endColorstr='#FFF09E21', GradientType=0);
+  border-color: #f09e21 #f09e21 #b8740c;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-  *background-color: #0044cc;
+  *background-color: #f09e21;
   /* Darken IE7 buttons by default so they stand out more given they won't have borders */
   filter: progid:DXImageTransform.Microsoft.gradient(enabled=false); }
   .btn-primary:hover, .btn-primary:active, .btn-primary.active, .btn-primary.disabled, .btn-primary[disabled] {
     color: white;
-    background-color: #0044cc;
-    *background-color: #003bb3; }
+    background-color: #f09e21;
+    *background-color: #e89210; }
   .btn-primary:active, .btn-primary.active {
-    background-color: #003399 \9; }
+    background-color: #d0830e \9; }
 
 .btn-warning {
   color: white;
@@ -2759,13 +2759,13 @@ input[type="submit"].btn {
 .btn-link {
   border-color: transparent;
   cursor: pointer;
-  color: #0088cc;
+  color: #f05921;
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   border-radius: 0; }
 
 .btn-link:hover {
-  color: #005580;
+  color: #d0430e;
   text-decoration: underline;
   background-color: transparent; }
 
@@ -2900,7 +2900,7 @@ input[type="submit"].btn {
 .btn-group.open .btn.dropdown-toggle {
   background-color: #e6e6e6; }
 .btn-group.open .btn-primary.dropdown-toggle {
-  background-color: #0044cc; }
+  background-color: #f09e21; }
 .btn-group.open .btn-warning.dropdown-toggle {
   background-color: #f89406; }
 .btn-group.open .btn-danger.dropdown-toggle {
@@ -3085,7 +3085,7 @@ input[type="submit"].btn {
 .nav-list > .active > a:hover {
   color: white;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
-  background-color: #0088cc; }
+  background-color: #f05921; }
 
 .nav-list [class^="icon-"],
 .nav-list [class*=" icon-"] {
@@ -3161,7 +3161,7 @@ input[type="submit"].btn {
 .nav-pills > .active > a,
 .nav-pills > .active > a:hover {
   color: white;
-  background-color: #0088cc; }
+  background-color: #f05921; }
 
 .nav-stacked > li {
   float: none; }
@@ -3215,13 +3215,13 @@ input[type="submit"].btn {
   border-radius: 6px; }
 
 .nav .dropdown-toggle .caret {
-  border-top-color: #0088cc;
-  border-bottom-color: #0088cc;
+  border-top-color: #f05921;
+  border-bottom-color: #f05921;
   margin-top: 6px; }
 
 .nav .dropdown-toggle:hover .caret {
-  border-top-color: #005580;
-  border-bottom-color: #005580; }
+  border-top-color: #d0430e;
+  border-bottom-color: #d0430e; }
 
 /* move down carets for tabs */
 .nav-tabs .dropdown-toggle .caret {
@@ -4279,7 +4279,7 @@ input[type="submit"].btn {
   transition: all 0.2s ease-in-out; }
 
 a.thumbnail:hover {
-  border-color: #0088cc;
+  border-color: #f05921;
   -webkit-box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
   -moz-box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
   box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25); }
@@ -5060,31 +5060,31 @@ div[role=masterhead] {
         background-image: url(layout/icon_expertise.png);
         background-size: 29px;
         background-position: 15px top; }
-        @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+        @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
           div[role=masterhead] header nav ul li#nav-expertise a:hover {
             background-image: url(layout/ico-expertise-h1@2x.png); } }
       div[role=masterhead] header nav ul li#nav-results a:hover {
         background-image: url(layout/ico-results-nav.png);
         background-size: 27px 29px; }
-        @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+        @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
           div[role=masterhead] header nav ul li#nav-results a:hover {
             background-image: url(layout/ico-results-nav@2x.png); } }
       div[role=masterhead] header nav ul li#nav-team a:hover {
         background-image: url(layout/ico-team-nav.png);
         background-size: 41px 26px; }
-        @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+        @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
           div[role=masterhead] header nav ul li#nav-team a:hover {
             background-image: url(layout/ico-team-nav@2x.png); } }
       div[role=masterhead] header nav ul li#nav-journal a:hover {
         background-image: url(layout/ico-journal-nav.png);
         background-size: 23px 27px; }
-        @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+        @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
           div[role=masterhead] header nav ul li#nav-journal a:hover {
             background-image: url(layout/ico-journal-nav@2x.png); } }
       div[role=masterhead] header nav ul li#nav-contact a:hover {
         background-image: url(layout/ico-contact-nav.png);
         background-size: 23px 33px; }
-        @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+        @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
           div[role=masterhead] header nav ul li#nav-contact a:hover {
             background-image: url(layout/ico-contact-nav@2x.png); } }
 
@@ -5141,6 +5141,9 @@ div[role=home] {
         @media (max-width: 480px) {
           div[role=home] .home-secondary .span4 article.recent-results .imac-frame .snapshot {
             width: 256px; } }
+        div[role=home] .home-secondary .span4 article.recent-results .imac-frame .snapshot img {
+          width: 276px;
+          height: 153px; }
     div[role=home] .home-secondary .span4 article.recent-results a {
       font-style: italic;
       color: #F05921; }
@@ -5152,11 +5155,10 @@ div[role=home] {
         background-position: left center;
         background-size: 18px 22px;
         padding-left: 30px; }
-        @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
-          div[role=home] .home-secondary .span4 article.from-the-journal header h1 {
-            background-image: url(layout/ico-journal-sm@2x.png); } }
       div[role=home] .home-secondary .span4 article.from-the-journal h3 {
         line-height: 1.3em; }
+        div[role=home] .home-secondary .span4 article.from-the-journal h3 a {
+          color: #fff; }
     div[role=home] .home-secondary .span4 article.from-twitter {
       padding: 0px 10px; }
       div[role=home] .home-secondary .span4 article.from-twitter header h1 {
@@ -5165,9 +5167,6 @@ div[role=home] {
         background-size: 18px 15px;
         background-position: left center;
         padding-left: 40px; }
-        @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
-          div[role=home] .home-secondary .span4 article.from-twitter header h1 {
-            background-image: url(layout/twitter-footer@2x.png); } }
       div[role=home] .home-secondary .span4 article.from-twitter p {
         word-wrap: break-word; }
   div[role=home] section#spotlight {
@@ -5396,7 +5395,7 @@ section#home-widget {
         @media (max-width: 480px) {
           section#home-widget #hw-nav a#hw-identity-design {
             left: 0px; } }
-        @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+        @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
           section#home-widget #hw-nav a#hw-identity-design {
             background-image: url(layout/iddesign-lg@2x.png); } }
       section#home-widget #hw-nav a#hw-online-marketing {
@@ -5404,7 +5403,7 @@ section#home-widget {
         @media (max-width: 480px) {
           section#home-widget #hw-nav a#hw-online-marketing {
             left: 25%; } }
-        @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+        @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
           section#home-widget #hw-nav a#hw-online-marketing {
             background-image: url(layout/onlinemarketing-lg@2x.png); } }
       section#home-widget #hw-nav a#hw-web-design {
@@ -5412,7 +5411,7 @@ section#home-widget {
         @media (max-width: 480px) {
           section#home-widget #hw-nav a#hw-web-design {
             left: 50%; } }
-        @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+        @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
           section#home-widget #hw-nav a#hw-web-design {
             background-image: url(layout/webdesign-lg@2x.png); } }
       section#home-widget #hw-nav a#hw-web-development {
@@ -5420,7 +5419,7 @@ section#home-widget {
         @media (max-width: 480px) {
           section#home-widget #hw-nav a#hw-web-development {
             left: 75%; } }
-        @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+        @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
           section#home-widget #hw-nav a#hw-web-development {
             background-image: url(layout/webdev-lg@2x.png); } }
   section#home-widget #hw-sectional {
@@ -5535,7 +5534,7 @@ footer[role=masterfooter] {
         background-size: 61px 62px;
         background-position: left 13px;
         padding-left: 75px; }
-        @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+        @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
           .page-title header h1.expertise {
             background-image: url(layout/ico-expertise-h1@2x.png); } }
       .page-title header h1.results {
@@ -5543,7 +5542,7 @@ footer[role=masterfooter] {
         background-size: 46px 49px;
         background-position: left 29px;
         padding-left: 55px; }
-        @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+        @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
           .page-title header h1.results {
             background-image: url(layout/ico-results-h1@2x.png); } }
       .page-title header h1.team {
@@ -5551,7 +5550,7 @@ footer[role=masterfooter] {
         background-size: 80px 51px;
         background-position: left 29px;
         padding-left: 100px; }
-        @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+        @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
           .page-title header h1.team {
             background-image: url(layout/ico-team-h1@2x.png); } }
       .page-title header h1.journal {
@@ -5559,7 +5558,7 @@ footer[role=masterfooter] {
         background-size: 41px 49px;
         background-position: left 29px;
         padding-left: 64px; }
-        @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+        @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
           .page-title header h1.journal {
             background-image: url(layout/ico-journal-h1@2x.png); } }
       .page-title header h1.contact {
@@ -5567,7 +5566,7 @@ footer[role=masterfooter] {
         background-size: 38px 55px;
         background-position: left 22px;
         padding-left: 50px; }
-        @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+        @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
           .page-title header h1.contact {
             background-image: url(layout/ico-contact-h1@2x.png); } }
 
@@ -5578,7 +5577,7 @@ footer[role=masterfooter] {
     padding-bottom: 30px; }
     .page-body .intro-text h3 {
       color: #fff;
-      font-size: 3em;
+      font-size: 2.5em;
       text-align: center; }
       @media (max-width: 480px) {
         .page-body .intro-text h3 {
@@ -5639,6 +5638,7 @@ footer[role=masterfooter] {
     display: inline-block; }
   .expertise-widget-detail .expertise-widget-icon {
     background-color: #EDECE8;
+    background-color: rgba(237, 236, 232, 0.9);
     width: 290px;
     padding-left: 30px;
     padding-right: 30px;
@@ -5655,6 +5655,7 @@ footer[role=masterfooter] {
       float: right; }
   .expertise-widget-detail .expertise-widget-description {
     background-color: #EDECE8;
+    background-color: rgba(237, 236, 232, 0.9);
     width: 330px;
     height: 207px;
     padding-right: 20px;
@@ -5683,6 +5684,14 @@ footer[role=masterfooter] {
     @media (max-width: 480px) {
       .expertise-widget-detail .expertise-widget-blockquote {
         display: none; } }
+    .expertise-widget-detail .expertise-widget-blockquote.bg-color-identity-design {
+      background-color: #00758C; }
+    .expertise-widget-detail .expertise-widget-blockquote.bg-color-online-marketing {
+      background-color: #75BEE9; }
+    .expertise-widget-detail .expertise-widget-blockquote.bg-color-web-design {
+      background-color: #A6CE39; }
+    .expertise-widget-detail .expertise-widget-blockquote.bg-color-web-development {
+      background-color: #F15A22; }
     .expertise-widget-detail .expertise-widget-blockquote ul {
       list-style: none;
       margin: 20px 0px 0px 20px;
@@ -5773,7 +5782,7 @@ div.expertise-widget-image {
         background-size: 43px 67px;
         background-repeat: no-repeat;
         background-position: left top; }
-        @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+        @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
           .result-item .result-screens .top .mobile-screen {
             background-image: url(layout/iphone-lg@2x.png); } }
         .result-item .result-screens .top .mobile-screen .snapshot {
@@ -5791,7 +5800,7 @@ div.expertise-widget-image {
         background-size: 100px 134px;
         background-repeat: no-repeat;
         background-position: left top; }
-        @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+        @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
           .result-item .result-screens .top .tablet-screen {
             background-image: url(layout/ipad-lg@2x.png); } }
         .result-item .result-screens .top .tablet-screen .snapshot {
@@ -5810,7 +5819,7 @@ div.expertise-widget-image {
         background-size: 379px 268px;
         background-repeat: no-repeat;
         background-position: left top; }
-        @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+        @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
           .result-item .result-screens .bottom .desktop-screen {
             background-image: url(layout/imac-lg@2x.png); } }
         .result-item .result-screens .bottom .desktop-screen .snapshot {
@@ -5859,25 +5868,25 @@ div.expertise-widget-image {
           .result-item .result-description footer .categories div.identity-design {
             background-size: 54px 40px;
             background-image: url(layout/iddesign-med.png); }
-            @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+            @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
               .result-item .result-description footer .categories div.identity-design {
                 background-image: url(layout/iddesign-med@2x.png); } }
           .result-item .result-description footer .categories div.web-design {
             background-size: 54px 36px;
             background-image: url(layout/webdesign-med.png); }
-            @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+            @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
               .result-item .result-description footer .categories div.web-design {
                 background-image: url(layout/webdesign-med@2x.png); } }
           .result-item .result-description footer .categories div.web-development {
             background-size: 54px 31px;
             background-image: url(layout/webdev-med.png); }
-            @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+            @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
               .result-item .result-description footer .categories div.web-development {
                 background-image: url(layout/webdev-med@2x.png); } }
           .result-item .result-description footer .categories div.online-marketing {
             background-size: 54px 31px;
             background-image: url(layout/onlinemarketing-med.png); }
-            @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+            @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
               .result-item .result-description footer .categories div.online-marketing {
                 background-image: url(layout/onlinemarketing-med@2x.png); } }
       .result-item .result-description footer a.case-study-btn {
@@ -5935,13 +5944,13 @@ div.expertise-widget-image {
       .result-item .thumb-wrapper a.browse.left {
         left: 0px;
         background-image: url(layout/arrow-l1.png); }
-        @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+        @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
           .result-item .thumb-wrapper a.browse.left {
             background-image: url(layout/arrow-l1@2x.png); } }
       .result-item .thumb-wrapper a.browse.right {
         right: 0px;
         background-image: url(layout/arrow-r1.png); }
-        @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+        @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
           .result-item .thumb-wrapper a.browse.right {
             background-image: url(layout/arrow-r1@2x.png); } }
     .result-item .thumb-wrapper .scrollable {
@@ -5973,12 +5982,12 @@ div.expertise-widget-image {
             height: 99px;
             background-size: 140px 99px;
             background-image: url(layout/imac-sm.png); }
-            @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+            @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
               .result-item .thumb-wrapper .scrollable .items .thumb-screen.desktop {
                 background-image: url(layout/imac-sm@2x.png); } }
             .result-item .thumb-wrapper .scrollable .items .thumb-screen.desktop.active {
               background-image: url(layout/imac-sm-on.png); }
-              @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+              @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
                 .result-item .thumb-wrapper .scrollable .items .thumb-screen.desktop.active {
                   background-image: url(layout/imac-sm-on@2x.png); } }
             .result-item .thumb-wrapper .scrollable .items .thumb-screen.desktop img {
@@ -5990,12 +5999,12 @@ div.expertise-widget-image {
             height: 83px;
             background-size: 63px 83px;
             background-image: url(layout/ipad-sm.png); }
-            @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+            @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
               .result-item .thumb-wrapper .scrollable .items .thumb-screen.tablet {
                 background-image: url(layout/ipad-sm@2x.png); } }
             .result-item .thumb-wrapper .scrollable .items .thumb-screen.tablet.active {
               background-image: url(layout/ipad-sm-on.png); }
-              @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+              @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
                 .result-item .thumb-wrapper .scrollable .items .thumb-screen.tablet.active {
                   background-image: url(layout/ipad-sm@2x.png); } }
             .result-item .thumb-wrapper .scrollable .items .thumb-screen.tablet img {
@@ -6007,12 +6016,12 @@ div.expertise-widget-image {
             height: 54px;
             background-size: 35px 54px;
             background-image: url(layout/iphone-sm.png); }
-            @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+            @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
               .result-item .thumb-wrapper .scrollable .items .thumb-screen.mobile {
                 background-image: url(layout/iphone-sm@2x.png); } }
             .result-item .thumb-wrapper .scrollable .items .thumb-screen.mobile.active {
               background-image: url(layout/iphone-sm-on.png); }
-              @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+              @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
                 .result-item .thumb-wrapper .scrollable .items .thumb-screen.mobile.active {
                   background-image: url(layout/iphone-sm@2x.png); } }
             .result-item .thumb-wrapper .scrollable .items .thumb-screen.mobile img {
@@ -6124,7 +6133,7 @@ div.expertise-widget-image {
       background-size: 18px 15px;
       background-position: left center;
       padding-left: 22px; }
-      @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+      @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
         .team-modal .modal-footer .social-bar a.twitter {
           background-image: url(layout/twitter-sm@2x.png); } }
     .team-modal .modal-footer .social-bar a.linkedin {
@@ -6133,7 +6142,7 @@ div.expertise-widget-image {
       background-size: 16px 17px;
       background-position: left center;
       padding-left: 22px; }
-      @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+      @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
         .team-modal .modal-footer .social-bar a.linkedin {
           background-image: url(layout/linkedin-sm@2x.png); } }
 
@@ -6199,7 +6208,7 @@ svg.team_balloon {
     background-size: 20px 20px;
     opacity: 1;
     margin: 16px; }
-    @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+    @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
       .journal .filter-wrapper .close {
         background-image: url(layout/close-btn1@2x.png); } }
 .journal article {
@@ -6408,7 +6417,11 @@ a.category {
       display: block;
       font-size: 2.3em; }
   .journal-detail article p {
-    font-size: 1.2em; }
+    font-size: 1.33em; }
+  .journal-detail article li {
+    font-size: 1.33em; }
+    .journal-detail article li ul li {
+      font-size: 1em; }
   .journal-detail article blockquote {
     width: 500px;
     background-color: #fff;

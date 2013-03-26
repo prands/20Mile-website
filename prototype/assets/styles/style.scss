@@ -1,6 +1,6 @@
 /*
  * 20Mile Interactive Stylesheet
- * 
+ *
  * Author: Rodrigo Passos;
  * Notes: I am using Twitter Bootstrap and Bourbon (bourbon.io)
  */
@@ -40,6 +40,11 @@
 // Set variables
 $headingsFontWeight: 	normal;
 $sansFontFamily:        Asap, "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+// Links
+// -------------------------
+$linkColor:             #F05921;
+$linkColorHover:        darken($linkColor, 10%);
 
 @import "bootstrap/bootstrap";
 @import "bootstrap/responsive";

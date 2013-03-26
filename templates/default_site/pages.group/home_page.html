@@ -78,15 +78,24 @@
                         <header>
                             <h1>Recent Results</h1>
                         </header>
+                        {exp:channel:entries
+                            channel="results"
+                            disable="category_fields|member_data|pagination|trackbacks"
+                            dynamic="off"
+                            limit="1"
+                        }
                         <div class="imac-frame">
                             <div class="snapshot">
-                                <img src="http://placehold.it/276x153" alt="">
+                                <a href="{path='/results#result-{url_title}'}">
+                                    <img src="{result_desktop_images:url:thumb}" alt="">
+                                </a>
                             </div>
                         </div>
                         <p>
                             Case Study:
-                            <a href="#">The Lanes Bowl &amp; Bristo</a>
+                            <a href="{path='/results#result-{url_title}'}">{title}</a>
                         </p>
+                        {/exp:channel:entries}
                     </article>
                 </div>
                 <div class="span4">
@@ -94,11 +103,15 @@
                         <header>
                             <h1>From the Journal</h1>
                         </header>
-
-                        <h3>This is a somewhat average sized blog post</h3>
-                        <p>
-                            Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-                        </p>
+                        {exp:channel:entries
+                            channel="journal"
+                            disable="category_fields|member_data|pagination|trackbacks"
+                            dynamic="off"
+                            limit="1"
+                        }
+                        <h3><a href="{page_uri}">{title}</a></h3>
+                        {journal_content:excerpt}
+                        {/exp:channel:entries}
                     </article>
                 </div>
                 <div class="span4">

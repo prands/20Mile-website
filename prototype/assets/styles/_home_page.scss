@@ -81,6 +81,11 @@ div[role=home] {
 							@include mobile-only {
 								width: 256px;
 							}
+
+							img {
+								width: 276px;
+								height: 153px;
+							}
 						}
 					}
 
@@ -101,7 +106,7 @@ div[role=home] {
 							padding-left: 30px;
 
 							@include retina {
-								background-image: url(layout/ico-journal-sm@2x.png);
+								// background-image: url(layout/ico-journal-sm@2x.png);
 							}
 						}
 					}
@@ -109,6 +114,10 @@ div[role=home] {
 					padding: 0px 10px;
 					h3 {
 						line-height: 1.3em;
+
+						a {
+							color: #fff;
+						}
 					}
 				}
 
@@ -124,7 +133,7 @@ div[role=home] {
 							padding-left: 40px;
 
 							@include retina {
-								background-image: url(layout/twitter-footer@2x.png);
+								// background-image: url(layout/twitter-footer@2x.png);
 							}
 						}
 					}

@@ -8,7 +8,7 @@ $ ->
 		$('#hw-nav').removeClass().addClass('span12').addClass($(@).attr('href'))
 		$('#hw-nav').next().removeClass().addClass('span12').addClass($(@).attr('href'))
 
-		
+
 
 	#--------------------------------------------------------
 	# Result's page modal with jquerytools scrollable gallery
@@ -19,7 +19,7 @@ $ ->
 		url = $(@).data('src')
 		wrap = $('.modal-body').fadeTo('medium', 0.5)
 		img = new Image()
-		
+
 		img.onload = ()->
 			wrap.fadeTo('fast', 1)
 			wrap.find('img').attr('src', url)
@@ -32,7 +32,7 @@ $ ->
 	setUpScrollableGallery = ()->
 		api = $('.scrollable').scrollable()
 		$(@).find('.items img').on 'click', loadSelectedImage
-			
+
 
 	$('.results-modal').on 'show', setUpScrollableGallery
 
@@ -52,7 +52,7 @@ $ ->
 	#-----------------------------------------------
 
 	# regex
-	emailRegEx = new RegExp(/^((?!\.)[a-z0-9._%+-]+(?!\.)\w)@[a-z0-9-]+\.[a-z.]{2,5}(?!\.)\w$/i)
+	emailRegEx = new RegExp(/^((?!\.)[a-z0-9._%+-]+(?!\.)\w)@[a-z0-9-]+\.[a-z.]{1,5}(?!\.)\w$/i)
 	emptyRegEx = new RegExp(/[-_.a-zA-Z0-9]{3,}/)
 
 	$form = $("#contact-form")
@@ -94,7 +94,7 @@ $ ->
 			field.next().removeClass('completed').addClass('error')
 
 
-		
+
 
 
 
