@@ -5058,32 +5058,36 @@ div[role=masterhead] {
           text-decoration: none; }
       div[role=masterhead] header nav ul li#nav-expertise a:hover {
         background-image: url(layout/icon_expertise.png);
-        background-size: 29px;
-        background-position: 15px top; }
+        background-size: 34px;
+        background-position: 11px -2px; }
         @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
           div[role=masterhead] header nav ul li#nav-expertise a:hover {
             background-image: url(layout/ico-expertise-h1@2x.png); } }
       div[role=masterhead] header nav ul li#nav-results a:hover {
         background-image: url(layout/ico-results-nav.png);
-        background-size: 27px 29px; }
+        background-size: 25px 27px;
+        background-position: 14px 6px; }
         @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
           div[role=masterhead] header nav ul li#nav-results a:hover {
             background-image: url(layout/ico-results-nav@2x.png); } }
       div[role=masterhead] header nav ul li#nav-team a:hover {
         background-image: url(layout/ico-team-nav.png);
-        background-size: 41px 26px; }
+        background-size: 41px 26px;
+        background-position: 0 7px; }
         @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
           div[role=masterhead] header nav ul li#nav-team a:hover {
             background-image: url(layout/ico-team-nav@2x.png); } }
       div[role=masterhead] header nav ul li#nav-journal a:hover {
         background-image: url(layout/ico-journal-nav.png);
-        background-size: 23px 27px; }
+        background-size: 21px 25px;
+        background-position: 17px 9px; }
         @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
           div[role=masterhead] header nav ul li#nav-journal a:hover {
             background-image: url(layout/ico-journal-nav@2x.png); } }
       div[role=masterhead] header nav ul li#nav-contact a:hover {
         background-image: url(layout/ico-contact-nav.png);
-        background-size: 23px 33px; }
+        background-size: 22px 31px;
+        background-position: 19px 2px; }
         @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
           div[role=masterhead] header nav ul li#nav-contact a:hover {
             background-image: url(layout/ico-contact-nav@2x.png); } }
@@ -5527,7 +5531,7 @@ footer[role=masterfooter] {
     .page-title header h1 {
       display: inline-block;
       background-repeat: no-repeat;
-      font-size: 5em;
+      font-size: 4em;
       padding-top: 30px;
       padding-bottom: 30px; }
       @media (max-width: 480px) {
@@ -5714,7 +5718,7 @@ div.expertise-widget-image {
   display: block;
   background-repeat: no-repeat;
   background-position: left bottom;
-  margin-top: -44px;
+  margin-top: -32px;
   width: 290px;
   height: 215px; }
   @media (max-width: 480px) {
@@ -6358,13 +6362,11 @@ svg.team_balloon {
     margin: 0;
     border-left: 0;
     margin-left: 444px;
-    margin-top: 50px; }
+    margin-top: 2em; }
     .journal article blockquote h3 {
-      font-family: Adelle;
-      font-style: italic;
       color: #F05921;
-      font-weight: bold;
-      line-height: 1.6em; }
+      line-height: 1.6em;
+      margin: 0; }
     @media (max-width: 480px) {
       .journal article blockquote {
         display: none; } }
@@ -6390,12 +6392,12 @@ a.category {
     background-size: 36px 27px; }
 
 .journal-detail article {
-  padding: 30px 90px 30px 150px; }
+  padding: 30px 165px 30px 150px; }
   @media (max-width: 480px) {
     .journal-detail article {
       padding: 30px 0px 30px 22px; } }
   .journal-detail article h1, .journal-detail article h2, .journal-detail article h3, .journal-detail article h4, .journal-detail article h5, .journal-detail article h6 {
-    color: #fff; }
+    color: #333; }
   .journal-detail article header h1 {
     font-size: 2.1em;
     line-height: 1.4em; }
@@ -6409,7 +6411,7 @@ a.category {
     color: #fff;
     padding: 1px 10px 5px 10px;
     text-align: center;
-    margin-left: -104px; }
+    margin-left: -10.2em; }
     @media (max-width: 480px) {
       .journal-detail article header time {
         margin-left: -20px; } }
@@ -6430,15 +6432,12 @@ a.category {
     width: 500px;
     background-color: #fff;
     padding: 28px;
-    margin: 0;
     border-left: 0;
-    margin-left: -86px; }
+    margin: 2em 0 0 -7.5em; }
     .journal-detail article blockquote h3 {
-      font-family: Adelle;
-      font-style: italic;
       color: #F05921;
-      font-weight: bold;
-      line-height: 1.6em; }
+      line-height: 1.6em;
+      margin: 0; }
     @media (max-width: 480px) {
       .journal-detail article blockquote {
         display: none; } }

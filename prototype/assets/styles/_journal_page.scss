@@ -229,13 +229,11 @@
 			margin: 0;
 			border-left: 0;
 			margin-left: 444px;
-			margin-top: 50px;
+			margin-top: 2em;
 			h3 {
-				font-family: Adelle;
-				font-style: italic;
 				color: #F05921;
-				font-weight: bold;
 				line-height: 1.6em;
+				margin: 0;
 			}
 
 			@include mobile-only {
