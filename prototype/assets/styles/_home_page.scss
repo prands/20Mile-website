@@ -13,10 +13,11 @@ div[role=home] {
 	.home-secondary {
 		background-color: #afaeaa;
 		padding-bottom: 30px;
+		padding-top: 2em;
 
 		#kayak {
 
-			margin-top: -40px;
+			margin-top: -140px;
 
 			#hull {
 				fill: #76BEE9;
@@ -53,6 +54,7 @@ div[role=home] {
 				p, h3 {
 					color: #FFF;
 					text-align: center;
+					margin-top: 0;
 				}
 
 				p {
