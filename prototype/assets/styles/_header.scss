@@ -59,8 +59,8 @@ div[role=masterhead] {
 					&#nav-expertise {
 						a:hover {
 							background-image: url(layout/icon_expertise.png);
-							background-size: 29px;
-							background-position: 15px top;
+							background-size: 34px;
+							background-position: 11px -2px;
 							@include retina {
 								background-image: url(layout/ico-expertise-h1@2x.png);
 							}
@@ -70,7 +70,8 @@ div[role=masterhead] {
 					&#nav-results {
 						a:hover {
 							background-image: url(layout/ico-results-nav.png);
-							background-size: 27px 29px;
+							background-size: 25px 27px;
+							background-position: 14px 6px;
 							@include retina {
 								background-image: url(layout/ico-results-nav@2x.png);
 							}
@@ -81,6 +82,7 @@ div[role=masterhead] {
 						a:hover {
 							background-image: url(layout/ico-team-nav.png);
 							background-size: 41px 26px;
+							background-position: 0 7px;
 							@include retina {
 								background-image: url(layout/ico-team-nav@2x.png);
 							}
@@ -90,7 +92,8 @@ div[role=masterhead] {
 					&#nav-journal {
 						a:hover {
 							background-image: url(layout/ico-journal-nav.png);
-							background-size: 23px 27px;
+							background-size: 21px 25px;
+							background-position: 17px 9px;
 							@include retina {
 								background-image: url(layout/ico-journal-nav@2x.png);
 							}
@@ -100,7 +103,8 @@ div[role=masterhead] {
 					&#nav-contact {
 						a:hover {
 							background-image: url(layout/ico-contact-nav.png);
-							background-size: 23px 33px;
+							background-size: 22px 31px;
+							background-position: 19px 2px;
 							@include retina {
 								background-image: url(layout/ico-contact-nav@2x.png);
 							}
