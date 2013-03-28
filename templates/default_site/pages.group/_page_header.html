@@ -1,0 +1,23 @@
+{!-- This chunk supplies the title and description at the top of the page. --}
+{exp:channel:entries disable="categories|category_fields|member_data|pagination|trackbacks"}
+<div class="row page-title">
+    <div class="container">
+        <div class="span12">
+            <header>
+                <h1 class="{url_title}">{title}</h1>
+            </header>
+        </div>
+    </div>
+</div>
+
+<div class="row page-body {url_title}">
+    <div class="container">
+        <div class="row">
+            <!-- Intro Text -->
+            <div class="span12 intro-text">
+                <h3>
+                    {page_content}
+                </h3>
+            </div>
+        </div>
+{/exp:channel:entries}

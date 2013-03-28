@@ -1,0 +1,65 @@
+{embed="pages/_top"}
+
+{embed="pages/_header"}
+
+<!-- CONTENT -->
+
+{embed="pages/_page_header"}
+        <!-- Contact -->
+        <div class="row">
+            <div class="span6">
+                <div class="contact-form-container">
+                	{exp:freeform:form
+                		form:class="form-horizontal"
+                		form:id="contact-form"
+						form_name="contact"
+						required="name|email|user_message"
+						ajax="yes"
+					}
+                        <fieldset>
+                            <legend>Send us a note</legend>
+                            <div class="control-group">
+                                <input type="text" name="name" class="validate-empty">
+                                <label class="control-label" for="name">Name</label>
+                            </div>
+                            <div class="control-group">
+                                <input type="text" name="email" class="validate-empty validate-email">
+                                <label class="control-label" for="email">Email</label>
+                            </div>
+                            <div class="control-group">
+                                <input type="tel" name="phone" class="">
+                                <label class="control-label" for="phone">Phone</label>
+                            </div>
+                            <div class="control-group message-box">
+                                <textarea name="user_message" class="validate-empty"></textarea>
+                                <label class="control-label textarea" for="user_message">Message</label>
+                            </div>
+                            <div class="control-group">
+                                <input type="submit" value="Send">
+                            </div>
+                        </fieldset>
+                    {/exp:freeform:form}
+                </div>
+            </div>
+            <div class="span6">
+                <div class="contact-info">
+                    <ul>
+                        <li class="phone">
+                            <a href="tel:5084197439">508.419.7439</a>
+                        </li>
+                        <li class="email">
+                            <a href="mailto:info@20mile.in">info@20mile.in</a>
+                        </li>
+                        <li class="address">
+                            901 Main St Osterville, MA 02655 <a href="{company_address_map_link}" target="_blank">map</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{embed="pages/_footer"}
+
+{embed="pages/_bottom"}

@@ -1,0 +1,117 @@
+{embed="pages/_top"}
+
+{embed="pages/_header"}
+
+<!-- CONTENT -->
+
+{embed="pages/_page_header"}
+        <!-- First Row -->
+
+        {exp:channel:entries
+        	channel="results"
+        	disable="category_fields|member_data|pagination|trackbacks"
+        	dynamic="off"
+        	require_entry="yes"
+        }
+        <a name="result-{url_title}"></a>
+        <div class="row">
+            <div class="span12">
+                <article class="result-item">
+                     <div class="result-screens">
+                        <div class="top">
+                        	{if "{result_tablet_images:total_files}" != ""}
+                            <div class="tablet-screen">
+                                <div class="snapshot">
+                                    <a href="#{url_title}-modal" data-toggle="modal">
+                                        <img src="{result_tablet_images:url:thumb}" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                            {/if}
+                            {if "{result_mobile_images:total_files}" != ""}
+                            <div class="mobile-screen">
+                                <div class="snapshot">
+                                    <a href="#{url_title}-modal" data-toggle="modal">
+                                        <img src="{result_mobile_images:url:thumb}" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                            {/if}
+                        </div>
+                        <div class="bottom">
+                        	{if "{result_desktop_images:total_files}" != ""}
+                            <div class="desktop-screen">
+                                <div class="snapshot">
+                                    <a href="#{url_title}-modal" data-toggle="modal">
+                                        <img src="{result_desktop_images:url:thumb}" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                            {/if}
+
+                        </div>
+                    </div>
+                    <div class="result-description">
+                        <header>
+                            <h1>{title}</h1>
+                        </header>
+
+                        {result_description}
+
+                        <footer>
+                            {!-- <a href="<!-- @path case_study.html -->" class="case-study-btn">Read the Case Study</a> --}
+                            <div class="categories">
+                                {categories show_group="1"}
+                                    <a href="/expertise#{category_url_title}" class="{category_url_title}"></a>
+                                {/categories}
+                            </div>
+                        </footer>
+                    </div>
+                    <!-- Modal Gallery -->
+                    <div
+                        id="{url_title}-modal" class="modal hide results-modal" tabindex="-1"
+                        role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+                    >
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&nbsp;</button>
+                            &nbsp;
+                        </div>
+                        <div class="modal-body">
+                            <img src="{result_desktop_images:url:full}" alt="">
+                        </div>
+                        <div class="modal-footer">
+                            <div class="thumb-wrapper">
+                                <div class="scrollable">
+                                    <div class="items">
+                                    	{result_desktop_images}
+                                        <div class="thumb-screen desktop">
+                                            <img src="{url:thumb}" data-src="{url:full}" alt="">
+                                        </div>
+                                        {/result_desktop_images}
+                                        {result_tablet_images}
+                                        <div class="thumb-screen tablet">
+                                            <img src="{url:thumb}" data-src="{url:full}" alt="">
+                                        </div>
+                                        {/result_tablet_images}
+                                        {result_mobile_images}
+                                        <div class="thumb-screen mobile">
+                                            <img src="{url:thumb}" data-src="{url:full}" alt="">
+                                        </div>
+                                        {/result_mobile_images}
+                                    </div>
+                                </div>
+                                <a class="prev browse left"></a>
+                                <a class="next browse right"></a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+		{/exp:channel:entries}
+    </div>
+</div>
+
+{embed="pages/_footer"}
+
+{embed="pages/_bottom"}

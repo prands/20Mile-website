@@ -1,0 +1,154 @@
+
+.page-title {
+	background-color: #b2b1ad;
+	background-image: url(layout/topo_bg.png);
+	background-repeat: repeat-x;
+
+	header {
+		text-align: center;
+
+		h1 {
+			display: inline-block;
+			background-repeat: no-repeat;
+			font-size: 4em;
+			padding-top: 30px;
+			padding-bottom: 30px;
+
+			@include mobile-only {
+				font-size: 3em;
+			}
+
+			&.expertise  {
+				background-image: url(layout/ico-expertise-h1.png);
+				background-size: 61px 62px;
+				background-position: left 13px;
+				padding-left: 75px;
+
+				@include retina {
+					background-image: url(layout/ico-expertise-h1@2x.png);
+				}
+			}
+
+			&.results  {
+				background-image: url(layout/ico-results-h1.png);
+				background-size: 46px 49px;
+				background-position: left 29px;
+				padding-left: 55px;
+
+				@include retina {
+					background-image: url(layout/ico-results-h1@2x.png);
+				}
+			}
+
+			&.team  {
+				background-image: url(layout/ico-team-h1.png);
+				background-size: 80px 51px;
+				background-position: left 29px;
+				padding-left: 100px;
+
+				@include retina {
+					background-image: url(layout/ico-team-h1@2x.png);
+				}
+			}
+
+			&.journal  {
+				background-image: url(layout/ico-journal-h1.png);
+				background-size: 41px 49px;
+				background-position: left 29px;
+				padding-left: 64px;
+
+				@include retina {
+					background-image: url(layout/ico-journal-h1@2x.png);
+				}
+			}
+
+			&.contact  {
+				background-image: url(layout/ico-contact-h1.png);
+				background-size: 38px 55px;
+				background-position: left 22px;
+				padding-left: 50px;
+
+				@include retina {
+					background-image: url(layout/ico-contact-h1@2x.png);
+				}
+			}
+		}
+	}
+}
+
+.page-body {
+	background-color: #afaeaa;
+
+
+	.intro-text {
+
+		padding-top: 30px;
+		padding-bottom: 30px;
+
+		h3 {
+			color: #fff;
+			font-size: 2.5em;
+			text-align: center;
+
+			@include mobile-only {
+				font-size: 1.6em;
+				line-height: 1.2em;
+				margin-left: 10px;
+				margin-right: 10px;
+			}
+
+			em {
+				color: #66615B;
+				display: block;
+			}
+		}
+	}
+
+	&.team {
+		background-image: url(layout/bg-team.png);
+		background-repeat: no-repeat;
+		background-size: 1660px 630px;
+		background-position: 30% 463px;
+	}
+
+	&.contact {
+		padding-bottom: 80px;
+	}
+
+	&.journal {
+
+		padding-bottom: 100px;
+
+		& > .container > .span12 {
+			background-image: url(layout/dotted_vertical_bg.png);
+			background-repeat: repeat-y;
+			background-position: center top;
+			padding-bottom: 100px;
+		}
+	}
+
+	&.journal-detail {
+
+		padding-bottom: 100px;
+
+		& > .container > .span12 {
+			background-image: url(layout/dotted_vertical_bg.png);
+			background-repeat: repeat-y;
+			background-position: 70px top;
+			padding-bottom: 100px;
+
+			@include mobile-only {
+				background-position: 10px top;
+			}
+		}
+	}
+}
+
+@import "expertise_page";
+@import "results_page";
+@import "case_study_page";
+@import "team_page";
+@import "journal_page";
+@import "journal_detail_page";
+@import "case_study_page";
+@import "contact_page";

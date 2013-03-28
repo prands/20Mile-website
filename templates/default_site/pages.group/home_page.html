@@ -1,0 +1,117 @@
+{embed="pages/_top"}
+
+{embed="pages/_header"}
+
+<!-- CONTENT -->
+
+<div class="row" role="home">
+    <div class="container">
+        <section id="spotlight">
+            <div class="span12">
+                <h1>
+                    Friendly, expert guides for navigating<br>
+                    an ever-changing digital terrain.
+                </h1>
+
+                <p>Adventurers inquire within.</p>
+            </div>
+        </section>
+        <section id="home-widget">
+            <div id="hw-nav" class="span12 pos1">
+                {exp:channel:categories category_group="1" style="linear"}
+                <a href="pos{count}" id="hw-{category_url_title}">{category_name}</a>
+                {/exp:channel:categories}
+            </div>
+            <div id="hw-sectional" class="span12 pos1">
+                {exp:channel:categories category_group="1" style="linear"}
+                <section id="panel-{category_url_title}">
+                    <p>
+                        {category_description}
+                    </p>
+                </section>
+                {/exp:channel:categories}
+            </div>
+        </section>
+    </div>
+
+    <div class="row home-secondary">
+        <div class="container">
+            <div class="row">
+                <div class="span12">
+                    <center>
+                    <svg id="kayak" x="0px" y="0px"width="213px" height="44px">
+                        <g>
+                            <path id="hull" d="M0.498,12.7c0,0,47.545-12.298,106.196-12.298c58.652,0,106.197,12.298,106.197,12.298
+                                s-47.545,30.94-106.197,30.94C48.043,43.641,0.498,12.7,0.498,12.7z"/>
+                            <path id="right-nose" d="M146.434,2.185c0.244,3.472,0.372,6.978,0.372,10.516c0,9.193-0.852,18.189-2.473,26.908
+                                c40.071-8.38,68.558-26.908,68.558-26.908S185.394,5.59,146.434,2.185z M136.436,41.094c1.154-0.196,2.305-0.393,3.441-0.606
+                                C138.74,40.701,137.59,40.897,136.436,41.094z M136.436,41.094c-2.62,0.437-5.281,0.834-7.982,1.167
+                                C131.154,41.928,133.815,41.53,136.436,41.094z"/>
+                            <path id="left-nose" d="M30.726,27.811c2.278-4.548,3.562-9.678,3.562-15.11c0-2.214-0.217-4.379-0.624-6.476
+                                C13.24,9.404,0.498,12.7,0.498,12.7S12.027,20.198,30.726,27.811z"/>
+                            <path id="top-hull" d="M0.498,12.7c0,0,47.545-12.298,106.196-12.298c58.652,0,106.197,12.298,106.197,12.298
+                                s-47.545,12.296-106.197,12.296C48.043,24.996,0.498,12.7,0.498,12.7z"/>
+                            <ellipse id="hole" cx="106.695" cy="12.7" rx="33.535" ry="5.591"/>
+                        </g>
+                    </svg>
+                    </center>
+                </div>
+            </div>
+            <div id="bottom-panels" class="row">
+                <div class="span4">
+                    <article class="recent-results">
+                        <header>
+                            <h1>Recent Results</h1>
+                        </header>
+                        {exp:channel:entries
+                            channel="results"
+                            disable="category_fields|member_data|pagination|trackbacks"
+                            dynamic="off"
+                            limit="1"
+                        }
+                        <div class="imac-frame">
+                            <div class="snapshot">
+                                <a href="{path='/results#result-{url_title}'}">
+                                    <img src="{result_desktop_images:url:thumb}" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <p>
+                            Case Study:
+                            <a href="{path='/results#result-{url_title}'}">{title}</a>
+                        </p>
+                        {/exp:channel:entries}
+                    </article>
+                </div>
+                <div class="span4">
+                    <article class="from-the-journal">
+                        <header>
+                            <h1>From the Journal</h1>
+                        </header>
+                        {exp:channel:entries
+                            channel="journal"
+                            disable="category_fields|member_data|pagination|trackbacks"
+                            dynamic="off"
+                            limit="1"
+                        }
+                        <h3><a href="{page_uri}">{title}</a></h3>
+                        {journal_content:excerpt}
+                        {/exp:channel:entries}
+                    </article>
+                </div>
+                <div class="span4">
+                    <article class="from-twitter">
+                        <header>
+                            <h1>@20Milers on Twitter</h1>
+                        </header>
+                        <p class="tweet-text"></p>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{embed="pages/_footer"}
+
+{embed="pages/_bottom"}
