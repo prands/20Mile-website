@@ -8,6 +8,13 @@ $ ->
 		$('#hw-nav').removeClass().addClass('span12').addClass($(@).attr('href'))
 		$('#hw-nav').next().removeClass().addClass('span12').addClass($(@).attr('href'))
 
+	#-----------------------------------
+	# Home Page Latest tweet
+	#-----------------------------------
+	if $('p.tweet-text').length > 0
+		$.getJSON "https://api.twitter.com/1/statuses/user_timeline/20milers.json\?count\=1\&include_rts\=1\&callback\=\?", (data)->
+			$('p.tweet-text').html(data[0].text);
+
 
 
 	#--------------------------------------------------------
