@@ -8,31 +8,9 @@
 	<meta name="author" content="">
 
 
-	
-        <!-- Hammer reload -->
-          <script>
-            setInterval(function(){
-              try {
-                if(typeof ws != 'undefined' && ws.readyState == 1){return true;}
-                ws = new WebSocket('ws://'+(location.host || 'localhost').split(':')[0]+':35353')
-                ws.onopen = function(){ws.onclose = function(){document.location.reload()}}
-                ws.onmessage = function(){
-                  var links = document.getElementsByTagName('link'); 
-                    for (var i = 0; i < links.length;i++) { 
-                    var link = links[i]; 
-                    if (link.rel === 'stylesheet' && !link.href.match(/typekit/)) { 
-                      href = link.href.replace(/((&|\?)hammer=)[^&]+/,''); 
-                      link.href = href + (href.indexOf('?')>=0?'&':'?') + 'hammer='+(new Date().valueOf());
-                    }
-                  }
-                }
-              }catch(e){}
-            }, 1000)
-          </script>
-        <!-- /Hammer reload -->
-      
+	<!-- @reload -->
 
-	<link rel='stylesheet' href='assets/styles/style.css'>
+	<link rel='stylesheet' href='56c0c38163fbfaedabf02bb4c1e67454.css'>
 
 
 
@@ -244,11 +222,11 @@
 	  fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));</script>
 
-  	<script src='assets/js/jquery-1.8.3.min.js'></script>
-  	<script src='assets/js/jquery.tools.min.js'></script>
-  	<script src='assets/js/bootstrap/bootstrap-modal.js'></script>
+  	<script src='3576a6e73c9dccdbbc4a2cf8ff544ad7.js'></script>
+  	<script src='2dbda6a6aaf07cab49c5a54af5e83cbc.js'></script>
+  	<script src='208e066ae21b4654178177e9748b70f3.js'></script>
   	
-  	<script src='assets/js/app.js'></script>
+  	<script src='18440d2706c3ad673352dc8bffe45ed6.js'></script>
   
 
 </body>

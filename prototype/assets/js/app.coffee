@@ -8,6 +8,13 @@ $ ->
 		$('#hw-nav').removeClass().addClass('span12').addClass($(@).attr('href'))
 		$('#hw-nav').next().removeClass().addClass('span12').addClass($(@).attr('href'))
 
+	#-----------------------------------
+	# Home Page Latest tweet
+	#-----------------------------------
+	if $('p.tweet-text').length > 0
+		$.getJSON "https://api.twitter.com/1/statuses/user_timeline/20milers.json\?count\=1\&include_rts\=1\&callback\=\?", (data)->
+			$('p.tweet-text').html(data[0].text);
+
 
 
 	#--------------------------------------------------------
@@ -66,8 +73,8 @@ $ ->
 				$field.val('')
 				$field.attr 'placeholder', error_message
 		else
+			$form.after "<h1>Thanks for your message, we'll get back to you.</h1>"
 			$form.remove()
-			# TODO: add thank you message here
 
 	ajax_contact_form = ( form )->
 		$.post form.attr('action'), form.serialize(), handlePostSubmission

@@ -6134,124 +6134,130 @@ div[role=home] {
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000313}}
   div[role=home] .home-secondary {
     background-color: #afaeaa;
-    padding-bottom: 30px;
-    padding-top: 2em; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000318}}
+    padding-bottom: 30px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000317}}
+    div[role=home] .home-secondary #bottom-panels {
+      padding-top: 2em; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000321}}
     div[role=home] .home-secondary #kayak {
-      margin-top: -140px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000322}}
+      margin-top: -28px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000325}}
       div[role=home] .home-secondary #kayak #hull {
         fill: #76BEE9; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000326}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000329}}
       div[role=home] .home-secondary #kayak #right-nose {
         fill: #F15B24; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000330}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000333}}
       div[role=home] .home-secondary #kayak #left-nose {
         fill: #A5CE39; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000334}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000337}}
       div[role=home] .home-secondary #kayak #top-hull {
         opacity: 0.2;
         fill: #01758C; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000339}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000342}}
       div[role=home] .home-secondary #kayak #hole {
         fill: #01758C; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000346}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000349}}
     div[role=home] .home-secondary .span4 article header {
       text-align: center; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000348}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000351}}
       div[role=home] .home-secondary .span4 article header h1 {
         display: inline-block;
         font-size: 1.4em; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000354}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000357}}
     div[role=home] .home-secondary .span4 article p, div[role=home] .home-secondary .span4 article h3 {
       color: #FFF;
       text-align: center;
       margin-top: 0; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000360}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000363}}
     div[role=home] .home-secondary .span4 article p {
       font-size: 1.2em; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000366}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000369}}
     div[role=home] .home-secondary .span4 article.recent-results .imac-frame {
       margin: auto;
       width: 300px;
       background: url(layout/imac.png) no-repeat left top;
       padding: 12px 12px 60px 12px; }
       @media (max-width: 480px) {
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000366}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000369}}
         div[role=home] .home-secondary .span4 article.recent-results .imac-frame {
           width: 280px;
           background-size: 280px; } }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000377}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000380}}
       div[role=home] .home-secondary .span4 article.recent-results .imac-frame .snapshot {
         display: block;
         width: 276px;
         height: 153px;
         overflow: hidden; }
         @media (max-width: 480px) {
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000377}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000380}}
           div[role=home] .home-secondary .span4 article.recent-results .imac-frame .snapshot {
             width: 256px; } }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000387}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000390}}
         div[role=home] .home-secondary .span4 article.recent-results .imac-frame .snapshot img {
           width: 276px;
           height: 153px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000394}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\0000397}}
     div[role=home] .home-secondary .span4 article.recent-results a {
       font-style: italic;
       color: #F05921; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\00003100}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\00003103}}
     div[role=home] .home-secondary .span4 article.from-the-journal {
       padding: 0px 10px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\00003103}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\00003106}}
       div[role=home] .home-secondary .span4 article.from-the-journal header h1 {
         background-image: url(layout/ico-journal-sm.png);
         background-repeat: no-repeat;
         background-position: left center;
         background-size: 18px 22px;
         padding-left: 30px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\00003117}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\00003120}}
       div[role=home] .home-secondary .span4 article.from-the-journal h3 {
         line-height: 1.3em; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\00003120}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\00003123}}
         div[role=home] .home-secondary .span4 article.from-the-journal h3 a {
           color: #fff; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\00003126}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\00003129}}
     div[role=home] .home-secondary .span4 article.from-twitter {
       padding: 0px 10px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\00003130}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\00003133}}
       div[role=home] .home-secondary .span4 article.from-twitter header h1 {
-        background-image: url(layout/twitter-footer.png);
+        background-image: url(layout/twitter-sm.png);
         background-repeat: no-repeat;
-        background-size: 18px 15px;
         background-position: left center;
-        padding-left: 40px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\00003143}}
+        padding-left: 20px;
+        background-size: 18px 15px; }
+        @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\00003133}}
+          div[role=home] .home-secondary .span4 article.from-twitter header h1 {
+            background-image: url(layout/twitter-sm@2x.png); } }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\00003146}}
       div[role=home] .home-secondary .span4 article.from-twitter p {
         word-wrap: break-word; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\00003151}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\00003154}}
   div[role=home] section#spotlight {
     min-height: 534px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\00003155}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\00003158}}
     div[role=home] section#spotlight h1 {
       margin-bottom: 25px; }
       @media (max-width: 480px) {
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\00003160}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\00003163}}
         div[role=home] section#spotlight h1 br {
           display: none; } }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\00003165}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\00003168}}
       div[role=home] section#spotlight h1 + p {
         font-size: 1.5em;
         color: #f15a22; }
     @media (max-width: 480px) {
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\00003151}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\00003154}}
       div[role=home] section#spotlight {
         min-height: 640px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\00003175}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\00003178}}
         div[role=home] section#spotlight h1 {
           font-size: 1.8em;
           line-height: 1.4em;
           margin-bottom: 25px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\00003180}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_page\.scss}line{font-family:\00003183}}
           div[role=home] section#spotlight h1 + p {
             font-size: 1.5em;
             color: #f15a22; } }
@@ -6530,7 +6536,7 @@ section#home-widget {
   section#home-widget #hw-sectional {
     padding-top: 5em;
     position: relative;
-    min-height: 220px; }
+    min-height: 250px; }
     @media (max-width: 480px) {
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_home_widget\.scss}line{font-family:\00003186}}
       section#home-widget #hw-sectional {
@@ -6793,103 +6799,103 @@ footer[role=masterfooter] {
       padding-top: 30px;
       padding-right: 10px; } }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\0000324}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\0000326}}
 .expertise-widget-detail {
-  height: 207px;
+  height: 270px;
   margin-bottom: 10px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\0000329}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\0000331}}
   .expertise-widget-detail .expertise-widget-detail-block {
     display: inline-block; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\0000333}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\0000335}}
   .expertise-widget-detail .expertise-widget-icon {
     background-color: #EDECE8;
     background-color: rgba(237, 236, 232, 0.9);
     width: 290px;
     padding-left: 30px;
     padding-right: 30px;
-    height: 207px;
+    height: 270px;
     float: left; }
     @media (max-width: 480px) {
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\0000333}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\0000335}}
       .expertise-widget-detail .expertise-widget-icon {
         padding-left: 0px;
         padding-right: 0px;
         display: block;
         width: 100%;
         height: 30px; } }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\0000350}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\0000352}}
     .even .expertise-widget-detail .expertise-widget-icon {
       float: right; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\0000355}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\0000357}}
   .expertise-widget-detail .expertise-widget-description {
     background-color: #EDECE8;
     background-color: rgba(237, 236, 232, 0.9);
     width: 330px;
-    height: 207px;
+    height: 270px;
     padding-right: 20px;
     float: left; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\0000363}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\0000365}}
     .even .expertise-widget-detail .expertise-widget-description {
       padding-right: 0px;
       padding-left: 20px; }
     @media (max-width: 480px) {
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\0000355}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\0000357}}
       .expertise-widget-detail .expertise-widget-description {
         width: 100%;
         padding-right: 0px;
         padding-left: 0px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\0000373}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\0000375}}
         .expertise-widget-detail .expertise-widget-description h2 {
           text-align: center; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\0000377}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\0000379}}
         .expertise-widget-detail .expertise-widget-description p {
           margin-right: 10px;
           margin-left: 10px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\0000382}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\0000384}}
         .even .expertise-widget-detail .expertise-widget-description {
           padding-right: 0px;
           padding-left: 0px; } }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\0000389}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\0000391}}
   .expertise-widget-detail .expertise-widget-blockquote {
     width: 240px;
-    height: 207px;
+    height: 270px;
     float: right;
     background-color: #00748B; }
     @media (max-width: 480px) {
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\0000389}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\0000391}}
       .expertise-widget-detail .expertise-widget-blockquote {
         display: none; } }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\0000399}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003101}}
     .expertise-widget-detail .expertise-widget-blockquote.bg-color-identity-design {
       background-color: #00758C; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003103}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003105}}
     .expertise-widget-detail .expertise-widget-blockquote.bg-color-online-marketing {
       background-color: #75BEE9; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003107}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003109}}
     .expertise-widget-detail .expertise-widget-blockquote.bg-color-web-design {
       background-color: #A6CE39; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003111}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003113}}
     .expertise-widget-detail .expertise-widget-blockquote.bg-color-web-development {
       background-color: #F15A22; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003116}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003118}}
     .expertise-widget-detail .expertise-widget-blockquote ul {
       list-style: none;
       margin: 20px 0px 0px 20px;
       padding: 0px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003121}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003123}}
       .expertise-widget-detail .expertise-widget-blockquote ul li {
         color: #fff;
         font-size: 1.4em;
         margin-bottom: 5px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003128}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003130}}
     .even .expertise-widget-detail .expertise-widget-blockquote {
       float: left; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003135}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003137}}
 #expertise-widget .odd, #expertise-widget .even {
   margin-top: 100px; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003139}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003141}}
 div.expertise-widget-image {
   display: block;
   background-repeat: no-repeat;
@@ -6898,42 +6904,42 @@ div.expertise-widget-image {
   width: 290px;
   height: 215px; }
   @media (max-width: 480px) {
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003139}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003141}}
     div.expertise-widget-image {
       margin-left: auto;
       margin-right: auto;
       width: 100px;
       height: 74px; } }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003156}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003158}}
   div.expertise-widget-image.identity-design-img {
     background-size: 290px 215px;
     background-image: url(layout/iddesign-med.png); }
     @media (max-width: 480px) {
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003156}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003158}}
       div.expertise-widget-image.identity-design-img {
         background-size: 100px 74px; } }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003165}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003167}}
   div.expertise-widget-image.web-design-img {
     background-size: 290px 193px;
     background-image: url(layout/webdesign-med.png); }
     @media (max-width: 480px) {
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003165}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003167}}
       div.expertise-widget-image.web-design-img {
         background-size: 100px 67px; } }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003174}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003176}}
   div.expertise-widget-image.web-development-img {
     background-size: 290px 165px;
     background-image: url(layout/webdev-med.png); }
     @media (max-width: 480px) {
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003174}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003176}}
       div.expertise-widget-image.web-development-img {
         background-size: 100px 57px; } }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003183}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003185}}
   div.expertise-widget-image.online-marketing-img {
     background-size: 290px 167px;
     background-image: url(layout/onlinemarketing-med.png); }
     @media (max-width: 480px) {
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003183}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_expertise_page\.scss}line{font-family:\00003185}}
       div.expertise-widget-image.online-marketing-img {
         background-size: 100px 58px; } }
 
@@ -7082,7 +7088,7 @@ div.expertise-widget-image {
         height: 40px;
         padding: 4px 10px; }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_results_page\.scss}line{font-family:\00003146}}
-        .result-item .result-description footer .categories div {
+        .result-item .result-description footer .categories a {
           display: block;
           width: 54px;
           height: 40px;
@@ -7090,36 +7096,36 @@ div.expertise-widget-image {
           background-position: center bottom;
           margin: 0px 4px; }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_results_page\.scss}line{font-family:\00003154}}
-          .result-item .result-description footer .categories div.identity-design {
+          .result-item .result-description footer .categories a.identity-design {
             background-size: 54px 40px;
             background-image: url(layout/iddesign-med.png); }
             @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_results_page\.scss}line{font-family:\00003154}}
-              .result-item .result-description footer .categories div.identity-design {
+              .result-item .result-description footer .categories a.identity-design {
                 background-image: url(layout/iddesign-med@2x.png); } }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_results_page\.scss}line{font-family:\00003163}}
-          .result-item .result-description footer .categories div.web-design {
+          .result-item .result-description footer .categories a.web-design {
             background-size: 54px 36px;
             background-image: url(layout/webdesign-med.png); }
             @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_results_page\.scss}line{font-family:\00003163}}
-              .result-item .result-description footer .categories div.web-design {
+              .result-item .result-description footer .categories a.web-design {
                 background-image: url(layout/webdesign-med@2x.png); } }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_results_page\.scss}line{font-family:\00003172}}
-          .result-item .result-description footer .categories div.web-development {
+          .result-item .result-description footer .categories a.web-development {
             background-size: 54px 31px;
             background-image: url(layout/webdev-med.png); }
             @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_results_page\.scss}line{font-family:\00003172}}
-              .result-item .result-description footer .categories div.web-development {
+              .result-item .result-description footer .categories a.web-development {
                 background-image: url(layout/webdev-med@2x.png); } }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_results_page\.scss}line{font-family:\00003181}}
-          .result-item .result-description footer .categories div.online-marketing {
+          .result-item .result-description footer .categories a.online-marketing {
             background-size: 54px 31px;
             background-image: url(layout/onlinemarketing-med.png); }
             @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_results_page\.scss}line{font-family:\00003181}}
-              .result-item .result-description footer .categories div.online-marketing {
+              .result-item .result-description footer .categories a.online-marketing {
                 background-image: url(layout/onlinemarketing-med@2x.png); } }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_results_page\.scss}line{font-family:\00003192}}
       .result-item .result-description footer a.case-study-btn {
@@ -7905,58 +7911,61 @@ a.category {
   .contact-form-container .control-group {
     margin-top: 0px; }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\0000310}}
+  .contact-form-container h1 {
+    color: #fff; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\0000314}}
   .contact-form-container legend {
     border: 0px;
     margin: 0px;
     color: #fff;
     font-size: 2em; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\0000317}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\0000321}}
   .contact-form-container label {
     float: left; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\0000320}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\0000324}}
     .contact-form-container label[for=name] {
       padding: 9px 16px 9px 16px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\0000324}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\0000328}}
     .contact-form-container label[for=email] {
       padding: 9px 17px 9px 18px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\0000328}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\0000332}}
     .contact-form-container label[for=phone] {
       padding: 9px 15px 9px 16px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\0000333}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\0000337}}
   .contact-form-container input, .contact-form-container textarea {
     float: right; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\0000336}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\0000340}}
     .contact-form-container input:focus, .contact-form-container textarea:focus {
       outline: 0;
       outline: thin dotted \9;
       /* IE6-9 */ }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\0000342}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\0000346}}
       .contact-form-container input:focus + label, .contact-form-container textarea:focus + label {
         background-color: #00748B;
         border-color: #00748B; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\0000349}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\0000353}}
   .contact-form-container input {
     width: 206px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\0000353}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\0000357}}
   .contact-form-container textarea {
     width: 284px;
     height: 120px;
     margin-top: 42px;
     margin-bottom: 24px;
     padding: 12px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\0000360}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\0000364}}
     .contact-form-container textarea + label.control-label {
       width: 100%;
       padding-left: 0px;
       padding-right: 0px;
       border: 0px;
       position: absolute; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\0000369}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\0000373}}
   .contact-form-container .message-box {
     display: block;
     width: 100%;
     position: relative; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\0000375}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\0000379}}
   .contact-form-container input[type=submit] {
     padding: 12px 0px;
     text-align: center;
@@ -7965,19 +7974,19 @@ a.category {
     background-color: #F05921;
     color: #fff;
     font-size: 1.4em; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\0000384}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\0000388}}
     .contact-form-container input[type=submit]:hover {
       background-color: #f26b39; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\0000391}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\0000395}}
   .contact-form-container label.completed {
     background-color: #A5CD38;
     border-color: #A5CD38; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\0000396}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\00003100}}
   .contact-form-container label.error {
     background-color: #b60024;
     border-color: #b60024; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\00003104}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\00003108}}
 .contact-info {
   margin-left: -20px;
   margin-right: 20px;
@@ -7985,29 +7994,29 @@ a.category {
   background: white url(layout/city@2x.png) no-repeat left bottom;
   background-size: 470px 262px;
   padding: 40px 50px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\00003113}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\00003117}}
   .contact-info ul {
     list-style: none;
     margin: 0px;
     padding: 0px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\00003118}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\00003122}}
     .contact-info ul li {
       display: block;
       border-bottom: 1px dashed #ccc;
       padding: 20px 0px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\00003124}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\00003128}}
       .contact-info ul li.phone a {
         font-size: 3.3em;
         color: #66615B; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\00003131}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\00003135}}
       .contact-info ul li.email a {
         font-size: 2.9em;
         color: #F05921; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\00003137}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\00003141}}
       .contact-info ul li.address {
         font-size: 1.6em;
         color: #66615B;
         border-bottom: 0px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\00003142}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/rodrigopassos\/Documents\/Repositories\/20Mile-website\/prototype\/assets\/styles\/_contact_page\.scss}line{font-family:\00003146}}
         .contact-info ul li.address a {
           color: #F05921; }

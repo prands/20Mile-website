@@ -7,6 +7,11 @@
       $('#hw-nav').removeClass().addClass('span12').addClass($(this).attr('href'));
       return $('#hw-nav').next().removeClass().addClass('span12').addClass($(this).attr('href'));
     });
+    if ($('p.tweet-text').length > 0) {
+      $.getJSON("https://api.twitter.com/1/statuses/user_timeline/20milers.json\?count\=1\&include_rts\=1\&callback\=\?", function(data) {
+        return $('p.tweet-text').html(data[0].text);
+      });
+    }
     loadSelectedImage = function() {
       var img, thumb, url, wrap;
       thumb = $(this);
@@ -48,6 +53,7 @@
           return $field.attr('placeholder', error_message);
         });
       } else {
+        $form.after("<h1>Thanks for your message, we'll get back to you.</h1>");
         return $form.remove();
       }
     };

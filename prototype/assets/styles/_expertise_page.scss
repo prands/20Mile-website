@@ -21,9 +21,11 @@
 	}
 }
 
+$expertise-row-heigth: 270px;
+
 .expertise-widget-detail {
 
-	height: 207px;
+	height: $expertise-row-heigth;
 	margin-bottom: 10px;
 
 	.expertise-widget-detail-block {
@@ -36,7 +38,7 @@
 		width: 290px;
 		padding-left: 30px;
 		padding-right: 30px;
-		height: 207px;
+		height: $expertise-row-heigth;
 		float: left;
 
 		@include mobile-only {
@@ -56,7 +58,7 @@
 		background-color: #EDECE8;
 		background-color: rgba(237,236,232, 0.9);
 		width: 330px;
-		height: 207px;
+		height: $expertise-row-heigth;
 		padding-right: 20px;
 		float: left;
 
@@ -88,7 +90,7 @@
 
 	.expertise-widget-blockquote {
 		width: 240px;
-		height: 207px;
+		height: $expertise-row-heigth;
 		float: right;
 		background-color: #00748B;
 

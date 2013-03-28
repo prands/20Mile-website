@@ -19,7 +19,7 @@
                 <article class="result-item">
                      <div class="result-screens">
                         <div class="top">
-                        	{if "{result_tablet_images:total_files}" != "0"}
+                        	{if "{result_tablet_images:total_files}" != ""}
                             <div class="tablet-screen">
                                 <div class="snapshot">
                                     <a href="#{url_title}-modal" data-toggle="modal">
@@ -28,7 +28,7 @@
                                 </div>
                             </div>
                             {/if}
-                            {if "{result_mobile_images:total_files}" != "0"}
+                            {if "{result_mobile_images:total_files}" != ""}
                             <div class="mobile-screen">
                                 <div class="snapshot">
                                     <a href="#{url_title}-modal" data-toggle="modal">
@@ -39,7 +39,7 @@
                             {/if}
                         </div>
                         <div class="bottom">
-                        	{if "{result_desktop_images:total_files}" != "0"}
+                        	{if "{result_desktop_images:total_files}" != ""}
                             <div class="desktop-screen">
                                 <div class="snapshot">
                                     <a href="#{url_title}-modal" data-toggle="modal">
@@ -62,7 +62,7 @@
                             {!-- <a href="<!-- @path case_study.html -->" class="case-study-btn">Read the Case Study</a> --}
                             <div class="categories">
                                 {categories show_group="1"}
-                                    <div class="{category_url_title}"></div>
+                                    <a href="/expertise#{category_url_title}" class="{category_url_title}"></a>
                                 {/categories}
                             </div>
                         </footer>

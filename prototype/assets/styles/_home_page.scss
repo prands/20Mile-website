@@ -13,11 +13,14 @@ div[role=home] {
 	.home-secondary {
 		background-color: #afaeaa;
 		padding-bottom: 30px;
-		padding-top: 2em;
+
+		#bottom-panels {
+			padding-top: 2em;
+		}
 
 		#kayak {
 
-			margin-top: -140px;
+			margin-top: -28px;
 
 			#hull {
 				fill: #76BEE9;
@@ -128,14 +131,14 @@ div[role=home] {
 
 					header {
 						h1 {
-							background-image: url(layout/twitter-footer.png);
+							background-image: url(layout/twitter-sm.png);
 							background-repeat: no-repeat;
-							background-size: 18px 15px;
 							background-position: left center;
-							padding-left: 40px;
+							padding-left: 20px;
+							background-size: 18px 15px;
 
 							@include retina {
-								// background-image: url(layout/twitter-footer@2x.png);
+								background-image: url(layout/twitter-sm@2x.png);
 							}
 						}
 					}

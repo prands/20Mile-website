@@ -9,9 +9,8 @@
         <section id="spotlight">
             <div class="span12">
                 <h1>
-                    Friendly, expert guides for <br>
-                    navigating an ever-changing digital <br>
-                    terrain.
+                    Friendly, expert guides for navigating<br>
+                    an ever-changing digital terrain.
                 </h1>
 
                 <p>Adventurers inquire within.</p>
@@ -19,32 +18,18 @@
         </section>
         <section id="home-widget">
             <div id="hw-nav" class="span12 pos1">
-                <a href="pos1" id="hw-identity-design">Identity Design</a>
-                <a href="pos2" id="hw-online-marketing">Online Marketing</a>
-                <a href="pos3" id="hw-web-design">Web Design</a>
-                <a href="pos4" id="hw-web-development">Web Development</a>
+                {exp:channel:categories category_group="1" style="linear"}
+                <a href="pos{count}" id="hw-{category_url_title}">{category_name}</a>
+                {/exp:channel:categories}
             </div>
             <div id="hw-sectional" class="span12 pos1">
-                <section id="panel-identity-design">
+                {exp:channel:categories category_group="1" style="linear"}
+                <section id="panel-{category_url_title}">
                     <p>
-                        Your business should tell a story. We work with you to bring that story to life. Through a logo, tagline, typography, color palette, imagery and content strategy, our team of creative professionals works with you to help you find your online voice and identity.
+                        {category_description}
                     </p>
                 </section>
-                <section id="panel-online-marketing">
-                    <p>
-                        A website is one component of your online marketing. If it's going to work for you, it needs regular attention. We'll help you evaluate the success of your website and guide you through the multiple options for online marketing. Whether it's a Google Adwords campaign, monthly executive summaries or media buys, we're here to help you reach the full potential of your online investment.
-                    </p>
-                </section>
-                <section id="panel-web-design">
-                    <p>
-                        We don't present you with three templates and tell you to pick the one you like the best (or the one you don't like the least). Our creative process is thorough. We get to know you and your brand. We learn about your business, your customers, your competition and your goals and create a web design that meets not only your needs, but the needs of your visitors, too.
-                    </p>
-                </section>
-                <section id="panel-web-development">
-                    <p>
-                        Our team of developers and technical professionals are here to support your web projects. We've completed hundreds of successful implementations. We have proven, stable processes that we've honed through 250 website implementations over the past five years. We take a creative, outside-the-box approach to craft solutions that meet your needs.
-                    </p>
-                </section>
+                {/exp:channel:categories}
             </div>
         </section>
     </div>
@@ -72,7 +57,7 @@
                     </center>
                 </div>
             </div>
-            <div class="row">
+            <div id="bottom-panels" class="row">
                 <div class="span4">
                     <article class="recent-results">
                         <header>
@@ -119,9 +104,7 @@
                         <header>
                             <h1>@20Milers on Twitter</h1>
                         </header>
-                        <p>
-                            Use these common design patterns to boost mobile e-commerce sales: http://uxdesign.smashingmagazine.com/2012/12/19/boost-your-mobile-e-commerce-sales-with-mobile-design-patterns/ … via @smashingmag
-                        </p>
+                        <p class="tweet-text"></p>
                     </article>
                 </div>
             </div>

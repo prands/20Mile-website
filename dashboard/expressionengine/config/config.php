@@ -24,13 +24,21 @@ switch ( $_SERVER['SERVER_ADDR'] ) {
     
     // local
     case '127.0.0.1' :
-	$db['expressionengine']['hostname'] = "localhost";
-	$db['expressionengine']['username'] = "root";
-	$db['expressionengine']['password'] = "root";
-	$db['expressionengine']['database'] = "20MileInt";
+    $db['expressionengine']['hostname'] = "localhost";
+    $db['expressionengine']['username'] = "root";
+    $db['expressionengine']['password'] = "root";
+    $db['expressionengine']['database'] = "20MileInt";
+    break;
+
+    // production
+    case '72.10.54.41' :
+    $db['expressionengine']['hostname'] = "localhost";
+    $db['expressionengine']['username'] = "Mile20_user";
+    $db['expressionengine']['password'] = "cotuit32";
+    $db['expressionengine']['database'] = "20MileInt";
     break;
     
-    // live
+    // 20mile.net
     default :
 	$db['expressionengine']['hostname'] = "localhost";
 	$db['expressionengine']['username'] = "Mile20_user";
@@ -107,7 +115,7 @@ $config['theme_folder_path'] = $config['server_path']."/themes/";
 $config['save_tmpl_files'] = "y";
 $config['tmpl_file_basepath'] = $config['server_path']."/templates/";
 $config['site_404'] = "pages/404";
-$config['strict_urls'] = "n";
+$config['strict_urls'] = "y";
 
 /* Category settings
 -------------------------------------------------------------------*/

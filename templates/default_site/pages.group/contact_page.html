@@ -13,7 +13,7 @@
                 		form:class="form-horizontal"
                 		form:id="contact-form"
 						form_name="contact"
-						required="name|email|phone|user_message"
+						required="name|email|user_message"
 						ajax="yes"
 					}
                         <fieldset>
@@ -27,7 +27,7 @@
                                 <label class="control-label" for="email">Email</label>
                             </div>
                             <div class="control-group">
-                                <input type="tel" name="phone" class="validate-empty">
+                                <input type="tel" name="phone" class="">
                                 <label class="control-label" for="phone">Phone</label>
                             </div>
                             <div class="control-group message-box">
@@ -51,7 +51,7 @@
                             <a href="mailto:info@20mile.in">info@20mile.in</a>
                         </li>
                         <li class="address">
-                            901 Main St Osterville, MA 02655 <a href="#">map</a>
+                            901 Main St Osterville, MA 02655 <a href="{company_address_map_link}" target="_blank">map</a>
                         </li>
                     </ul>
                 </div>
